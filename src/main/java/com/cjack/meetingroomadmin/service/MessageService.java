@@ -34,8 +34,10 @@ public class MessageService {
     public void list( LayPage layPage, MessageModel model){
         List< Sort.Order> orders=new ArrayList<>();
         orders.add( new Sort.Order( Sort.Direction.DESC, "updateTime"));
+        //只返回手动发送的消息
+        model.setType( 1);
         Specification<MessageTable> specification = handleConditon( model);
-        Pageable pageable = new PageRequest( layPage.getPage()-1, layPage.getLimit(), new Sort( orders));
+        Pageable pageable = new PageRequest( layPage.getPage() - 1, layPage.getLimit(), new Sort( orders));
 
         Page<MessageTable> pageTable = dao.findAll( specification, pageable);
         List<MessageModel> datas = new ArrayList<>();
@@ -59,13 +61,7 @@ public class MessageService {
     }
 
     public void save( MessageModel model){
-        MessageTable message;
-        if( EmptyUtil.isNotEmpty( model.getId())){
-            message = dao.findOne( model.getId());
-            ModelUtils.copySignModel( model, message);
-        }else{
-            message = ModelUtils.copySignModel( model, MessageTable.class);
-        }
+        MessageTable message = ModelUtils.copySignModel( model, MessageTable.class);
         dao.save( message);
         List<AppUserTable> appUserTables = appUserDao.findAll( );
         //保存到message_read表
@@ -86,7 +82,10 @@ public class MessageService {
         Specification< MessageTable> specification = (root, query, cb) -> {
             Predicate predicate = cb.conjunction();
             if( EmptyUtil.isNotEmpty( model.getTitle())){
-                predicate.getExpressions().add( cb.equal( root.get("title"), model.getTitle()));
+                predicate.getExpressions().add( cb.like( root.get("title"), "%" + model.getTitle() + "%"));
+            }
+            if( EmptyUtil.isNotEmpty( model.getType())){
+                predicate.getExpressions().add( cb.equal( root.get("type"), model.getType()));
             }
             return predicate;
         };

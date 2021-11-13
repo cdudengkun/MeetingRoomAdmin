@@ -46,26 +46,6 @@ layui.define(["form","jquery"],function(exports){
             getDataFromList: function( key){
                 return JSON.parse( window.sessionStorage.getItem( key));
             },
-            formatSecond: function( second){
-                if( !second){
-                    return "0秒";
-                }
-                //把秒转化为时分秒格式化
-                var hour = Math.floor(Math.floor(second/60)/60);
-                var minute = Math.floor(second/60) % 60;
-                var senc = second % 60;
-                var str = "";
-                if( hour){
-                    str += hour + "小时";
-                }
-                if( minute){
-                    str += minute + "分钟";
-                }
-                if( senc){
-                    str += senc + "秒";
-                }
-                return str;
-            },
 
             getTitleByType: function ( type, name) {
                 switch ( type) {
@@ -75,7 +55,27 @@ layui.define(["form","jquery"],function(exports){
                     case this.ACTION.REVIEW: return "审核" + name;
                 }
             },
-
+            //获取url参数，先暂时使用此方法，后续找找layui有没有提供更优雅的写法
+            getUrlParamer: function( name){
+                var url = window.location.href.split( "?" )[1];            /*获取url里"?"后面的值*/
+                if( !url){
+                    return "";
+                }
+                if( url.indexOf( "&") > 0){                                      /*判断是否是一个参数还是多个参数*/
+                    var urlParamArry = url.split( "&");                            /*分开每个参数，并放到数组里*/
+                    for(var i=0; i < urlParamArry.length ; i++){
+                        var paramerName = urlParamArry[i].split( "=");   /*把每个参数名和值分开，并放到数组里*/
+                        if( name == paramerName[0]){                     /*匹配输入的参数和数组循环出来的参数是否一样*/
+                            return paramerName[1];                           /*返回想要的参数值*/
+                        }
+                    }
+                }else{                                                              /*判断只有个参数*/
+                    var paramerValue = url.split( "=")[1];
+                    if( name ==  url.split( "=")[0]){
+                        return paramerValue;
+                    }
+                }
+            },
             getHeight: function( h){
                 //获取浏览器最大高度，以防页面显示不完全
                 var maxHeight = $(window).height();
@@ -96,6 +96,12 @@ layui.define(["form","jquery"],function(exports){
                     res = maxWidth - 100;
                 }
                 return res + "px";
+            },
+            setFormReadOnly: function ( elementId, readOnley) {
+                var readForm = layui.$("#" + elementId);
+                readForm.find( 'input,textarea,select').prop( 'disabled', readOnley);
+                readForm.find( '.layui-layedit iframe').contents().find( 'body').prop( 'contenteditable', !readOnley);
+                layui.form.render();
             }
         };
     exports( "baseConfig", baseConfig);

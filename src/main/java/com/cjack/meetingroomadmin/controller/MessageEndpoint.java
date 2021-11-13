@@ -49,11 +49,10 @@ public class MessageEndpoint extends BaseEndpoint{
     @ResponseBody
     public AjaxResult addOrUpdate( HttpSession session, MessageModel model) {
         try{
-            if( isAdd( model.getId())){
-                model.setCreateTime( System.currentTimeMillis());
-                Object adminUserId = session.getAttribute( CommonConfig.SESSION_NAME);
-                model.setAdminUserId( (Long)adminUserId);
-            }
+            model.setCreateTime( System.currentTimeMillis());
+            Object adminUserId = session.getAttribute( CommonConfig.SESSION_NAME);
+            model.setAdminUserId( (Long)adminUserId);
+            model.setType( 1);
             service.save( model);
             return AjaxResult.SUCCESS();
         }catch ( Exception e) {
