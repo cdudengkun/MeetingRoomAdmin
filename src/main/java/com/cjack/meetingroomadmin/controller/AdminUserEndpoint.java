@@ -108,10 +108,9 @@ public class AdminUserEndpoint extends BaseEndpoint{
     public AjaxResult addOrUpdate( HttpSession session, AdminUserModel model) {
         try{
             if( isAdd( model.getId())){
-                model.setCreateTime( new Date());
+                model.setCreateTime( System.currentTimeMillis());
             }
             Object loginUserId = session.getAttribute( CommonConfig.SESSION_NAME);
-            model.setUpdateTime( new Date());
             service.save( (Long)loginUserId,model);
             return AjaxResult.SUCCESS();
         }catch ( Exception e) {

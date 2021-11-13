@@ -45,7 +45,14 @@ public class MeetingZoneService {
     }
 
     public void save( MeetingZoneModel model){
-        dao.save( ModelUtils.copySignModel( model, MeetingZoneTable.class));
+        MeetingZoneTable table = null;
+        if( EmptyUtil.isNotEmpty( model.getId())){
+            table = dao.findOne( model.getId());
+            ModelUtils.copySignModel( model, table);
+        }else{
+            table = ModelUtils.copySignModel( model, MeetingZoneTable.class);
+        }
+        dao.save( table);
     }
 
     /**

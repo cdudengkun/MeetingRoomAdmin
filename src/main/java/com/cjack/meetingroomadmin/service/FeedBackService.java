@@ -4,6 +4,7 @@ import com.cjack.meetingroomadmin.config.LayPage;
 import com.cjack.meetingroomadmin.dao.FeedBackDao;
 import com.cjack.meetingroomadmin.model.FeedBackModel;
 import com.cjack.meetingroomadmin.table.FeedBackTable;
+import com.cjack.meetingroomadmin.util.EmptyUtil;
 import com.cjack.meetingroomadmin.util.ModelUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.*;
@@ -46,7 +47,13 @@ public class FeedBackService {
     }
 
     public void save( FeedBackModel model){
-        FeedBackTable table = ModelUtils.copySignModel( model, FeedBackTable.class);
+        FeedBackTable table = null;
+        if( EmptyUtil.isNotEmpty( model.getId())){
+            table = dao.findOne( model.getId());
+            ModelUtils.copySignModel( model, table);
+        }else{
+            table = ModelUtils.copySignModel( model, FeedBackTable.class);
+        }
         dao.save( table);
     }
 

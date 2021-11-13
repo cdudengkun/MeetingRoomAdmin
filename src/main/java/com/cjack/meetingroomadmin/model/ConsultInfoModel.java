@@ -6,10 +6,7 @@ import lombok.Data;
  * 咨询信息表
  */
 @Data
-public class ConsultInfoModel {
-
-    private Long id;
-    private Long createTime;
+public class ConsultInfoModel extends BaseModel{
 
     private String title;//问题标题
     private String content;//解答内容

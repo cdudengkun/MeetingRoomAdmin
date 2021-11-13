@@ -49,7 +49,14 @@ public class MeetingRoomService {
     }
 
     public void save( MeetingRoomModel model){
-        dao.save( ModelUtils.copySignModel( model, MeetingRoomTable.class));
+        MeetingRoomTable table = null;
+        if( EmptyUtil.isNotEmpty( model.getId())){
+            table = dao.findOne( model.getId());
+            ModelUtils.copySignModel( model, table);
+        }else{
+            table = ModelUtils.copySignModel( model, MeetingRoomTable.class);
+        }
+        dao.save( table);
     }
 
     /**

@@ -3,25 +3,22 @@ package com.cjack.meetingroomadmin.controller;
 import com.cjack.meetingroomadmin.config.AjaxResult;
 import com.cjack.meetingroomadmin.config.CommonConfig;
 import com.cjack.meetingroomadmin.config.LayPage;
-import com.cjack.meetingroomadmin.exception.JPushException;
-import com.cjack.meetingroomadmin.model.MessageModel;
-import com.cjack.meetingroomadmin.service.MessageService;
+import com.cjack.meetingroomadmin.model.ConsultInfoModel;
+import com.cjack.meetingroomadmin.service.ConsultInfoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-
 import javax.servlet.http.HttpSession;
-import java.util.Date;
 
 @Controller
-@RequestMapping("/message")
-public class MessageEndpoint extends BaseEndpoint{
+@RequestMapping("/consultInfo")
+public class ConsultInfoEndpoint extends BaseEndpoint{
 
     @Autowired
-    MessageService service;
+    ConsultInfoService service;
 
     /**
      * 列表
@@ -29,7 +26,7 @@ public class MessageEndpoint extends BaseEndpoint{
      */
     @RequestMapping(value = "/list", method = RequestMethod.GET)
     @ResponseBody
-    public AjaxResult list( HttpSession session, LayPage layPage, MessageModel model) {
+    public AjaxResult list( HttpSession session, LayPage layPage, ConsultInfoModel model) {
         try{
             Object adminUserId = session.getAttribute( CommonConfig.SESSION_NAME);
             model.setAdminUserId( (Long)adminUserId);
@@ -47,7 +44,7 @@ public class MessageEndpoint extends BaseEndpoint{
      */
     @RequestMapping(value = "/addOrUpdate", method = RequestMethod.POST)
     @ResponseBody
-    public AjaxResult addOrUpdate( HttpSession session, MessageModel model) {
+    public AjaxResult addOrUpdate( HttpSession session, ConsultInfoModel model) {
         try{
             if( isAdd( model.getId())){
                 model.setCreateTime( System.currentTimeMillis());

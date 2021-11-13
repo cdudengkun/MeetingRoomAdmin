@@ -50,7 +50,14 @@ public class CouponService {
     }
 
     public void save( CouponModel model){
-        dao.save( ModelUtils.copySignModel( model, CouponTable.class));
+        CouponTable table = null;
+        if( EmptyUtil.isNotEmpty( model.getId())){
+            table = dao.findOne( model.getId());
+            ModelUtils.copySignModel( model, table);
+        }else{
+            table = ModelUtils.copySignModel( model, CouponTable.class);
+        }
+        dao.save( table);
     }
 
     /**

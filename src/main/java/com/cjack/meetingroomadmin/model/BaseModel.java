@@ -8,4 +8,5 @@ public class BaseModel {
     private Long id;
     private Long createTime;
     private Long updateTime = System.currentTimeMillis();
+    private Long adminUserId;
 }
