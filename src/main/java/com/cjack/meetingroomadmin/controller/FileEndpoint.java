@@ -28,10 +28,6 @@ public class FileEndpoint extends BaseEndpoint{
     String spelitor;
     @Value("${file.upload.serverUrl}")
     String serverUrl;
-    @Value("${file.word.engDir}")
-    private String engDir;
-    @Value("${file.word.usaDir}")
-    private String usaDir;
 
     @RequestMapping(value = "/upload", method = RequestMethod.POST)
     @ResponseBody
@@ -82,41 +78,6 @@ public class FileEndpoint extends BaseEndpoint{
             BufferedInputStream bis;
             //需要先将 excel的浏览器端访问路径 转化为服务器端访问路径
             filePath = FileUtils.transferClientFileUrl( filePath, baseServerDir, baseClientDir);
-            bis = new BufferedInputStream( new FileInputStream( new File( filePath)));
-            int i = bis.read(buff);
-            while (i != -1) {
-                outputStream.write(buff, 0, buff.length);
-                outputStream.flush();
-                i = bis.read(buff);
-            }
-        }catch ( Exception e){
-            e.printStackTrace();
-        }
-    }
-
-    @RequestMapping(value = "/downloadWordAudio", method = RequestMethod.GET)
-    public void downloadWordAudio(HttpServletResponse response, @RequestParam("type") String type, @RequestParam("word") String word) {
-
-        // 设置信息给客户端不解析
-        String responseFileType = new MimetypesFileTypeMap().getContentType( "mp3");
-        // 设置contenttype，即告诉客户端所发送的数据属于什么类型
-        response.setHeader( "Content-type", responseFileType);
-        // 读取filename
-        String fileName = word + ".mp3";
-        // 设置扩展头，当Content-Type 的类型为要下载的类型时 , 这个信息头会告诉浏览器这个文件的名字和类型。
-        response.setHeader( "Content-Disposition", "attachment;filename=" + fileName);
-        try{
-            // 发送给客户端的数据
-            OutputStream outputStream = response.getOutputStream();
-            byte[] buff = new byte[1024];
-            BufferedInputStream bis;
-            //需要先将 excel的浏览器端访问路径 转化为服务器端访问路径
-            String filePath = null;
-            if( type.equals( "usa")){
-                filePath = usaDir + word + ".mp3";
-            }else{
-                filePath = engDir + word + ".mp3";
-            }
             bis = new BufferedInputStream( new FileInputStream( new File( filePath)));
             int i = bis.read(buff);
             while (i != -1) {

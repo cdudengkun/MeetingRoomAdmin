@@ -2,9 +2,7 @@
 <html>
 <head>
     <meta charset="utf-8">
-    <title>layuimini-iframe版 v2 - 基于Layui的后台管理系统前端模板</title>
-    <meta name="keywords" content="layuimini,layui,layui模板,layui后台,后台模板,admin,admin模板,layui mini">
-    <meta name="description" content="layuimini基于layui的轻量级前端后台管理框架，最简洁、易用的后台框架模板，面向所有层次的前后端程序,只需提供一个接口就直接初始化整个框架，无需复杂操作。">
+    <title>共享办公后台管理系统</title>
     <meta name="renderer" content="webkit">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <meta http-equiv="Access-Control-Allow-Origin" content="*">
@@ -26,7 +24,7 @@
     <div class="layui-header header">
         <div class="layui-logo layuimini-logo"></div>
 
-        <div class="layuimini-header-content">
+        <div class="layuimini-header-content" style="margin-right: 30px;">
             <a>
                 <div class="layuimini-tool"><i title="展开" class="fa fa-outdent" data-side-fold="1"></i></div>
             </a>
@@ -68,22 +66,6 @@
             <ul class="layui-tab-title">
                 <li class="layui-this" id="layuiminiHomeTabId" lay-id=""></li>
             </ul>
-            <div class="layui-tab-control">
-                <li class="layuimini-tab-roll-left layui-icon layui-icon-left"></li>
-                <li class="layuimini-tab-roll-right layui-icon layui-icon-right"></li>
-                <li class="layui-tab-tool layui-icon layui-icon-down">
-                    <ul class="layui-nav close-box">
-                        <li class="layui-nav-item">
-                            <a href="javascript:;"><span class="layui-nav-more"></span></a>
-                            <dl class="layui-nav-child">
-                                <dd><a href="javascript:;" layuimini-tab-close="current">关 闭 当 前</a></dd>
-                                <dd><a href="javascript:;" layuimini-tab-close="other">关 闭 其 他</a></dd>
-                                <dd><a href="javascript:;" layuimini-tab-close="all">关 闭 全 部</a></dd>
-                            </dl>
-                        </li>
-                    </ul>
-                </li>
-            </div>
             <div class="layui-tab-content">
                 <div id="layuiminiHomeTabIframe" class="layui-tab-item layui-show"></div>
             </div>
@@ -97,12 +79,10 @@
     layui.use(['jquery', 'layer', 'miniAdmin','miniTongji'], function () {
         var $ = layui.jquery,
             layer = layui.layer,
-            miniAdmin = layui.miniAdmin,
-            miniTongji = layui.miniTongji;
+            miniAdmin = layui.miniAdmin;
 
         var options = {
             iniUrl: "/api/init.json",    // 初始化接口
-            clearUrl: "/api/clear.json", // 缓存清理接口
             urlHashLocation: true,      // 是否打开hash定位
             bgColorDefault: false,      // 主题默认配置
             multiModule: true,          // 是否开启多模块
@@ -113,15 +93,34 @@
         };
         miniAdmin.render(options);
 
-        // 百度统计代码，只统计指定域名
-        miniTongji.render({
-            specific: true,
-            domains: [
-                '99php.cn',
-                'layuimini.99php.cn',
-                'layuimini-onepage.99php.cn',
-            ],
+        //获取登录的用户信息
+        function getUserInfo( callback){
+            $.ajaxSettings.async = false;
+            $.get("/adminUser/getUserInfo",function( res){
+                try{
+                    res = JSON.parse( res);
+                }catch (e) {
+
+                }
+                if( res.code == 200){
+                    callback( res.data);
+                }else if( res.code == 304){
+                    top.layer.confirm( "用户尚未登录，点击跳转到登录页面", function(){
+                        window.location.href = "/pages/login.html";
+                    });
+                }else{
+                    top.layer.alert( res.msg);
+                }
+            });
+        }
+        var userInfo= {};
+        getUserInfo( function( data){
+            userInfo = data;
         });
+        //将用户信息缓存起来
+        window.sessionStorage.setItem( "userInfo", JSON.stringify( userInfo));
+        var headImg = userInfo.avatar ? userInfo.avatar : "/images/face.jpg";
+
 
         $('.login-out').on("click", function () {
             layer.msg('退出登录成功', function () {

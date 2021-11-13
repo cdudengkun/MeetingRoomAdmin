@@ -12,7 +12,7 @@ import java.util.List;
  * 后台管理端使用人账户信息
  */
 @Entity
-@Table(name="admin_user")
+@Table(name="admin_user", catalog = "meeting_room")
 @Data
 @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 public class AdminUserTable {
@@ -40,14 +40,14 @@ public class AdminUserTable {
     private String loginName;//登录名称
     private String passWord;//登录密码
 
-    @ManyToOne
-    @JoinColumn(name="province_id", columnDefinition="int(20)")
+    @OneToOne
+    @JoinColumn(name="province_id", columnDefinition="bigint(20)")
     private CityTable province;
-    @ManyToOne
-    @JoinColumn(name="city_id", columnDefinition="int(20)")
+    @OneToOne
+    @JoinColumn(name="city_id", columnDefinition="bigint(20)")
     private CityTable city;
-    @ManyToOne
-    @JoinColumn(name="country_id", columnDefinition="int(20)")
+    @OneToOne
+    @JoinColumn(name="country_id", columnDefinition="bigint(20)")
     private CityTable country;
     private String detail;
 

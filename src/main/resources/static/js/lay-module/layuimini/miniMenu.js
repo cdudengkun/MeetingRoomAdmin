@@ -4,9 +4,10 @@
  * version:2.0
  * description:layuimini 菜单框架扩展
  */
-layui.define(["element","laytpl" ,"jquery"], function (exports) {
+layui.define(["element","laytpl" ,"jquery", 'baseConfig'], function (exports) {
     var element = layui.element,
         $ = layui.$,
+        baseConfig = layui.baseConfig,
         laytpl = layui.laytpl,
         layer = layui.layer;
 
@@ -20,6 +21,7 @@ layui.define(["element","laytpl" ,"jquery"], function (exports) {
          */
         render: function (options) {
             options.menuList = options.menuList || [];
+
             options.multiModule = options.multiModule || false;
             options.menuChildOpen = options.menuChildOpen || false;
             if (options.multiModule) {
@@ -95,6 +97,10 @@ layui.define(["element","laytpl" ,"jquery"], function (exports) {
             options = options || {};
             var me = this ;
             var leftMenusHtml =  me.each(leftMenus || [],function (idx,leftMenu) { // 左侧菜单遍历
+                //判断用户有无权限
+                if( !baseConfig.checkPrivalege( leftMenu.privilegeName)){
+                    return "";
+                }
                 var children = me.renderChildrenMenu(leftMenu.child, { childOpenClass:options.childOpenClass });
                 var leftMenuHtml = me.compileMenu({
                     href: leftMenu.href,
@@ -128,6 +134,7 @@ layui.define(["element","laytpl" ,"jquery"], function (exports) {
 
             if (menuChildOpen) childOpenClass = ' layui-nav-itemed';
             var headerMenuHtml = this.each(menuList, function (index, val) { //顶部菜单渲染
+
                 var menu = 'multi_module_' + index ;
                 var id = menu+"HeaderId";
                 var topMenuItemHtml = "" ;

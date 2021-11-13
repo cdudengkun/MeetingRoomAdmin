@@ -4,18 +4,16 @@
  * version:2.0
  * description:layuimini 主体框架扩展
  */
-layui.define(["jquery", "miniMenu", "element","miniTab", "miniTheme"], function (exports) {
+layui.extend({
+    baseConfig : "../../lib/baseConfig"
+}).define(["jquery", "miniMenu", "element","miniTab", "miniTheme", 'baseConfig'], function (exports) {
     var $ = layui.$,
         layer = layui.layer,
         miniMenu = layui.miniMenu,
+        baseConfig = layui.baseConfig,
         miniTheme = layui.miniTheme,
         element = layui.element ,
         miniTab = layui.miniTab;
-
-    if (!/http(s*):\/\//.test(location.href)) {
-        var tips = "请先将项目部署至web容器（Apache/Tomcat/Nginx/IIS/等），否则部分数据将无法显示";
-        return layer.alert(tips);
-    }
 
     var miniAdmin = {
 
@@ -45,13 +43,14 @@ layui.define(["jquery", "miniMenu", "element","miniTab", "miniTheme"], function 
                 if (data == null) {
                     miniAdmin.error('暂无菜单信息')
                 } else {
+                    var menuInfo = data.menuInfo;
                     miniAdmin.renderLogo(data.logoInfo);
                     miniAdmin.renderClear(options.clearUrl);
                     miniAdmin.renderHome(data.homeInfo);
                     miniAdmin.renderAnim(options.pageAnim);
                     miniAdmin.listen();
                     miniMenu.render({
-                        menuList: data.menuInfo,
+                        menuList: menuInfo,
                         multiModule: options.multiModule,
                         menuChildOpen: options.menuChildOpen
                     });
@@ -61,7 +60,7 @@ layui.define(["jquery", "miniMenu", "element","miniTab", "miniTheme"], function 
                         multiModule: options.multiModule,
                         menuChildOpen: options.menuChildOpen,
                         maxTabNum: options.maxTabNum,
-                        menuList: data.menuInfo,
+                        menuList: menuInfo,
                         homeInfo: data.homeInfo,
                         listenSwichCallback: function () {
                             miniAdmin.renderDevice();

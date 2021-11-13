@@ -21,10 +21,6 @@ import java.util.List;
 @Service
 public class AppUserService {
 
-    @Value("${file.word.engDir}")
-    private String engDir;
-    @Value("${file.word.usaDir}")
-    private String usaDir;
     @Value("${file.upload.baseServerDir}")
     String baseServerDir;
     @Value("${file.upload.baseClientDir}")

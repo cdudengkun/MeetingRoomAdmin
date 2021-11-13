@@ -40,7 +40,7 @@ public class AdminUserService {
         if( user == null){
             throw new AdminUserNotFoundException();
         }
-        if( !user.getPassWord().equals( passWord)){
+        if( !user.getPassWord().equals( Md5Util.stringToMD5( passWord))){
             throw new AdminUserPassErrorException();
         }
         user.setLastLoginTime( new Date());

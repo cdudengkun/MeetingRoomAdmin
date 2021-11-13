@@ -4,8 +4,7 @@ window.rootPath = (function (src) {
 })();
 
 layui.config({
-    base: rootPath + "lay-module/",
-    version: true
+    base: rootPath + "lay-module/"
 }).extend({
     miniAdmin: "layuimini/miniAdmin", // layuimini后台扩展
     miniMenu: "layuimini/miniMenu", // layuimini菜单扩展

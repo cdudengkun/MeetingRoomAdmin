@@ -10,7 +10,7 @@ import java.util.Date;
  * 后端用户角色列表
  */
 @Entity
-@Table(name="admin_role")
+@Table(name="admin_role", catalog = "meeting_room")
 @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 public class AdminRoleTable {
 
