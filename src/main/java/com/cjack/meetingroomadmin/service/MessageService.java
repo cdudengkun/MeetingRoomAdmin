@@ -27,17 +27,9 @@ public class MessageService {
     @Autowired
     private MessageDao dao;
     @Autowired
-    private AdminUserDao adminUserDao;
-    @Autowired
-    private SchoolDao schoolDao;
-    @Autowired
-    private SchoolClassDao schoolClassDao;
-    @Autowired
     private AppUserDao appUserDao;
     @Autowired
     private MessageReadDao messageReadDao;
-    @Autowired
-    private JpushService jpushService;
 
     public void list( LayPage layPage, MessageModel model){
         List< Sort.Order> orders=new ArrayList<>();
@@ -49,18 +41,6 @@ public class MessageService {
         List<MessageModel> datas = new ArrayList<>();
         for( MessageTable table : pageTable.getContent()){
             MessageModel data = ModelUtils.copySignModel( table, MessageModel.class);
-            if( table.getSchool() != null){
-                data.setSchoolId( table.getSchool().getId());
-                data.setSchoolName( table.getSchool().getName());
-            }
-            if( table.getAdminUser() != null){
-                data.setAdminUserId( table.getAdminUser().getId());
-                data.setAdminUserName( table.getAdminUser().getName());
-            }
-            if( table.getSchoolClass() != null){
-                data.setSchoolClassId( table.getSchoolClass().getId());
-                data.setSchoolClassName( table.getSchoolClass().getName());
-            }
             datas.add( data);
         }
         layPage.setData( datas);
@@ -78,85 +58,39 @@ public class MessageService {
         dao.deleteInBatch( tables);
     }
 
-    public void save( MessageModel model) throws JPushException {
+    public void save( MessageModel model){
         MessageTable message;
         if( EmptyUtil.isNotEmpty( model.getId())){
             message = dao.findOne( model.getId());
             ModelUtils.copySignModel( model, message);
         }else{
             message = ModelUtils.copySignModel( model, MessageTable.class);
-            message.setAdminUser( adminUserDao.getOne( model.getAdminUserId()));
-        }
-        if( EmptyUtil.isNotEmpty( model.getSchoolClassId())){
-            message.setSchoolClass( schoolClassDao.getOne( model.getSchoolClassId()));
-        }
-        if( EmptyUtil.isNotEmpty( model.getSchoolId())){
-            message.setSchool( schoolDao.getOne( model.getSchoolId()));
         }
         dao.save( message);
-        List<AppUserTable> appUserTables;
-        if( model.getType().equals( 3)){
-            Specification<AppUserTable> specification = handleConditon( model.getSchoolClassId());
-            appUserTables = appUserDao.findAll( specification);
-        }else{
-            //查询系统所有app用户
-            appUserTables = appUserDao.findAll();
-        }
+        List<AppUserTable> appUserTables = appUserDao.findAll( );
         //保存到message_read表
         List<MessageReadTable> reads = new ArrayList<>();
         for( AppUserTable appUser : appUserTables){
             MessageReadTable read = new MessageReadTable();
             read.setAppUser( appUser);
-            read.setCreateTime( new Date());
-            read.setUpdateTime( new Date());
+            read.setCreateTime( System.currentTimeMillis());
+            read.setUpdateTime( System.currentTimeMillis());
             read.setMessage( message);
             read.setState( CommonConfig.NO);
             reads.add( read);
         }
-        messageReadDao.save( reads);/*
-        //调用极光推送
-        switch ( model.getType()){
-            case 1://系统消息
-                JsonObject jsonObject =new JsonObject() ;
-                jsonObject.addProperty( "id", message.getId());
-                jsonObject.addProperty( "type", 0);
-                jpushService.pushForAll( message.getContent(), message.getTitle(), jsonObject);
-                break;
-            case 2://学校消息
-                //暂时屏蔽
-                break;
-            case 3://班级消息
-                jpushService.pushForTag( message.getTitle(), message.getContent(), String.valueOf( model.getSchoolClassId()));
-                break;
-        }*/
+        messageReadDao.save( reads);
     }
 
-    private Specification<AppUserTable> handleConditon( Long schoolClassId){
-        Specification< AppUserTable> specification = (root, query, cb) -> {
+    private Specification<MessageTable> handleConditon( MessageModel model){
+        Specification< MessageTable> specification = (root, query, cb) -> {
             Predicate predicate = cb.conjunction();
-            if( EmptyUtil.isNotEmpty( schoolClassId)){
-                Join<AppUserTable, SchoolClassTable> join = root.join("schoolClass", JoinType.LEFT);
-                predicate.getExpressions().add( cb.equal( join.get("id"), schoolClassId));
+            if( EmptyUtil.isNotEmpty( model.getTitle())){
+                predicate.getExpressions().add( cb.equal( root.get("title"), model.getTitle()));
             }
             return predicate;
         };
         return specification;
     }
 
-    private Specification<MessageTable> handleConditon( MessageModel condition){
-        final AdminUserTable loginUser = adminUserDao.getOne( condition.getAdminUserId());
-        Specification< MessageTable> specification = (root, query, cb) -> {
-            Predicate predicate = cb.conjunction();
-            AdminRoleTable role = loginUser.getAdminRole();
-            //修改一下，就算是超级管理员，也只能查看自己发送的消息
-            /*
-            if( !role.getCode().equals( PrivageConfig.SUPER_ADMIN_CODE)){
-
-            }*/
-            Join<MessageTable, AdminUserTable> join = root.join("adminUser", JoinType.LEFT);
-            predicate.getExpressions().add( cb.equal( join.get("id"), condition.getAdminUserId()));
-            return predicate;
-        };
-        return specification;
-    }
 }

@@ -1,7 +1,6 @@
 package com.cjack.meetingroomadmin.service;
 
 import com.cjack.meetingroomadmin.config.LayPage;
-import com.cjack.meetingroomadmin.dao.AdminUserDao;
 import com.cjack.meetingroomadmin.dao.FeedBackDao;
 import com.cjack.meetingroomadmin.model.FeedBackModel;
 import com.cjack.meetingroomadmin.table.FeedBackTable;
@@ -9,9 +8,7 @@ import com.cjack.meetingroomadmin.util.ModelUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.*;
 import org.springframework.stereotype.Service;
-
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 @Service
@@ -19,10 +16,8 @@ public class FeedBackService {
 
     @Autowired
     private FeedBackDao dao;
-    @Autowired
-    private AdminUserDao adminUserDao;
 
-    public void list( LayPage layPage, FeedBackModel model){
+    public void list(LayPage layPage, FeedBackModel model){
         FeedBackTable condition = ModelUtils.copySignModel( model, FeedBackTable.class);
         Example<FeedBackTable> example = Example.of( condition);
         List< Sort.Order> orders=new ArrayList<>();
@@ -32,10 +27,7 @@ public class FeedBackService {
         List<FeedBackModel> datas = new ArrayList<>();
         for(FeedBackTable table : pageTable.getContent()){
             FeedBackModel data = ModelUtils.copySignModel( table, FeedBackModel.class);
-            data.setAppUserName( table.getAppUser().getName());
-            if( table.getAdminUser() != null){
-                data.setAdminUserName( table.getAdminUser().getName());
-            }
+
             datas.add( data);
         }
         layPage.setData( datas);
@@ -54,11 +46,7 @@ public class FeedBackService {
     }
 
     public void save( FeedBackModel model){
-        FeedBackTable table = dao.getOne( model.getId());
-        table.setReplyTime( new Date());
-        table.setReplyContent( model.getReplyContent());
-        table.setState( model.getState());
-        table.setAdminUser( adminUserDao.getOne( model.getAdminUserId()));
+        FeedBackTable table = ModelUtils.copySignModel( model, FeedBackTable.class);
         dao.save( table);
     }
 

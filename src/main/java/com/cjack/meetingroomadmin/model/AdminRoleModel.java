@@ -11,11 +11,7 @@ import java.util.Date;
  */
 @Data
 @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
-public class AdminRoleModel {
-
-    private Long id;
-    private Date createTime;
-    private Date updateTime;
+public class AdminRoleModel  extends BaseModel{
 
     private String code;//角色编码
     private String roleName;//角色名称

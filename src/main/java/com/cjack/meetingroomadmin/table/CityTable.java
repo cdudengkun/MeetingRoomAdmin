@@ -1,7 +1,5 @@
 package com.cjack.meetingroomadmin.table;
 
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import lombok.Data;
 
 import javax.persistence.*;
@@ -10,15 +8,9 @@ import javax.persistence.*;
  * 全国城市列表
  */
 @Entity
-@Table(name="city")
+@Table(name="city", catalog = "meeting_room")
 @Data
-@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 public class CityTable {
-    public CityTable(){}
-
-    public CityTable( Long id){
-        this.id = id;
-    }
     @Id
     @GeneratedValue( strategy= GenerationType.AUTO)
     private Long id;

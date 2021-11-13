@@ -1,26 +1,22 @@
 package com.cjack.meetingroomadmin.table;
 
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import lombok.Data;
 
 import javax.persistence.*;
-import java.util.Date;
 
 /**
  * 验证码表
  */
 @Entity
-@Table(name="verification_code")
+@Table(name="verification_code", catalog = "meeting_room")
 @Data
-@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 public class VerificationCodeTable {
 
     @Id
     @GeneratedValue( strategy= GenerationType.AUTO)
     private Long id;
-    private Date createTime;
-    private Date updateTime;
+    private Long createTime;
+    private Long updateTime;
 
     private Long expireTime;//验证码过期时间-单位毫秒
     private String phone;//电话

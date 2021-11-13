@@ -7,7 +7,7 @@ import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 /**
  * Created by root on 4/20/19.
  */
-public interface AdminUserDao extends JpaRepository< AdminUserTable, Long>, JpaSpecificationExecutor<AdminUserTable> {
+public interface AdminUserDao extends JpaRepository<AdminUserTable, Long>, JpaSpecificationExecutor<AdminUserTable> {
 
     AdminUserTable findOneByLoginName(String loginName);
 }

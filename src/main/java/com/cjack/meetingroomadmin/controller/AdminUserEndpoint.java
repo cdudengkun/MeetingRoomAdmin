@@ -87,49 +87,17 @@ public class AdminUserEndpoint extends BaseEndpoint{
      */
     @RequestMapping(value = "/list", method = RequestMethod.GET)
     @ResponseBody
-    public AjaxResult list( HttpSession session, LayPage layPage, AdminUserModel model) {
+    public AjaxResult list( HttpSession session, AdminUserModel model) {
         try{
             Object adminUserId = session.getAttribute( CommonConfig.SESSION_NAME);
-            service.list( (Long)adminUserId, layPage, model);
-            return AjaxResult.SUCCESS( layPage);
+            service.list( (Long)adminUserId, model);
+            return AjaxResult.SUCCESS();
         }catch ( Exception e) {
             e.printStackTrace();
             return AjaxResult.ERROR();
         }
     }
 
-    /**
-     * 列表
-     * @return
-     */
-    @RequestMapping(value = "/list/{roleId}", method = RequestMethod.GET)
-    @ResponseBody
-    public AjaxResult listByRoleId( HttpSession session, @PathVariable("roleId") Long roleId) {
-        try{
-            Object loginUserId = session.getAttribute( CommonConfig.SESSION_NAME);
-            List<AdminUserModel> datas = service.list( roleId, (Long)loginUserId);
-            return AjaxResult.SUCCESS( datas);
-        }catch ( Exception e) {
-            e.printStackTrace();
-            return AjaxResult.ERROR();
-        }
-    }
-
-    /**
-     * 获取未绑定学校的校长列表
-     * @return
-     */
-    @RequestMapping(value = "/unSignSchoolMasterList", method = RequestMethod.GET)
-    @ResponseBody
-    public AjaxResult unSignSchoolMasterList( @RequestParam("masterId") Long masterId) {
-        try{
-            List<AdminUserModel> datas = service.unSignSchoolMasterList( masterId);
-            return AjaxResult.SUCCESS( datas);
-        }catch ( Exception e) {
-            e.printStackTrace();
-            return AjaxResult.ERROR();
-        }
-    }
 
     /**
      * 新增

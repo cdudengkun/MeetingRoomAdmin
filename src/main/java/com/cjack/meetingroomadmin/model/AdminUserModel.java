@@ -11,11 +11,7 @@ import java.util.Date;
  */
 @Data
 @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
-public class AdminUserModel {
-
-    private Long id;
-    private Date createTime;
-    private Date updateTime;
+public class AdminUserModel  extends BaseModel{
 
     private String name;//姓名
     private String phone;//电话
@@ -38,9 +34,4 @@ public class AdminUserModel {
     private String roleName;
     private Long roleId;
     private String roleContent;
-    //校长绑定学校
-    private SchoolModel schoolModel;
-    //校长、老师所属学校
-    private Long schoolId;
-    private String schoolName;
 }

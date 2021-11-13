@@ -55,22 +55,4 @@ public class AdminUserTable {
     @JoinColumn(name="role_id")
     private AdminRoleTable adminRole;
 
-    @OneToMany( cascade = {CascadeType.REFRESH, CascadeType.MERGE},mappedBy = "unit" , fetch = FetchType.LAZY)
-    @OrderBy("id DESC")
-    private List<DictionaryWordTable> words;
-
-    //经销商账户下面的学校列表
-    @OneToMany( cascade = {CascadeType.REFRESH, CascadeType.MERGE},mappedBy = "agent" , fetch = FetchType.LAZY)
-    @OrderBy("id DESC")
-    private List<SchoolTable> agentSchools;
-
-    //教师账户下面的班级列表
-    @OneToMany( cascade = {CascadeType.REFRESH, CascadeType.MERGE},mappedBy = "teacher" , fetch = FetchType.LAZY)
-    @OrderBy("id DESC")
-    private List<SchoolClassTable> schoolClasses;
-
-    //校长、老师所属的学校
-    @ManyToOne( cascade = {CascadeType.REFRESH, CascadeType.MERGE})
-    @JoinColumn( name = "school_id")
-    private SchoolTable school;
 }

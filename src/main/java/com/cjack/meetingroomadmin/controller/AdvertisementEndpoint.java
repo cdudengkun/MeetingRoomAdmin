@@ -45,9 +45,8 @@ public class AdvertisementEndpoint extends BaseEndpoint{
     public AjaxResult addOrUpdate( AdvertisementModel model) {
         try{
             if( isAdd( model.getId())){
-                model.setCreateTime( new Date());
+                model.setCreateTime( System.currentTimeMillis());
             }
-            model.setUpdateTime( new Date());
             service.save( model);
             return AjaxResult.SUCCESS();
         }catch ( Exception e) {

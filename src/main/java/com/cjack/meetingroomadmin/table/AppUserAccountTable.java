@@ -1,87 +1,33 @@
 package com.cjack.meetingroomadmin.table;
 
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+import lombok.Data;
 
 import javax.persistence.*;
-import java.util.Date;
 
 /**
  * app用户账户信息
  */
 @Entity
-@Table(name="app_user_account")
-@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
+@Table(name="app_user_account", catalog = "meeting_room")
+@Data
 public class AppUserAccountTable {
 
     @Id
     @GeneratedValue( strategy= GenerationType.IDENTITY)
     private Long id;
-    private Date createTime;
-    private Date updateTime;
+    private Long createTime;
+    private Long updateTime;
 
-    private Double goldCoin;//用户充值的金币余额
-    private Integer integral;//用户积分余额
+    private Integer isVip;//是否vip 1-是，2-否  这个返回给app的时候，需要计算过期时间，如果已过期，把它修改为2
+    private Long joinVipTime;//加入vip时间
+    private Long vipExpireTime;//vip过期时间
+
+    private Integer surplusMeetingRoomHour;//剩余会议室时长，单位小时
+    private Integer usedMeetingRoomHour;//已用会议室时长，单位小时
+    private Integer surplusWorkStation;//剩余工位数，单位个/天
+    private Integer usedWorkStation;//已用工位数，单位个/天
 
     @OneToOne( cascade = {CascadeType.REFRESH, CascadeType.MERGE})
     @JoinColumn( name = "app_user_id")
     private AppUserTable appUser;// 所属用户
-
-    private Integer level;//用户的学习级别，从1-15，分别代表1-15级
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public Date getCreateTime() {
-        return createTime;
-    }
-
-    public void setCreateTime(Date createTime) {
-        this.createTime = createTime;
-    }
-
-    public Date getUpdateTime() {
-        return updateTime;
-    }
-
-    public void setUpdateTime(Date updateTime) {
-        this.updateTime = updateTime;
-    }
-
-    public Double getGoldCoin() {
-        return goldCoin;
-    }
-
-    public void setGoldCoin(Double goldCoin) {
-        this.goldCoin = goldCoin;
-    }
-
-    public Integer getIntegral() {
-        return integral;
-    }
-
-    public void setIntegral(Integer integral) {
-        this.integral = integral;
-    }
-
-    public AppUserTable getAppUser() {
-        return appUser;
-    }
-
-    public void setAppUser(AppUserTable appUser) {
-        this.appUser = appUser;
-    }
-
-    public Integer getLevel() {
-        return level;
-    }
-
-    public void setLevel(Integer level) {
-        this.level = level;
-    }
 }

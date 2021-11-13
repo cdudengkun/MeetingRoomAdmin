@@ -1,17 +1,15 @@
 package com.cjack.meetingroomadmin.table;
 
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+import lombok.Data;
 
 import javax.persistence.*;
-import java.util.Date;
 
 /**
  * 共用的key-value数据项配置表
  */
 @Entity
-@Table(name="define_key_value")
-@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
+@Table(name="define_key_value", catalog = "meeting_room")
+@Data
 public class DefineKeyValueTable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -19,57 +17,9 @@ public class DefineKeyValueTable {
     private String dataKey;//数据项名称
     private String dataValue;//数据项值
 
-    private Integer type;//1-积分等级规则
+    private Integer type;//1-会议中心设施服务
 
-    private Date createTime;
-    private Date updateTime;
-
-    public Date getCreateTime() {
-        return createTime;
-    }
-
-    public void setCreateTime(Date createTime) {
-        this.createTime = createTime;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public Integer getType() {
-        return type;
-    }
-
-    public void setType(Integer type) {
-        this.type = type;
-    }
-
-    public Date getUpdateTime() {
-        return updateTime;
-    }
-
-    public void setUpdateTime(Date updateTime) {
-        this.updateTime = updateTime;
-    }
-
-    public String getDataKey() {
-        return dataKey;
-    }
-
-    public void setDataKey(String dataKey) {
-        this.dataKey = dataKey;
-    }
-
-    public String getDataValue() {
-        return dataValue;
-    }
-
-    public void setDataValue(String dataValue) {
-        this.dataValue = dataValue;
-    }
+    private Long createTime;
+    private Long updateTime;
 }
 
