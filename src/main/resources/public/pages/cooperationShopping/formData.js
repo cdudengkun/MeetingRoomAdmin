@@ -1,22 +1,25 @@
-layui.use(['form','layer', 'baseConfig'], function () {
+layui.use(['form','layer', 'baseConfig', "upload"], function () {
     var form = layui.form,
         $ = layui.jquery,
         layer = parent.layer === undefined ? layui.layer : top.layer,
+        upload = layui.upload,
         baseConfig = layui.baseConfig;
 
-    var pageName = "adminUser";
+    var pageName = "cooperationShopping";
     var data = baseConfig.getDataFromList( pageName);
     var actionType = baseConfig.getUrlParamer( "actionType");
 
     //------------加载搜索表单下拉框
-    var roleId = data ? data.roleId: null;
-    baseConfig.loadSelect( "/role/list", "typeId", roleId, "roleName");
+    var typeId = data ? data.typeId: null;
+    baseConfig.loadSelect( "/singleKey/list/3", "typeId", typeId, "dataKey");
 
     /**
      * 将list页面通过url传过来的参数加载到form表单里面去
      * @param data
      */
     baseConfig.loadFormData( data);
+    $( "#coverImg_img").attr( "src", data.cover);
+
     /**
      * 处理表单元素的 禁用、隐藏、显示灯操作
      */
@@ -43,9 +46,21 @@ layui.use(['form','layer', 'baseConfig'], function () {
 
     //关闭弹窗页面
     $( "#closeBtn").on( "click", function(){
-        //  parent.location.reload();
         var index = parent.layer.getFrameIndex( window.name);
         parent.layer.close( index);
+    });
+    //上传封面
+    upload.render({
+        elem: '#coverImg_div',
+        url: '/file/upload?type=cooperationShoppingCover',
+        multiple: true,
+        done: function(res){
+            if( res.code == 200){
+                var filePath = res.data.filePath;
+                $( "input[name=cover]").val( filePath);
+                $( "#coverImg_img").attr( "src", filePath);
+            }
+        }
     });
 
 

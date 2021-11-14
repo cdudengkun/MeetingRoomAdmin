@@ -29,13 +29,20 @@ public class CooperationShoppingService {
     @Autowired
     private CooperationShoppingDao dao;
 
-    public void list(LayPage page, CooperationShoppingModel model){
+    public void list(LayPage page, CooperationShoppingModel condition){
         List< Sort.Order> orders=new ArrayList<>();
         orders.add( new Sort.Order( Sort.Direction.DESC, "updateTime"));
         Pageable pageable = new PageRequest( page.getPage()-1, page.getLimit(), new Sort( orders));
-        Specification<CooperationShoppingTable> specification = handleConditon( model);
+        Specification<CooperationShoppingTable> specification = handleConditon( condition);
         Page<CooperationShoppingTable> pageTable = dao.findAll( specification, pageable);
-        page.setData( ModelUtils.copyListModel( pageTable.getContent(), CooperationShoppingModel.class));
+        List<CooperationShoppingModel> models = new ArrayList<>();
+        for( CooperationShoppingTable table : pageTable.getContent()){
+            CooperationShoppingModel model = ModelUtils.copySignModel( table, CooperationShoppingModel.class);
+            model.setTypeId( table.getType().getId());
+            model.setTypeName( table.getType().getDataKey());
+            models.add( model);
+        }
+        page.setData( models);
         page.setCount( Long.valueOf( pageTable.getTotalElements()).intValue());
     }
 

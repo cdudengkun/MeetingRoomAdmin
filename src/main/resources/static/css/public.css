@@ -72,3 +72,23 @@ body {
 .user_right{ text-align: center; }
 .user_right p{ margin:10px 0 25px; font-size: 12px; text-align: center; color: #FF5722;}
 .user_right img#userFace{ width:200px; height:200px; margin-top:20px; cursor:pointer; box-shadow:0 0 50px #44576b; }
+
+#img_face_div{ width: 350px; height: 230px;cursor:pointer;}
+#img_face_div:after{ position:absolute; width:100%; height:100%; line-height:230px; z-index:-1; text-align:center; font-size:20px; content:"点击上传头像"; left:0; top:0; color:#9F9F9F;}
+#img_face_img{ width:100%; height:100%;}
+
+#img_div{ width: 350px; height: 230px;cursor:pointer;}
+#img_div:after{ position:absolute; width:100%; height:100%; line-height:230px; z-index:-1; text-align:center; font-size:20px; content:"点击上传封面"; left:0; top:0; color:#9F9F9F;}
+#img_img{ width:100%; height:100%;}
+
+#imgUrl_div{ width: 350px; height: 230px;cursor:pointer;}
+#imgUrl_div:after{ position:absolute; width:100%; height:100%; line-height:230px; z-index:-1; text-align:center; font-size:20px; content:"点击上传广告图片"; left:0; top:0; color:#9F9F9F;}
+#imgUrl_img{ width:100%; height:100%;}
+
+#coverImg_div{ width: 350px; height: 230px;cursor:pointer;}
+#coverImg_div:after{ position:absolute; width:100%; height:100%; line-height:230px; z-index:-1; text-align:center; font-size:20px; content:"点击上传商品介绍"; left:0; top:0; color:#9F9F9F;}
+#coverImg_img{ width:100%; height:100%;}
+
+#avatar_div{ width: 350px; height: 230px;cursor:pointer;}
+#avatar_div:after{ position:absolute; width:100%; height:100%; line-height:230px; z-index:-1; text-align:center; font-size:20px; content:"点击上传用户头像"; left:0; top:0; color:#9F9F9F;}
+#avatar_img{ width:100%; height:100%;}

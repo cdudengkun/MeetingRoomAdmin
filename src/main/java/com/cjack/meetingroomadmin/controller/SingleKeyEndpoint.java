@@ -2,38 +2,34 @@ package com.cjack.meetingroomadmin.controller;
 
 import com.cjack.meetingroomadmin.config.AjaxResult;
 import com.cjack.meetingroomadmin.config.CommonConfig;
-import com.cjack.meetingroomadmin.config.LayPage;
-import com.cjack.meetingroomadmin.model.CooperationShoppingModel;
-import com.cjack.meetingroomadmin.service.CooperationShoppingService;
+import com.cjack.meetingroomadmin.model.DefineSignKeyModel;
+import com.cjack.meetingroomadmin.service.SingleKeyService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
-
+import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpSession;
+import java.util.List;
 
 /**
- * 合作商家
+ * 单个key的枚举值管理
  */
 @Controller
-@RequestMapping("/cooperationShopping")
-public class CooperationShoppingEndpoint extends BaseEndpoint{
+@RequestMapping("/singleKey")
+public class SingleKeyEndpoint extends BaseEndpoint{
 
     @Autowired
-    CooperationShoppingService service;
+    SingleKeyService service;
 
     /**
      * 列表
      * @return
      */
-    @RequestMapping(value = "/list", method = RequestMethod.GET)
+    @RequestMapping(value = "/list/{type}", method = RequestMethod.GET)
     @ResponseBody
-    public AjaxResult list( LayPage layPage, CooperationShoppingModel model) {
+    public AjaxResult list(@PathVariable("type")Integer type) {
         try{
-            service.list( layPage, model);
-            return AjaxResult.SUCCESS( layPage);
+            List<DefineSignKeyModel> list = service.list(type);
+            return AjaxResult.SUCCESS( list);
         }catch ( Exception e) {
             e.printStackTrace();
             return AjaxResult.ERROR();
@@ -46,12 +42,12 @@ public class CooperationShoppingEndpoint extends BaseEndpoint{
      */
     @RequestMapping(value = "/addOrUpdate", method = RequestMethod.POST)
     @ResponseBody
-    public AjaxResult addOrUpdate(HttpSession session, CooperationShoppingModel model) {
+    public AjaxResult addOrUpdate( HttpSession session, DefineSignKeyModel model) {
         try{
-            Object loginUserId = session.getAttribute( CommonConfig.SESSION_NAME);
             if( isAdd( model.getId())){
                 model.setCreateTime( System.currentTimeMillis());
-                model.setAdminUserId( (Long)loginUserId);
+                Object adminUserId = session.getAttribute( CommonConfig.SESSION_NAME);
+                model.setAdminUserId( (Long)adminUserId);
             }
             service.save( model);
             return AjaxResult.SUCCESS();
