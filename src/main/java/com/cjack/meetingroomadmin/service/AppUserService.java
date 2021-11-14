@@ -61,9 +61,9 @@ public class AppUserService {
                 data.setCityId( appUser.getCity().getId());
                 data.setCityName( appUser.getCity().getName());
             }
-            if( appUser.getCountry() != null){
-                data.setCountryId( appUser.getCountry().getId());
-                data.setCountryName( appUser.getCountry().getName());
+            if( appUser.getCounty() != null){
+                data.setCountyId( appUser.getCounty().getId());
+                data.setCountyName( appUser.getCounty().getName());
             }
             datas.add( data);
         }

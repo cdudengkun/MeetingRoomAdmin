@@ -4,8 +4,6 @@ import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import lombok.Data;
 
-import java.util.Date;
-
 /**
  * 后台管理端使用人账户信息
  */
@@ -26,8 +24,8 @@ public class AdminUserModel  extends BaseModel{
     private Long provinceId;
     private String cityName;
     private Long cityId;
-    private String countryName;
-    private Long countryId;
+    private String countyName;
+    private Long countyId;
     private String detail;
     private String roleName;
     private Long roleId;

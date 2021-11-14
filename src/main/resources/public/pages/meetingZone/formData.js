@@ -1,18 +1,31 @@
-layui.use(['form','layer', 'baseConfig', "upload"], function () {
+layui.use(['form','layer', 'baseConfig', "upload", 'layarea'], function () {
     var form = layui.form,
         $ = layui.jquery,
         layer = parent.layer === undefined ? layui.layer : top.layer,
         upload = layui.upload,
-        baseConfig = layui.baseConfig;
+        baseConfig = layui.baseConfig,
+        layarea = layui.layarea;
 
-    var pageName = "cooperationShopping";
+    var pageName = "meetingZone";
     var data = baseConfig.getDataFromList( pageName);
     var actionType = baseConfig.getUrlParamer( "actionType");
 
-    //------------加载搜索表单下拉框
+    //------------加载下拉框
     var typeId = data ? data.typeId: null;
     baseConfig.loadSelect( "/singleKey/list/3", "typeId", typeId, "dataKey");
-
+    //省市区下拉框
+    layarea.render({
+        elem: '#area-picker',
+        data: {
+            provinceId: data ? data.provinceId : null,
+            cityId: data ? data.cityId : null,
+            countyId: data ? data.countyId : null,
+        },
+        change: function (res) {
+            //选择结果
+            console.log(res);
+        }
+    });
     /**
      * 将list页面通过url传过来的参数加载到form表单里面去
      * @param data

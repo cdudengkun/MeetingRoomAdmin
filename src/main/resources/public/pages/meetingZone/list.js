@@ -6,10 +6,10 @@ layui.use(['form', 'table', 'util', 'baseConfig'], function () {
         table = layui.table;
 
     //------------公共配置
-    var pageName = "cooperationShopping";
-    var minWidth = 900;
-    var minHeight = 800;
-    var formTitleSuffix = "合作商家";
+    var pageName = "meetingZone";
+    var minWidth = 1100;
+    var minHeight = 700;
+    var formTitleSuffix = "合作中心";
 
     table.render({
         id : "listTable",
@@ -18,10 +18,18 @@ layui.use(['form', 'table', 'util', 'baseConfig'], function () {
         toolbar: '#toolbar',
         defaultToolbar: [],
         cols: [[
-            {field: 'shop', width: 200, title: '商品名称'},
-            {field: 'companyName', width: 200, title: '公司名称'},
-            {field: 'name', width: 150, title: '联系人'},
-            {field: 'phone', width: 200, title: '联系电话'},
+            {field: 'name', width: 200, title: '名称'},
+            {field: 'detail', width: 400, title: '地点', templet : function( d){
+                return d.provinceName + d.cityName + d.countryName + d.detail;
+            }},
+            {field: 'availableDayTime', width: 200, title: '每日可用时间'},
+            {field: 'availableWeekDay', width: 200, title: '每周可用时间', templet : function( d){
+                switch (d.availableWeekDay) {
+                    case 1: return "周一到周五";
+                    case 2: return "周一到周日";
+                    case 3: return "仅周末";
+                }
+            }},
             {field: 'typeName', width: 150, title: '类别'},
             {field: 'createTime', width: 200, title: '创建时间', templet : function( d){
                 return util.toDateString( d.createTime);

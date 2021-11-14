@@ -26,10 +26,12 @@ public class MeetingZoneTable{
     @JoinColumn(name="city_id")
     private CityTable city;
     @ManyToOne
-    @JoinColumn(name="country_id")
-    private CityTable country;
+    @JoinColumn(name="county_id")
+    private CityTable county;
     private String detail;
 
+    private String name;//名称
+    private String description;//介绍
     private String facilityIds;//设施服务id列表，多个英文逗号分割
     private String cover;//封面图片地址
     private String lnt;//经度

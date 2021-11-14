@@ -41,8 +41,8 @@ public class AppUserTable {
     @JoinColumn(name="city_id")
     private CityTable city;
     @ManyToOne
-    @JoinColumn(name="country_id")
-    private CityTable country;
+    @JoinColumn(name="county_id")
+    private CityTable county;
     private String detail;
 
     @OneToOne(cascade={CascadeType.REFRESH, CascadeType.MERGE}, fetch = FetchType.EAGER, mappedBy="appUser")

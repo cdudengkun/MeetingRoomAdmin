@@ -16,12 +16,13 @@ public class MeetingZoneModel  extends BaseModel{
     public MeetingZoneModel(){}
 
 
+    private String name;//名称
     private Long provinceId;
     private String provinceName = "";
     private Long cityId;
     private String cityName = "";
-    private Long countryId;
-    private String countryName = "";
+    private Long countyId;
+    private String countyName = "";
     private String detail;
     private List<String> facilitys;
     private String cover;
@@ -30,6 +31,6 @@ public class MeetingZoneModel  extends BaseModel{
     private String availableDayTime;
     private Integer availableWeekDay;
     private String imgs;
-
+    private String description;//介绍
 
 }

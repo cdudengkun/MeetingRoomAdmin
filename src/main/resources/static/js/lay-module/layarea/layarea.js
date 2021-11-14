@@ -3883,25 +3883,22 @@ layui.define(['layer', 'form', 'laytpl'], function (exports) {
 
         //监听结果
         form.on('select('+provinceFilter+')', function(data){
-            options.data.province = data.value;
-            options.data.provinceCode = getCode('province', data.value);
+            options.data.provinceCode = data.value;
             renderCity(options.data.provinceCode);
 
             options.change(options.data);
         });
         form.on('select('+cityFilter+')', function(data){
-            options.data.city = data.value;
             if(options.data.provinceCode){
-                options.data.cityCode = getCode('city', data.value, options.data.provinceCode.slice(0, 2));
+                options.data.cityCode = data.value;
                 renderCounty(options.data.cityCode);
             }
 
             options.change(options.data);
         });
         form.on('select('+countyFilter+')', function(data){
-            options.data.county = data.value;
             if(options.data.cityCode){
-                options.data.countyCode = getCode('county', data.value, options.data.cityCode.slice(0, 4));
+                options.data.countyCode = data.value;
             }
             options.change(options.data);
         });
@@ -3913,17 +3910,11 @@ layui.define(['layer', 'form', 'laytpl'], function (exports) {
             let tpl = '<option value="">--选择省--</option>';
             let provinceList = getList("province");
             let currentCode = '';
-            let currentName = '';
             provinceList.forEach(function(_item){
-                // if (!currentCode){
-                //   currentCode = _item.code;
-                //   currentName = _item.name;
-                // }
-                if(_item.name === options.data.province){
+                if(_item.code === options.data.provinceId){
                     currentCode = _item.code;
-                    currentName = _item.name;
                 }
-                tpl += '<option value="'+_item.name+'">'+_item.name+'</option>';
+                tpl += '<option value="'+_item.code+'">'+_item.name+'</option>';
             });
             provinceEl.html(tpl);
             provinceEl.val(options.data.province);
@@ -3935,19 +3926,13 @@ layui.define(['layer', 'form', 'laytpl'], function (exports) {
             let tpl = '<option value="">--选择市--</option>';
             let cityList = getList('city', provinceCode.slice(0, 2));
             let currentCode = '';
-            let currentName = '';
             cityList.forEach(function(_item){
-                // if (!currentCode){
-                //   currentCode = _item.code;
-                //   currentName = _item.name;
-                // }
-                if(_item.name === options.data.city){
+                if(_item.code === options.data.cityId){
                     currentCode = _item.code;
-                    currentName = _item.name;
                 }
-                tpl += '<option value="'+_item.name+'">'+_item.name+'</option>';
+                tpl += '<option value="'+_item.code+'">'+_item.name+'</option>';
             });
-            options.data.city = currentName;
+            options.data.city = currentCode;
             cityEl.html(tpl);
             cityEl.val(options.data.city);
             form.render('select');
@@ -3958,19 +3943,13 @@ layui.define(['layer', 'form', 'laytpl'], function (exports) {
             let tpl = '<option value="">--选择区--</option>';
             let countyList = getList('county', cityCode.slice(0, 4));
             let currentCode = '';
-            let currentName = '';
             countyList.forEach(function(_item){
-                // if (!currentCode){
-                //   currentCode = _item.code;
-                //   currentName = _item.name;
-                // }
-                if(_item.name === options.data.county){
+                if(_item.code === options.data.countyId){
                     currentCode = _item.code;
-                    currentName = _item.name;
                 }
-                tpl += '<option value="'+_item.name+'">'+_item.name+'</option>';
+                tpl += '<option value="'+_item.code+'">'+_item.name+'</option>';
             });
-            options.data.county = currentName;
+            options.data.county = currentCode;
             countyEl.html(tpl);
             countyEl.val(options.data.county);
 

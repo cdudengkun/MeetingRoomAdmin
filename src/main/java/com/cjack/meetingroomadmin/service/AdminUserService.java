@@ -62,9 +62,9 @@ public class AdminUserService {
             model.setCityId( user.getCity().getId());
             model.setCityName( user.getCity().getName());
         }
-        if( user.getCountry() != null){
-            model.setCountryId( user.getCountry().getId());
-            model.setCountryName( user.getCountry().getName());
+        if( user.getCounty() != null){
+            model.setCountyId( user.getCounty().getId());
+            model.setCountyName( user.getCounty().getName());
         }
         if( user.getAdminRole() != null){
             model.setRoleId( user.getAdminRole().getId());
@@ -132,8 +132,8 @@ public class AdminUserService {
         if( EmptyUtil.isNotEmpty( model.getCityId())){
             table.setCity( cityDao.getOne( model.getCityId()));
         }
-        if( EmptyUtil.isNotEmpty( model.getCountryId())){
-            table.setCountry( cityDao.getOne( model.getCountryId()));
+        if( EmptyUtil.isNotEmpty( model.getCountyId())){
+            table.setCounty( cityDao.getOne( model.getCountyId()));
         }
         if( EmptyUtil.isNotEmpty( model.getPassWord())){
             table.setPassWord( Md5Util.stringToMD5( model.getPassWord()));

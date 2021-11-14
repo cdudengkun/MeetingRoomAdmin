@@ -43,8 +43,8 @@ public class AdminUserTable {
     @JoinColumn(name="city_id", columnDefinition="bigint(20)")
     private CityTable city;
     @OneToOne
-    @JoinColumn(name="country_id", columnDefinition="bigint(20)")
-    private CityTable country;
+    @JoinColumn(name="county_id", columnDefinition="bigint(20)")
+    private CityTable county;
     private String detail;
 
     @ManyToOne(cascade={CascadeType.REFRESH},optional=false)

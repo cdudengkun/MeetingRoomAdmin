@@ -25,8 +25,8 @@ public class CompanyJoinInfoTable {
     @JoinColumn(name="city_id")
     private CityTable city;
     @ManyToOne
-    @JoinColumn(name="country_id")
-    private CityTable country;
+    @JoinColumn(name="county_id")
+    private CityTable county;
     private String detail;
 
 

@@ -12,8 +12,8 @@ public class CompanyJoinInfoModel  extends BaseModel{
     private String provinceName = "";
     private Long cityId;
     private String cityName = "";
-    private Long countryId;
-    private String countryName = "";
+    private Long countyId;
+    private String countyName = "";
     private String detail;
 
     private String companyName;//公司名称

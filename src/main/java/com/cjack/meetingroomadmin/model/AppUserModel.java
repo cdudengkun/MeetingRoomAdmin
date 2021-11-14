@@ -22,8 +22,8 @@ public class AppUserModel  extends BaseModel{
     private String provinceName = "";
     private Long cityId;
     private String cityName = "";
-    private Long countryId;
-    private String countryName = "";
+    private Long countyId;
+    private String countyName = "";
     private String detail;
     private AppUserAccountModel accountModel;
     private Integer isVip;
