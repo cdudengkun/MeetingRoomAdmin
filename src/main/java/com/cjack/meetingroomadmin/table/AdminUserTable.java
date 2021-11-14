@@ -14,7 +14,6 @@ import java.util.List;
 @Entity
 @Table(name="admin_user", catalog = "meeting_room")
 @Data
-@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 public class AdminUserTable {
 
     public AdminUserTable(){}
@@ -39,6 +38,7 @@ public class AdminUserTable {
     private String wechatOpenId;//绑定的微信公众号id
     private String loginName;//登录名称
     private String passWord;//登录密码
+    private Long adminUserId;//创建人id
 
     @OneToOne
     @JoinColumn(name="province_id", columnDefinition="bigint(20)")

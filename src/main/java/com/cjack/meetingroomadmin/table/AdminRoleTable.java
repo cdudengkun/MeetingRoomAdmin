@@ -1,7 +1,6 @@
 package com.cjack.meetingroomadmin.table;
 
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+import lombok.Data;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -11,7 +10,7 @@ import java.util.Date;
  */
 @Entity
 @Table(name="admin_role", catalog = "meeting_room")
-@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
+@Data
 public class AdminRoleTable {
 
     @Id
@@ -23,52 +22,5 @@ public class AdminRoleTable {
     private String code;//角色编码
     private String roleName;//角色名称
     private String content;//角色权限内容
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public Date getCreateTime() {
-        return createTime;
-    }
-
-    public void setCreateTime(Date createTime) {
-        this.createTime = createTime;
-    }
-
-    public Date getUpdateTime() {
-        return updateTime;
-    }
-
-    public void setUpdateTime(Date updateTime) {
-        this.updateTime = updateTime;
-    }
-
-    public String getCode() {
-        return code;
-    }
-
-    public void setCode(String code) {
-        this.code = code;
-    }
-
-    public String getRoleName() {
-        return roleName;
-    }
-
-    public void setRoleName(String roleName) {
-        this.roleName = roleName;
-    }
-
-    public String getContent() {
-        return content;
-    }
-
-    public void setContent(String content) {
-        this.content = content;
-    }
+    private Long adminUserId;//创建人id
 }

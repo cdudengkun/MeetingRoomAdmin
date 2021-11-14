@@ -24,6 +24,7 @@ public class CooperationShoppingTable {
     private String phone;//联系电话
     private String content;//内容
     private String cover;//商品图片
+    private Long adminUserId;//创建人id
 
     @OneToOne( cascade = {CascadeType.REFRESH, CascadeType.MERGE})
     @JoinColumn( name = "type_id")

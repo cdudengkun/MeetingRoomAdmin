@@ -21,6 +21,7 @@ public class EnterpriseServiceTable {
     private String cover;//封面图片地址
     private String title;//消息标题
     private String content;//消息内容
+    private Long adminUserId;//创建人id
 
     @OneToOne( cascade = {CascadeType.REFRESH, CascadeType.MERGE})
     @JoinColumn( name = "type_id")

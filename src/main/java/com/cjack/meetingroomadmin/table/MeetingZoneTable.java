@@ -37,6 +37,7 @@ public class MeetingZoneTable{
     private String availableDayTime;//每日可用时间 保存8:00AM-18:00PM这种格式
     private Integer availableWeekDay;//每周可用时间 1-周一到周五，2-周一到周日，3-仅周末
     private String imgs; //图片地址列表，多个英文逗号分割
+    private Long adminUserId;//创建人id
 
 
 }

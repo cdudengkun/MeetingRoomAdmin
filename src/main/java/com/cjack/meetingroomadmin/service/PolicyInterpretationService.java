@@ -2,9 +2,9 @@ package com.cjack.meetingroomadmin.service;
 
 
 import com.cjack.meetingroomadmin.config.LayPage;
-import com.cjack.meetingroomadmin.dao.ConsultInfoDao;
-import com.cjack.meetingroomadmin.model.ConsultInfoModel;
-import com.cjack.meetingroomadmin.table.ConsultInfoTable;
+import com.cjack.meetingroomadmin.dao.PolicyInterpretationDao;
+import com.cjack.meetingroomadmin.model.PolicyInterpretationModel;
+import com.cjack.meetingroomadmin.table.PolicyInterpretationTable;
 import com.cjack.meetingroomadmin.util.EmptyUtil;
 import com.cjack.meetingroomadmin.util.ModelUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,21 +19,21 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Service
-public class ConsultInfoService {
+public class PolicyInterpretationService {
 
     @Autowired
-    private ConsultInfoDao dao;
+    private PolicyInterpretationDao dao;
 
-    public void list( LayPage layPage, ConsultInfoModel model){
+    public void list( LayPage layPage, PolicyInterpretationModel model){
         List< Sort.Order> orders=new ArrayList<>();
         orders.add( new Sort.Order( Sort.Direction.DESC, "updateTime"));
-        Specification<ConsultInfoTable> specification = handleConditon( model);
+        Specification<PolicyInterpretationTable> specification = handleConditon( model);
         Pageable pageable = new PageRequest( layPage.getPage()-1, layPage.getLimit(), new Sort( orders));
 
-        Page<ConsultInfoTable> pageTable = dao.findAll( specification, pageable);
-        List<ConsultInfoModel> datas = new ArrayList<>();
-        for( ConsultInfoTable table : pageTable.getContent()){
-            ConsultInfoModel data = ModelUtils.copySignModel( table, ConsultInfoModel.class);
+        Page<PolicyInterpretationTable> pageTable = dao.findAll( specification, pageable);
+        List<PolicyInterpretationModel> datas = new ArrayList<>();
+        for( PolicyInterpretationTable table : pageTable.getContent()){
+            PolicyInterpretationModel data = ModelUtils.copySignModel( table, PolicyInterpretationModel.class);
             datas.add( data);
         }
         layPage.setData( datas);
@@ -41,32 +41,35 @@ public class ConsultInfoService {
     }
 
     public void del( String ids){
-        List<ConsultInfoTable> tables = new ArrayList<>();
+        List<PolicyInterpretationTable> tables = new ArrayList<>();
         String[] idArr = ids.split( ",");
         for( String id : idArr){
-            ConsultInfoTable table = new ConsultInfoTable();
+            PolicyInterpretationTable table = new PolicyInterpretationTable();
             table.setId( Long.valueOf( id));
             tables.add( table);
         }
         dao.deleteInBatch( tables);
     }
 
-    public void save( ConsultInfoModel model){
-        ConsultInfoTable table;
+    public void save( PolicyInterpretationModel model){
+        PolicyInterpretationTable table;
         if( EmptyUtil.isNotEmpty( model.getId())){
             table = dao.findOne( model.getId());
             ModelUtils.copySignModel( model, table);
         }else{
-            table = ModelUtils.copySignModel( model, ConsultInfoTable.class);
+            table = ModelUtils.copySignModel( model, PolicyInterpretationTable.class);
         }
         dao.save( table);
     }
 
-    private Specification<ConsultInfoTable> handleConditon( ConsultInfoModel model){
-        Specification< ConsultInfoTable> specification = (root, query, cb) -> {
+    private Specification<PolicyInterpretationTable> handleConditon( PolicyInterpretationModel model){
+        Specification< PolicyInterpretationTable> specification = (root, query, cb) -> {
             Predicate predicate = cb.conjunction();
             if( EmptyUtil.isNotEmpty( model.getTitle())){
                 predicate.getExpressions().add( cb.equal( root.get("title"), model.getTitle()));
+            }
+            if( EmptyUtil.isNotEmpty( model.getType())){
+                predicate.getExpressions().add( cb.equal( root.get("type"), model.getType()));
             }
             return predicate;
         };

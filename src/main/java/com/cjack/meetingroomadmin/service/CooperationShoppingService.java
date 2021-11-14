@@ -5,6 +5,7 @@ import com.cjack.meetingroomadmin.dao.CooperationShoppingDao;
 import com.cjack.meetingroomadmin.model.CooperationShoppingModel;
 import com.cjack.meetingroomadmin.table.CooperationShoppingTable;
 import com.cjack.meetingroomadmin.table.DefineSignKeyTable;
+import com.cjack.meetingroomadmin.util.CustomerStringUtil;
 import com.cjack.meetingroomadmin.util.EmptyUtil;
 import com.cjack.meetingroomadmin.util.ModelUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -60,13 +61,13 @@ public class CooperationShoppingService {
         Specification< CooperationShoppingTable> specification = (root, query, cb) -> {
             Predicate predicate = cb.conjunction();
             if( EmptyUtil.isNotEmpty( model.getCompanyName())){
-                predicate.getExpressions().add( cb.like( root.get("companyName"), "%" + model.getCompanyName() + "%"));
+                predicate.getExpressions().add( cb.like( root.get("companyName"), CustomerStringUtil.toLikeStr( model.getCompanyName())));
             }
             if( EmptyUtil.isNotEmpty( model.getName())){
-                predicate.getExpressions().add( cb.like( root.get("name"), "%" + model.getName() + "%"));
+                predicate.getExpressions().add( cb.like( root.get("name"), CustomerStringUtil.toLikeStr( model.getName())));
             }
             if( EmptyUtil.isNotEmpty( model.getShop())){
-                predicate.getExpressions().add( cb.like( root.get("shop"), "%" + model.getShop() + "%"));
+                predicate.getExpressions().add( cb.like( root.get("shop"), CustomerStringUtil.toLikeStr( model.getShop())));
             }
             if( EmptyUtil.isNotEmpty( model.getTypeId())){
                 Join<CooperationShoppingTable, DefineSignKeyTable> join = root.join("type", JoinType.LEFT);

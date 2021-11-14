@@ -11,6 +11,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+/**
+ * 会议室
+ */
 @Controller
 @RequestMapping("/meetingRoom")
 public class MeetingRoomEndpoint extends BaseEndpoint{

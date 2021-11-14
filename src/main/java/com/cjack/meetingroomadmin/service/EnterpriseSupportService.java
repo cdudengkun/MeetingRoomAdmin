@@ -3,8 +3,12 @@ package com.cjack.meetingroomadmin.service;
 
 import com.cjack.meetingroomadmin.config.LayPage;
 import com.cjack.meetingroomadmin.dao.ConsultInfoDao;
+import com.cjack.meetingroomadmin.dao.EnterpriseSupportDao;
 import com.cjack.meetingroomadmin.model.ConsultInfoModel;
+import com.cjack.meetingroomadmin.model.EnterpriseSupportModel;
 import com.cjack.meetingroomadmin.table.ConsultInfoTable;
+import com.cjack.meetingroomadmin.table.EnterpriseSupportTable;
+import com.cjack.meetingroomadmin.util.CustomerStringUtil;
 import com.cjack.meetingroomadmin.util.EmptyUtil;
 import com.cjack.meetingroomadmin.util.ModelUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,26 +18,27 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
+
 import javax.persistence.criteria.Predicate;
 import java.util.ArrayList;
 import java.util.List;
 
 @Service
-public class ConsultInfoService {
+public class EnterpriseSupportService {
 
     @Autowired
-    private ConsultInfoDao dao;
+    private EnterpriseSupportDao dao;
 
-    public void list( LayPage layPage, ConsultInfoModel model){
+    public void list( LayPage layPage, EnterpriseSupportModel model){
         List< Sort.Order> orders=new ArrayList<>();
         orders.add( new Sort.Order( Sort.Direction.DESC, "updateTime"));
-        Specification<ConsultInfoTable> specification = handleConditon( model);
+        Specification<EnterpriseSupportTable> specification = handleConditon( model);
         Pageable pageable = new PageRequest( layPage.getPage()-1, layPage.getLimit(), new Sort( orders));
 
-        Page<ConsultInfoTable> pageTable = dao.findAll( specification, pageable);
-        List<ConsultInfoModel> datas = new ArrayList<>();
-        for( ConsultInfoTable table : pageTable.getContent()){
-            ConsultInfoModel data = ModelUtils.copySignModel( table, ConsultInfoModel.class);
+        Page<EnterpriseSupportTable> pageTable = dao.findAll( specification, pageable);
+        List<EnterpriseSupportModel> datas = new ArrayList<>();
+        for( EnterpriseSupportTable table : pageTable.getContent()){
+            EnterpriseSupportModel data = ModelUtils.copySignModel( table, EnterpriseSupportModel.class);
             datas.add( data);
         }
         layPage.setData( datas);
@@ -41,32 +46,32 @@ public class ConsultInfoService {
     }
 
     public void del( String ids){
-        List<ConsultInfoTable> tables = new ArrayList<>();
+        List<EnterpriseSupportTable> tables = new ArrayList<>();
         String[] idArr = ids.split( ",");
         for( String id : idArr){
-            ConsultInfoTable table = new ConsultInfoTable();
+            EnterpriseSupportTable table = new EnterpriseSupportTable();
             table.setId( Long.valueOf( id));
             tables.add( table);
         }
         dao.deleteInBatch( tables);
     }
 
-    public void save( ConsultInfoModel model){
-        ConsultInfoTable table;
+    public void save( EnterpriseSupportModel model){
+        EnterpriseSupportTable table;
         if( EmptyUtil.isNotEmpty( model.getId())){
             table = dao.findOne( model.getId());
             ModelUtils.copySignModel( model, table);
         }else{
-            table = ModelUtils.copySignModel( model, ConsultInfoTable.class);
+            table = ModelUtils.copySignModel( model, EnterpriseSupportTable.class);
         }
         dao.save( table);
     }
 
-    private Specification<ConsultInfoTable> handleConditon( ConsultInfoModel model){
-        Specification< ConsultInfoTable> specification = (root, query, cb) -> {
+    private Specification<EnterpriseSupportTable> handleConditon(EnterpriseSupportModel model){
+        Specification< EnterpriseSupportTable> specification = (root, query, cb) -> {
             Predicate predicate = cb.conjunction();
-            if( EmptyUtil.isNotEmpty( model.getTitle())){
-                predicate.getExpressions().add( cb.equal( root.get("title"), model.getTitle()));
+            if( EmptyUtil.isNotEmpty( model.getName())){
+                predicate.getExpressions().add( cb.like( root.get("title"), CustomerStringUtil.toLikeStr( model.getName())));
             }
             return predicate;
         };

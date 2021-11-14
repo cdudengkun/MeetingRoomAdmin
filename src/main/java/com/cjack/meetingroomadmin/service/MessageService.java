@@ -7,6 +7,7 @@ import com.cjack.meetingroomadmin.dao.*;
 import com.cjack.meetingroomadmin.exception.JPushException;
 import com.cjack.meetingroomadmin.model.MessageModel;
 import com.cjack.meetingroomadmin.table.*;
+import com.cjack.meetingroomadmin.util.CustomerStringUtil;
 import com.cjack.meetingroomadmin.util.EmptyUtil;
 import com.cjack.meetingroomadmin.util.ModelUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -82,7 +83,7 @@ public class MessageService {
         Specification< MessageTable> specification = (root, query, cb) -> {
             Predicate predicate = cb.conjunction();
             if( EmptyUtil.isNotEmpty( model.getTitle())){
-                predicate.getExpressions().add( cb.like( root.get("title"), "%" + model.getTitle() + "%"));
+                predicate.getExpressions().add( cb.like( root.get("title"), CustomerStringUtil.toLikeStr( model.getTitle())));
             }
             if( EmptyUtil.isNotEmpty( model.getType())){
                 predicate.getExpressions().add( cb.equal( root.get("type"), model.getType()));

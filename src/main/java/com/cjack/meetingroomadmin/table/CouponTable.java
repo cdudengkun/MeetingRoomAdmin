@@ -22,6 +22,7 @@ public class CouponTable {
     private String name;//优惠券名称
     private Long startTime;//可用开始时间
     private Long endTime;//过期时间
+    private Long adminUserId;//创建人id
 
     @ManyToOne( cascade = {CascadeType.REFRESH, CascadeType.MERGE})
     @JoinColumn( name = "meeting_zone_id")

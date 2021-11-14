@@ -22,6 +22,7 @@ public class PolicyInterpretationVideoTable {
     private String url;//视频文件地址
     private String size;//文件大小，内容为22MB这种格式
     private Integer visitCount;//观看次数
+    private Long adminUserId;//创建人id
 
     @ManyToOne( cascade = {CascadeType.REFRESH, CascadeType.MERGE})
     @JoinColumn( name = "policy_interpretation_id")

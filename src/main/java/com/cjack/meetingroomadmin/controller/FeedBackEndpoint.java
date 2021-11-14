@@ -13,6 +13,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.Date;
 
+/**
+ * 用户反馈
+ */
 @Controller
 @RequestMapping("/feedBack")
 public class FeedBackEndpoint extends BaseEndpoint{

@@ -13,6 +13,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+/**
+ * 合作商家
+ */
 @Controller
 @RequestMapping("/cooperationShopping")
 public class CooperationShoppingEndpoint extends BaseEndpoint{

@@ -93,10 +93,10 @@ public class AppUserService {
         Specification< AppUserTable> specification = (root, query, cb) -> {
             Predicate predicate = cb.conjunction();
             if( EmptyUtil.isNotEmpty( model.getName())){
-                predicate.getExpressions().add( cb.like( root.get("name"), "%" + model.getName() + "%"));
+                predicate.getExpressions().add( cb.like( root.get("name"), CustomerStringUtil.toLikeStr(  model.getName())));
             }
             if( EmptyUtil.isNotEmpty( model.getPhone())){
-                predicate.getExpressions().add( cb.like( root.get("phone"), "%" + model.getPhone() + "%"));
+                predicate.getExpressions().add( cb.like( root.get("phone"), CustomerStringUtil.toLikeStr(  model.getPhone())));
             }
             if( EmptyUtil.isNotEmpty( model.getIsVip())){
                 Join<AppUserTable, AppUserAccountTable> join = root.join("appUser", JoinType.LEFT);

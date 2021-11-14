@@ -22,5 +22,6 @@ public class EnterpriseSupportTable {
     private String url;//文件下载地址
     private String size;//文件大小，内容为22MB这种格式
     private Integer downloadCount;//下载次数
+    private Long adminUserId;//创建人id
 
 }

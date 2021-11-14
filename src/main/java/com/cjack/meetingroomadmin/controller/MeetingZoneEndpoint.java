@@ -13,6 +13,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.Date;
 
+/**
+ * 会议中心/楼宇
+ */
 @Controller
 @RequestMapping("/meetingZone")
 public class MeetingZoneEndpoint extends BaseEndpoint{

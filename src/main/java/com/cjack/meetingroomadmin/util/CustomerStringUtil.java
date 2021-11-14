@@ -27,6 +27,10 @@ public class CustomerStringUtil {
         return str;
     }
 
+    public static String toLikeStr( String str){
+        return "%" + str + "%";
+    }
+
     public static String randomNumberStr( int len){
         StringBuffer buffer = new StringBuffer( "0123456789");
         StringBuffer sb = new StringBuffer();

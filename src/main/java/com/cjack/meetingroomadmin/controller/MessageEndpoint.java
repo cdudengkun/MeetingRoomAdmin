@@ -16,6 +16,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import javax.servlet.http.HttpSession;
 import java.util.Date;
 
+/**
+ * 消息管理
+ */
 @Controller
 @RequestMapping("/message")
 public class MessageEndpoint extends BaseEndpoint{

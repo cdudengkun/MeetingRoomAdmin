@@ -4,6 +4,7 @@ import com.cjack.meetingroomadmin.config.LayPage;
 import com.cjack.meetingroomadmin.dao.MeetingZoneDao;
 import com.cjack.meetingroomadmin.model.MeetingZoneModel;
 import com.cjack.meetingroomadmin.table.MeetingZoneTable;
+import com.cjack.meetingroomadmin.util.CustomerStringUtil;
 import com.cjack.meetingroomadmin.util.EmptyUtil;
 import com.cjack.meetingroomadmin.util.ModelUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -64,7 +65,7 @@ public class MeetingZoneService {
         Specification< MeetingZoneTable> specification = (root, query, cb) -> {
             Predicate predicate = cb.conjunction();
             if( EmptyUtil.isNotEmpty( model.getDetail())){
-                predicate.getExpressions().add( cb.like( root.get("detail"), "%" + model.getDetail() + "%"));
+                predicate.getExpressions().add( cb.like( root.get("detail"), CustomerStringUtil.toLikeStr( model.getDetail())));
             }
             return predicate;
         };

@@ -22,5 +22,6 @@ public class EnterpriseServiceTypeTable {
     private String logoChosed;//logo图片地址 选中时候
     private String name;//类型名称
     private Integer priority;//展示优先级,越大展示越前面
+    private Long adminUserId;//创建人id
 
 }

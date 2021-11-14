@@ -23,6 +23,7 @@ public class PolicyInterpretationTable {
     private String title;//标题
     private Integer type;//内容类型，1-视频章节,2-图文,3-纯图片,4-优惠券
     private String content;//内容
+    private Long adminUserId;//创建人id
 
     @OneToMany( cascade = {CascadeType.REFRESH, CascadeType.MERGE},mappedBy = "policyInterpretation" , fetch = FetchType.LAZY)
     @OrderBy("id asc")

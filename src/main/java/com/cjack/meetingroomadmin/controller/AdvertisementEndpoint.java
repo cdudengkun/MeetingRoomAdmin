@@ -13,6 +13,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import java.util.Date;
 import java.util.List;
 
+/**
+ * 广告banner栏目
+ */
 @Controller
 @RequestMapping("/advertisement")
 public class AdvertisementEndpoint extends BaseEndpoint{

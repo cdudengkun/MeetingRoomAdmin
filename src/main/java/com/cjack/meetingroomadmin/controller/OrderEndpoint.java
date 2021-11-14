@@ -11,7 +11,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-
+/**
+ * 订单管理
+ */
 @Controller
 @RequestMapping(value = "/order")
 public class OrderEndpoint {

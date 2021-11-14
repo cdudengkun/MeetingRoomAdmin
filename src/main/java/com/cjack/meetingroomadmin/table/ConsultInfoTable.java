@@ -23,5 +23,5 @@ public class ConsultInfoTable {
     private String keyWords;//关键字，多个关键字英文逗号分割
     private Integer isHot;//是否热门，1-是，2-否
     private Integer matchCount;//匹配次数
-
+    private Long adminUserId;//创建人id
 }
