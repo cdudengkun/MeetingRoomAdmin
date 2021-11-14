@@ -1,6 +1,4 @@
-layui.extend({
-    baseConfig : "/lib/baseConfig"
-}).use(['form', 'baseConfig', 'layer'], function () {
+layui.use(['form', 'layer', 'baseConfig'], function () {
     var form = layui.form,
         $ = layui.jquery,
         layer = parent.layer === undefined ? layui.layer : top.layer,
@@ -61,13 +59,11 @@ layui.extend({
         //提交数据
         $.post("/" + pageName + "/addOrUpdate", jsonBody, function( res){
             if( res.code == 200){
-                setTimeout(function(){
-                    top.layer.close( index);
-                    top.layer.msg( res.msg);
-                    layer.closeAll( "iframe");
-                    //刷新父页面
-                    parent.location.reload();
-                },500);
+                top.layer.close( index);
+                top.layer.msg( res.msg);
+                layer.closeAll( "iframe");
+                //刷新父页面
+                parent.location.reload();
             }else{
                 top.layer.close( index);
                 top.layer.msg( res.msg);

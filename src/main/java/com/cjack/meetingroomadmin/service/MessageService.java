@@ -3,24 +3,28 @@ package com.cjack.meetingroomadmin.service;
 
 import com.cjack.meetingroomadmin.config.CommonConfig;
 import com.cjack.meetingroomadmin.config.LayPage;
-import com.cjack.meetingroomadmin.dao.*;
-import com.cjack.meetingroomadmin.exception.JPushException;
+import com.cjack.meetingroomadmin.dao.AppUserDao;
+import com.cjack.meetingroomadmin.dao.MessageDao;
+import com.cjack.meetingroomadmin.dao.MessageReadDao;
 import com.cjack.meetingroomadmin.model.MessageModel;
-import com.cjack.meetingroomadmin.table.*;
-import com.cjack.meetingroomadmin.util.CustomerStringUtil;
+import com.cjack.meetingroomadmin.table.AppUserTable;
+import com.cjack.meetingroomadmin.table.MessageReadTable;
+import com.cjack.meetingroomadmin.table.MessageTable;
 import com.cjack.meetingroomadmin.util.EmptyUtil;
 import com.cjack.meetingroomadmin.util.ModelUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.*;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
-import javax.persistence.criteria.Join;
-import javax.persistence.criteria.JoinType;
 import javax.persistence.criteria.Predicate;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
+
+import static com.cjack.meetingroomadmin.util.CustomerStringUtil.toLikeStr;
 
 @Service
 public class MessageService {
@@ -83,7 +87,7 @@ public class MessageService {
         Specification< MessageTable> specification = (root, query, cb) -> {
             Predicate predicate = cb.conjunction();
             if( EmptyUtil.isNotEmpty( model.getTitle())){
-                predicate.getExpressions().add( cb.like( root.get("title"), CustomerStringUtil.toLikeStr( model.getTitle())));
+                predicate.getExpressions().add( cb.like( root.get("title"), toLikeStr( model.getTitle())));
             }
             if( EmptyUtil.isNotEmpty( model.getType())){
                 predicate.getExpressions().add( cb.equal( root.get("type"), model.getType()));

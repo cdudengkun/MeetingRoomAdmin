@@ -1,46 +1,35 @@
-var INTERFACE_NAME = "adminUser";
-layui.extend({
-    baseConfig : "/js/baseConfig"
-}).use(['form','layer','laydate','table','laytpl','element','util','baseConfig'],function(){
-
-    var form = layui.form,
-        layer = parent.layer === undefined ? layui.layer : top.layer,
-        $ = layui.jquery,
+layui.use(['form', 'table', 'util', 'baseConfig'], function () {
+    var $ = layui.jquery,
+        form = layui.form,
         baseConfig = layui.baseConfig,
+        util = layui.util;
         table = layui.table;
-    var util = layui.util;
-    var roleId = baseConfig.getUrlParamer( "roleId");//角色id
-    var tableIns = table.render({
-        elem: '#list',
-        url : '/' + INTERFACE_NAME + '/list?roleId=' + roleId,
-        cellMinWidth : 95,
-        height : "full-125",
-        page: true, //开启分页
+
+    //------------公共配置
+    var pageName = "adminUser";
+    var minWidth = 800;
+    var minHeight = 500;
+    var formTitleSuffix = "后台账户";
+
+    table.render({
         id : "listTable",
-        cols : [[
-            {type: "checkbox", fixed:"left", width:50},
-            {field: 'loginName', title: '登录帐号', align:"center"},
-            {field: 'roleName', title: '角色', align:"center"},
-            {field: 'name', title: '姓名', align:"center"},
-            {field: 'phone', title: '电话', align:'center'},
-            {field: 'email', title: '邮箱', align:"center"},
-            {field: 'lastLoginTime', title: '最后登录时间', align:'center', templet : function( d){
-                if( d.lastLoginTime){
-                    return util.toDateString( d.lastLoginTime);
-                }else{
-                    return "未登录过";
-                }
+        elem: '#currentTableId',
+        url : '/' + pageName + '/list',
+        toolbar: '#toolbar',
+        defaultToolbar: [],
+        cols: [[
+            {field: 'loginName', width: 150, title: '账号名称'},
+            {field: 'name', width: 150, title: '姓名'},
+            {field: 'phone', width: 150, title: '电话'},
+            {field: 'email', width: 200, title: '邮箱'},
+            {field: 'lastLoginTime', width: 200, title: '最后登录时间', templet : function( d){
+                return util.toDateString( d.lastLoginTime);
             }},
-            {field: 'createTime', title: '添加时间', width:180, align:'center', templet : function( d){
+            {field: 'roleName', width: 150, title: '所属角色'},
+            {field: 'createTime', width: 200, title: '创建时间', templet : function( d){
                 return util.toDateString( d.createTime);
             }},
-            {title: '操作', fixed:"right", width: 200, align:"center", templet : function( d) {
-                var str = "";
-                str += "<a class=\"layui-btn layui-btn-xs\" lay-event=\"update\">编辑</a>";
-                str += "<a class=\"layui-btn layui-btn-xs\" lay-event=\"detail\">详细</a>";
-                str += "<a class=\"layui-btn layui-btn-xs\" lay-event=\"del\">删除</a>";
-                return str;
-            }}
+            {title: '操作', minWidth: 150, toolbar: '#currentTableBar', align: "center"}
         ]],
         response : {
             statusCode: 200 //规定成功的状态码，默认：0
@@ -49,83 +38,72 @@ layui.extend({
             return {
                 "code": res.code, //解析接口状态
                 "msg": res.msg, //解析提示文本
-                "count": res.data.count, //解析数据长度
-                "data": res.data.data //解析数据列表
+                "data": res.data //解析数据列表
             };
         }
     });
 
-    //添加
-    $(".add_btn").click(function(){
-        addOrUpdateOrDetail( null, baseConfig.ACTION.ADD);
+    //------------加载搜索表单下拉框
+    baseConfig.loadSelect( "/role/list", "roleId", null, "roleName");
+
+    //------------表单搜索
+    form.on('submit(data-search-btn)', function (data) {
+        var result = data.field;
+        //执行搜索重载
+        table.reload('listTable', {
+            page: {
+                curr: 1
+            }
+            , where: result
+        }, 'data');
+
+        return false;
     });
 
-    //添加/修改/详细查看（readonly=true）
-    function addOrUpdateOrDetail( data, type){
-        var title = baseConfig.getTitleByType( type, "账户");
-        var index = layui.layer.open({
-            title : title,
-            type : 2,
-            area: [900 + 'px', baseConfig.getHeight( 620) + 'px'],
-            shade: 0.4,
-            btnAlign: 'r',
-            id: "aboutUs", //设定一个id，防止重复弹出
-            content : "formData.html?data=" + encodeURIComponent( JSON.stringify( data)) + "&actionType=" + type + "&roleId=" + roleId,//把操作类型传到form页面",
-            success : function(){
-                setTimeout( function(){
-                    layui.layer.tips('点击此处返回数据列表', '.layui-layer-setwin .layui-layer-close', {
-                        tips: 3
-                    });
-                },500);
-            }
-        });
-    }
-
-    //删除
-    function del( ids){
-        layer.confirm('确定删除选中的数据项？', {icon: 3, title: '提示信息'}, function (index) {
-            $.post("/" + INTERFACE_NAME + "/del",{
-                "ids" : ids
-            },function( res){
-                if( res.code == 200){
-                    tableIns.reload();
-                    layer.close( index);
-                    top.layer.msg( res.msg);
-                }else{
-                    top.layer.close( index);
-                    top.layer.msg( res.msg);
-                }
+    //------------表格头部工具栏，一般放新增等按钮
+    table.on('toolbar(currentTableFilter)', function (obj) {
+        if (obj.event === 'add') {  // 监听添加操作
+            baseConfig.sendDataToForm( pageName, null);
+            var index = layer.open({
+                title: baseConfig.getTitleByType( 1, formTitleSuffix),
+                type: 2,
+                shade: 0.2,
+                shadeClose: true,
+                area: [ baseConfig.getWidth( minWidth), baseConfig.getHeight( minHeight)],
+                content: 'formData.html',
             });
-        });
-    }
-
-    //批量删除
-    $(".delAll_btn").click(function(){
-        var checkStatus = table.checkStatus( 'listTable'),
-            data = checkStatus.data, ids = "";
-        if( data.length > 0) {
-            for ( var i=0 ; i<data.length ; i++) {
-                ids += data[i].id;
-                if( i != data.length-1){
-                    ids += ",";
-                }
-            }
-            del( ids);
-        }else{
-            layer.msg( "请选择需要删除的数据项");
         }
     });
 
-    //列表操作
-    table.on('tool(list)', function(obj){
-        var layEvent = obj.event,
-            data = obj.data;
-        if(layEvent === 'update'){ //编辑
-            addOrUpdateOrDetail( data, baseConfig.ACTION.UPDATE);
-        } else if(layEvent === 'del'){ //删除
-            del( data.id);
-        } else if(layEvent === 'detail'){ //预览
-            addOrUpdateOrDetail( data, baseConfig.ACTION.DETAIL);
+    //------------表格数据工具栏，一般放表格行数据的编辑、删除等按钮
+    table.on('tool(currentTableFilter)', function (obj) {
+        var data = obj.data;
+        if (obj.event === 'detail') {
+            baseConfig.sendDataToForm( pageName, data);
+            var index = layer.open({
+                title: baseConfig.getTitleByType( 3, formTitleSuffix),
+                type: 2,
+                shade: 0.2,
+                shadeClose: true,
+                area: [ baseConfig.getWidth( minWidth), baseConfig.getHeight( minHeight)],
+                content: 'formData.html?actionType=3',
+            });
+        } else if (obj.event === 'edit') {
+            baseConfig.sendDataToForm( pageName, data);
+            var index = layer.open({
+                title: baseConfig.getTitleByType( 2, formTitleSuffix),
+                type: 2,
+                shade: 0.2,
+                shadeClose: true,
+                area: [ baseConfig.getWidth( minWidth), baseConfig.getHeight( minHeight)],
+                content: 'formData.html?actionType=2',
+            });
+        } else if (obj.event === 'delete') {
+            layer.confirm('确认删除？', function (index) {
+                obj.del();
+                layer.close(index);
+            });
         }
     });
+
 });

@@ -68,3 +68,7 @@ body {
     -moz-border-radius: 2em;
     border-radius: 2em
 }
+
+.user_right{ text-align: center; }
+.user_right p{ margin:10px 0 25px; font-size: 12px; text-align: center; color: #FF5722;}
+.user_right img#userFace{ width:200px; height:200px; margin-top:20px; cursor:pointer; box-shadow:0 0 50px #44576b; }

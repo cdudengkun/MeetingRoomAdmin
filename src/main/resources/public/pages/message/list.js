@@ -1,6 +1,4 @@
-layui.extend({
-    baseConfig : "/lib/baseConfig"
-}).use(['form', 'table', 'baseConfig', 'util'], function () {
+layui.use(['form', 'table', 'util', 'baseConfig'], function () {
     var $ = layui.jquery,
         form = layui.form,
         baseConfig = layui.baseConfig,
@@ -9,8 +7,8 @@ layui.extend({
 
     //------------公共配置
     var pageName = "message";
-    var minWidth = 1000;
-    var minHeight = 600;
+    var minWidth = 800;
+    var minHeight = 400;
     var formTitleSuffix = "消息";
 
     table.render({
@@ -20,9 +18,7 @@ layui.extend({
         toolbar: '#toolbar',
         defaultToolbar: [],
         cols: [[
-            {type: "checkbox", width: 50},
-            {field: 'id', width: 80, title: 'ID', sort: true},
-            {field: 'title', width: 200, title: '标题'},
+            {field: 'title', width: 300, title: '标题'},
             {field: 'createTime', width: 200, title: '发送时间', templet : function( d){
                 return util.toDateString( d.createTime);
             }},
@@ -61,13 +57,13 @@ layui.extend({
     //------------表格头部工具栏，一般放新增等按钮
     table.on('toolbar(currentTableFilter)', function (obj) {
         if (obj.event === 'add') {  // 监听添加操作
-            baseConfig.sendDataToForm( "message", null);
+            baseConfig.sendDataToForm( pageName, null);
             var index = layer.open({
                 title: baseConfig.getTitleByType( 1, formTitleSuffix),
                 type: 2,
                 shade: 0.2,
                 shadeClose: true,
-                area: [ baseConfig.getWidth( minWidth), baseConfig.getWidth( minHeight)],
+                area: [ baseConfig.getWidth( minWidth), baseConfig.getHeight( minHeight)],
                 content: 'formData.html',
             });
         }
@@ -77,23 +73,23 @@ layui.extend({
     table.on('tool(currentTableFilter)', function (obj) {
         var data = obj.data;
         if (obj.event === 'detail') {
-            baseConfig.sendDataToForm( "message", data);
+            baseConfig.sendDataToForm( pageName, data);
             var index = layer.open({
                 title: baseConfig.getTitleByType( 3, formTitleSuffix),
                 type: 2,
                 shade: 0.2,
                 shadeClose: true,
-                area: [ baseConfig.getWidth(1000), baseConfig.getWidth(800)],
+                area: [ baseConfig.getWidth( minWidth), baseConfig.getHeight( minHeight)],
                 content: 'formData.html?actionType=3',
             });
         } else if (obj.event === 'edit') {
-            baseConfig.sendDataToForm( "message", data);
+            baseConfig.sendDataToForm( pageName, data);
             var index = layer.open({
                 title: baseConfig.getTitleByType( 2, formTitleSuffix),
                 type: 2,
                 shade: 0.2,
                 shadeClose: true,
-                area: [ baseConfig.getWidth(1000), baseConfig.getWidth(800)],
+                area: [ baseConfig.getWidth( minWidth), baseConfig.getHeight( minHeight)],
                 content: 'formData.html?actionType=2',
             });
         } else if (obj.event === 'delete') {

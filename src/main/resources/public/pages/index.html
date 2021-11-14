@@ -76,10 +76,11 @@
 <script src="/lib/layui-v2.6.3/layui.js" charset="utf-8"></script>
 <script src="/js/lay-config.js?v=2.0.0" charset="utf-8"></script>
 <script>
-    layui.use(['jquery', 'layer', 'miniAdmin','miniTongji'], function () {
+    layui.use(['jquery', 'layer', 'miniAdmin','miniTongji', 'baseConfig'], function () {
         var $ = layui.jquery,
             layer = layui.layer,
-            miniAdmin = layui.miniAdmin;
+            miniAdmin = layui.miniAdmin,
+            baseConfig = layui.baseConfig;
 
         var options = {
             iniUrl: "/api/init.json",    // 初始化接口
@@ -93,28 +94,8 @@
         };
         miniAdmin.render(options);
 
-        //获取登录的用户信息
-        function getUserInfo( callback){
-            $.ajaxSettings.async = false;
-            $.get("/adminUser/getUserInfo",function( res){
-                try{
-                    res = JSON.parse( res);
-                }catch (e) {
-
-                }
-                if( res.code == 200){
-                    callback( res.data);
-                }else if( res.code == 304){
-                    top.layer.confirm( "用户尚未登录，点击跳转到登录页面", function(){
-                        window.location.href = "/pages/login.html";
-                    });
-                }else{
-                    top.layer.alert( res.msg);
-                }
-            });
-        }
         var userInfo= {};
-        getUserInfo( function( data){
+        baseConfig.getUserInfo( function( data){
             userInfo = data;
         });
         //将用户信息缓存起来
