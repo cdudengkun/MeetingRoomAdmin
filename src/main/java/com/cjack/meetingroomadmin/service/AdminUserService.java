@@ -55,15 +55,15 @@ public class AdminUserService {
         AdminUserModel model = ModelUtils.copySignModel( user, AdminUserModel.class);
         model.setLastLoginTime( user.getLastLoginTime());
         if( user.getProvince() != null){
-            model.setProvinceId( user.getProvince().getId());
+            model.setProvinceId( user.getProvince().getAreaCode());
             model.setProvinceName( user.getProvince().getName());
         }
         if( user.getCity() != null){
-            model.setCityId( user.getCity().getId());
+            model.setCityId( user.getCity().getAreaCode());
             model.setCityName( user.getCity().getName());
         }
         if( user.getCounty() != null){
-            model.setCountyId( user.getCounty().getId());
+            model.setCountyId( user.getCounty().getAreaCode());
             model.setCountyName( user.getCounty().getName());
         }
         if( user.getAdminRole() != null){
@@ -127,13 +127,13 @@ public class AdminUserService {
             table.setAdminRole( adminRoleDao.getOne( model.getRoleId()));
         }
         if( EmptyUtil.isNotEmpty( model.getProvinceId())){
-            table.setProvince( cityDao.getOne( model.getProvinceId()));
+            table.setProvince( cityDao.getByAreaCode( model.getProvinceId()));
         }
         if( EmptyUtil.isNotEmpty( model.getCityId())){
-            table.setCity( cityDao.getOne( model.getCityId()));
+            table.setCity( cityDao.getByAreaCode( model.getCityId()));
         }
         if( EmptyUtil.isNotEmpty( model.getCountyId())){
-            table.setCounty( cityDao.getOne( model.getCountyId()));
+            table.setCounty( cityDao.getByAreaCode( model.getCountyId()));
         }
         if( EmptyUtil.isNotEmpty( model.getPassWord())){
             table.setPassWord( Md5Util.stringToMD5( model.getPassWord()));

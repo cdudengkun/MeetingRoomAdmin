@@ -10,6 +10,7 @@
     <link rel="stylesheet" href="/css/public.css" media="all">
     <script src="/lib/layui-v2.6.3/layui.js" charset="utf-8"></script>
     <script src="/js/lay-config.js?v=2.0.0" charset="utf-8"></script>
+    <script type="text/javascript" src="/lib/xm-select.js"></script>
     <script type="text/javascript" src="formData.js"></script>
     <style>
         body {
@@ -65,12 +66,6 @@
             </div>
 
             <div class="layui-form-item">
-                <label class="layui-form-label required">公司名称</label>
-                <div class="layui-input-inline">
-                    <input type="text" name="companyName" lay-verify="required" lay-reqtext="公司名称不能为空" placeholder="请输入公司名称"  class="layui-input">
-                </div>
-            </div>
-            <div class="layui-form-item">
                 <label class="layui-form-label required">每日可用时间</label>
                 <div class="layui-input-inline">
                     <input type="text" name="availableDayTime" lay-verify="required" lay-reqtext="每日可用时间不能为空" placeholder="请输入每日可用时间"  class="layui-input">
@@ -93,18 +88,23 @@
                     <textarea name="description" class="layui-textarea"  lay-verify="required" lay-reqtext="介绍不能为空" placeholder="请输入介绍"></textarea>
                 </div>
             </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label required">设施列表</label>
+                <div class="layui-input-inline" id="facilityIdsDiv">
 
+                </div>
+            </div>
         </div>
 
         <div class="layui-form-item" id="submitDiv">
             <hr class="layui-bg-gray" />
-            <div class="layui-input-block layui-left">
+            <div class="layui-input-block layui-right">
                 <button class="layui-btn layui-btn-normal" lay-submit lay-filter="saveBtn">确认保存</button>
             </div>
         </div>
         <div id="closeDiv">
             <hr class="layui-bg-gray" />
-            <div class="layui-left">
+            <div class="layui-right">
                 <a class="layui-btn layui-btn-normal" id="closeBtn"><i class="layui-icon">&#xe609;</i>关闭</a>
             </div>
         </div>

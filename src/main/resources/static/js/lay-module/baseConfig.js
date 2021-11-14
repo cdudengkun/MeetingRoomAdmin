@@ -147,7 +147,16 @@ layui.define(["form","jquery"],function(exports){
                         top.layer.alert( res.msg);
                     }
                 });
-            }
+            },
+            arrIdToStr: function ( datas){
+                var str = "";
+                if( datas){
+                    for( var i = 0; i < datas.length; i++){
+                        str += datas[i].id + ",";
+                    }
+                }
+                return str;
+            },
         };
     exports( "baseConfig", baseConfig);
 })

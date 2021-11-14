@@ -13,4 +13,6 @@ import java.util.List;
 public interface CityDao extends JpaRepository<CityTable, Long> {
 
     List<CityTable> findByParentId(Long parentId);
+
+    CityTable getByAreaCode( String areaCode);
 }

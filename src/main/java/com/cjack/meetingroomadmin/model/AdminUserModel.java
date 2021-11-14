@@ -21,11 +21,11 @@ public class AdminUserModel  extends BaseModel{
     private String passWord;//登录密码
 
     private String provinceName;
-    private Long provinceId;
+    private String provinceId;
     private String cityName;
-    private Long cityId;
+    private String cityId;
     private String countyName;
-    private Long countyId;
+    private String countyId;
     private String detail;
     private String roleName;
     private Long roleId;
