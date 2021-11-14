@@ -1,6 +1,7 @@
 package com.cjack.meetingroomadmin.controller;
 
 import com.cjack.meetingroomadmin.config.AjaxResult;
+import com.cjack.meetingroomadmin.config.CommonConfig;
 import com.cjack.meetingroomadmin.config.LayPage;
 import com.cjack.meetingroomadmin.model.MeetingZoneModel;
 import com.cjack.meetingroomadmin.service.MeetingZoneService;
@@ -11,7 +12,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import java.util.Date;
+import javax.servlet.http.HttpSession;
 
 /**
  * 会议中心/楼宇
@@ -45,10 +46,12 @@ public class MeetingZoneEndpoint extends BaseEndpoint{
      */
     @RequestMapping(value = "/addOrUpdate", method = RequestMethod.POST)
     @ResponseBody
-    public AjaxResult addOrUpdate( MeetingZoneModel model) {
+    public AjaxResult addOrUpdate(HttpSession session, MeetingZoneModel model) {
         try{
+            Object adminUserId = session.getAttribute( CommonConfig.SESSION_NAME);
             if( isAdd( model.getId())){
                 model.setCreateTime( System.currentTimeMillis());
+                model.setAdminUserId( (Long)adminUserId);
             }
             service.save( model);
             return AjaxResult.SUCCESS();
@@ -68,6 +71,38 @@ public class MeetingZoneEndpoint extends BaseEndpoint{
         try{
             service.del( ids);
             return AjaxResult.SUCCESS( "删除成功");
+        }catch ( Exception e) {
+            e.printStackTrace();
+            return AjaxResult.ERROR();
+        }
+    }
+
+    /**
+     * 新增
+     * @return
+     */
+    @RequestMapping(value = "/uploadImg", method = RequestMethod.POST)
+    @ResponseBody
+    public AjaxResult uploadImg( MeetingZoneModel model) {
+        try{
+            service.uploadImg( model);
+            return AjaxResult.SUCCESS();
+        }catch ( Exception e) {
+            e.printStackTrace();
+            return AjaxResult.ERROR();
+        }
+    }
+
+    /**
+     * 新增
+     * @return
+     */
+    @RequestMapping(value = "/delImg", method = RequestMethod.POST)
+    @ResponseBody
+    public AjaxResult delImg( MeetingZoneModel model) {
+        try{
+            service.delImg( model);
+            return AjaxResult.SUCCESS();
         }catch ( Exception e) {
             e.printStackTrace();
             return AjaxResult.ERROR();

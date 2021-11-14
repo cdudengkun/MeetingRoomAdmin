@@ -1,6 +1,7 @@
 package com.cjack.meetingroomadmin.service;
 
 import com.cjack.meetingroomadmin.config.LayPage;
+import com.cjack.meetingroomadmin.dao.CityDao;
 import com.cjack.meetingroomadmin.dao.MeetingZoneDao;
 import com.cjack.meetingroomadmin.model.MeetingZoneModel;
 import com.cjack.meetingroomadmin.table.MeetingZoneTable;
@@ -23,14 +24,33 @@ public class MeetingZoneService {
 
     @Autowired
     private MeetingZoneDao dao;
+    @Autowired
+    private CityDao cityDao;
 
-    public void list(LayPage page, MeetingZoneModel model){
+    public void list(LayPage page, MeetingZoneModel condition){
         List< Sort.Order> orders=new ArrayList<>();
         orders.add( new Sort.Order( Sort.Direction.DESC, "updateTime"));
         Pageable pageable = new PageRequest( page.getPage()-1, page.getLimit(), new Sort( orders));
-        Specification<MeetingZoneTable> specification = handleConditon( model);
+        Specification<MeetingZoneTable> specification = handleConditon( condition);
         Page<MeetingZoneTable> pageTable = dao.findAll( specification, pageable);
-        page.setData( ModelUtils.copyListModel( pageTable.getContent(), MeetingZoneModel.class));
+        List<MeetingZoneModel> models = new ArrayList<>();
+        for( MeetingZoneTable table : pageTable.getContent()){
+            MeetingZoneModel model = ModelUtils.copySignModel( table, MeetingZoneModel.class);
+            if( table.getProvince() != null){
+                model.setProvinceId( table.getProvince().getAreaCode());
+                model.setProvinceName( table.getProvince().getName());
+            }
+            if( table.getCity() != null){
+                model.setCityId( table.getCity().getAreaCode());
+                model.setCityName( table.getCity().getName());
+            }
+            if( table.getCounty() != null){
+                model.setCountyId( table.getCounty().getAreaCode());
+                model.setCountyName( table.getCounty().getName());
+            }
+            models.add( model);
+        }
+        page.setData( models);
         page.setCount( Long.valueOf( pageTable.getTotalElements()).intValue());
     }
 
@@ -52,6 +72,38 @@ public class MeetingZoneService {
             ModelUtils.copySignModel( model, table);
         }else{
             table = ModelUtils.copySignModel( model, MeetingZoneTable.class);
+        }
+        if( EmptyUtil.isNotEmpty( model.getProvinceId())){
+            table.setProvince( cityDao.getByAreaCode( model.getProvinceId()));
+        }
+        if( EmptyUtil.isNotEmpty( model.getCityId())){
+            table.setCity( cityDao.getByAreaCode( model.getCityId()));
+        }
+        if( EmptyUtil.isNotEmpty( model.getCountyId())){
+            table.setCounty( cityDao.getByAreaCode( model.getCountyId()));
+        }
+        dao.save( table);
+    }
+
+    public void uploadImg( MeetingZoneModel model){
+        MeetingZoneTable table = dao.findOne( model.getId());
+        if( EmptyUtil.isNotEmpty( table.getImgs())){
+            if( !table.getImgs().contains( model.getImg())){
+                table.setImgs( table.getImgs() + "," + model.getImg());
+            }
+        }else{
+            table.setImgs( model.getImg());
+        }
+
+        dao.save( table);
+    }
+
+    public void delImg( MeetingZoneModel model){
+        MeetingZoneTable table = dao.findOne( model.getId());
+        if( EmptyUtil.isNotEmpty( table.getImgs()) && EmptyUtil.isNotEmpty( model.getImgs())){
+           for( String img : model.getImgs().split( ",")){
+               table.setImgs( table.getImgs().replace( img + ",", ""));
+           }
         }
         dao.save( table);
     }

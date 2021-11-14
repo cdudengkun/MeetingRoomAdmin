@@ -11,8 +11,31 @@ layui.use(['form','layer', 'baseConfig', "upload", 'layarea'], function () {
     var actionType = baseConfig.getUrlParamer( "actionType");
 
     //------------加载下拉框
-    var typeId = data ? data.typeId: null;
-    baseConfig.loadSelect( "/singleKey/list/3", "typeId", typeId, "dataKey");
+    var facilityIds = data ? data.facilityIds: "";
+    //------------加载多选下拉框  声明->加载数据->加载选中值
+    var facilityIdsSelect = xmSelect.render({
+        el: '#facilityIdsDiv',
+        data: [
+        ]
+    });
+    $.get( "/singleKey/list/4", function( res){
+        if( res.code == 200){
+            //转一下
+            var datas = res.data;
+            for( var i = 0; i < datas.length; i++){
+                var data = datas[i];
+                data.name = data.dataKey;
+                data.value = data.id;
+            }
+            facilityIdsSelect.update({
+                data: datas,
+                autoRow: true,
+            });
+            facilityIdsSelect.setValue( facilityIds.split( ","));
+        }else{
+            top.layer.msg( res.msg);
+        }
+    });
     //省市区下拉框
     layarea.render({
         elem: '#area-picker',
@@ -85,6 +108,7 @@ layui.use(['form','layer', 'baseConfig', "upload", 'layarea'], function () {
         //弹出loading
         var index = top.layer.msg('数据提交中，请稍候',{icon: 16,time:false,shade:0.8});
         var jsonBody = data.field;
+        jsonBody.facilityIds = baseConfig.arrIdToStr( facilityIdsSelect.getValue());
         //提交数据
         $.post("/" + pageName + "/addOrUpdate", jsonBody, function( res){
             if( res.code == 200){

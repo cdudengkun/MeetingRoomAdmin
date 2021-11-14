@@ -41,7 +41,7 @@
         },
         {
           "title": "楼宇管理",
-          "href": "meetingZoneAdmin",
+          "href": "",
           "icon": "fa fa-window-maximize",
           "privilegeName": "meetingZoneAdminMenu",
           "target": "_self",

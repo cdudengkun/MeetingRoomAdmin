@@ -4,8 +4,6 @@ import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import lombok.Data;
 
-import java.util.List;
-
 /**
  * 会议中心表
  */
@@ -17,14 +15,14 @@ public class MeetingZoneModel  extends BaseModel{
 
 
     private String name;//名称
-    private Long provinceId;
+    private String provinceId;
     private String provinceName = "";
-    private Long cityId;
+    private String cityId;
     private String cityName = "";
-    private Long countyId;
+    private String countyId;
     private String countyName = "";
     private String detail;
-    private List<String> facilitys;
+    private String facilityIds;
     private String cover;
     private String lnt;
     private String lat;
@@ -32,5 +30,7 @@ public class MeetingZoneModel  extends BaseModel{
     private Integer availableWeekDay;
     private String imgs;
     private String description;//介绍
+
+    private String img;//单张图片
 
 }

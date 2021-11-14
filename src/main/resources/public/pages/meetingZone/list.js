@@ -20,7 +20,7 @@ layui.use(['form', 'table', 'util', 'baseConfig'], function () {
         cols: [[
             {field: 'name', width: 200, title: '名称'},
             {field: 'detail', width: 400, title: '地点', templet : function( d){
-                return d.provinceName + d.cityName + d.countryName + d.detail;
+                return d.provinceName + d.cityName + d.countyName + d.detail;
             }},
             {field: 'availableDayTime', width: 200, title: '每日可用时间'},
             {field: 'availableWeekDay', width: 200, title: '每周可用时间', templet : function( d){
@@ -30,7 +30,6 @@ layui.use(['form', 'table', 'util', 'baseConfig'], function () {
                     case 3: return "仅周末";
                 }
             }},
-            {field: 'typeName', width: 150, title: '类别'},
             {field: 'createTime', width: 200, title: '创建时间', templet : function( d){
                 return util.toDateString( d.createTime);
             }},
@@ -111,6 +110,16 @@ layui.use(['form', 'table', 'util', 'baseConfig'], function () {
             layer.confirm('确认删除？', function (index) {
                 obj.del();
                 layer.close(index);
+            });
+        } else if (obj.event === 'imgsEdit') {
+            baseConfig.sendDataToForm( pageName, data);
+            var index = layer.open({
+                title: baseConfig.getTitleByType( 2, "图片编辑"),
+                type: 2,
+                shade: 0.2,
+                shadeClose: true,
+                area: [ baseConfig.getWidth( minWidth), baseConfig.getHeight( minHeight)],
+                content: 'formData_Pics.html?actionType=2',
             });
         }
     });
