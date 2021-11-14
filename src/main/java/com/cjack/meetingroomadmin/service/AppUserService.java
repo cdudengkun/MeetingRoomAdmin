@@ -2,21 +2,32 @@ package com.cjack.meetingroomadmin.service;
 
 
 import com.cjack.meetingroomadmin.config.LayPage;
-import com.cjack.meetingroomadmin.dao.*;
+import com.cjack.meetingroomadmin.dao.AdminUserDao;
+import com.cjack.meetingroomadmin.dao.AppUserDao;
 import com.cjack.meetingroomadmin.exception.CommonException;
 import com.cjack.meetingroomadmin.model.AppUserModel;
-import com.cjack.meetingroomadmin.table.*;
-import com.cjack.meetingroomadmin.util.*;
+import com.cjack.meetingroomadmin.table.AdminRoleTable;
+import com.cjack.meetingroomadmin.table.AdminUserTable;
+import com.cjack.meetingroomadmin.table.AppUserAccountTable;
+import com.cjack.meetingroomadmin.table.AppUserTable;
+import com.cjack.meetingroomadmin.util.EmptyUtil;
+import com.cjack.meetingroomadmin.util.ModelUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.data.domain.*;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
+
 import javax.persistence.criteria.Join;
 import javax.persistence.criteria.JoinType;
 import javax.persistence.criteria.Predicate;
 import java.util.ArrayList;
 import java.util.List;
+
+import static com.cjack.meetingroomadmin.util.CustomerStringUtil.toLikeStr;
 
 @Service
 public class AppUserService {
@@ -93,10 +104,10 @@ public class AppUserService {
         Specification< AppUserTable> specification = (root, query, cb) -> {
             Predicate predicate = cb.conjunction();
             if( EmptyUtil.isNotEmpty( model.getName())){
-                predicate.getExpressions().add( cb.like( root.get("name"), CustomerStringUtil.toLikeStr(  model.getName())));
+                predicate.getExpressions().add( cb.like( root.get("name"), toLikeStr(  model.getName())));
             }
             if( EmptyUtil.isNotEmpty( model.getPhone())){
-                predicate.getExpressions().add( cb.like( root.get("phone"), CustomerStringUtil.toLikeStr(  model.getPhone())));
+                predicate.getExpressions().add( cb.like( root.get("phone"), toLikeStr(  model.getPhone())));
             }
             if( EmptyUtil.isNotEmpty( model.getIsVip())){
                 Join<AppUserTable, AppUserAccountTable> join = root.join("appUser", JoinType.LEFT);

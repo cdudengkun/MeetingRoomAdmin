@@ -2,13 +2,9 @@ package com.cjack.meetingroomadmin.service;
 
 
 import com.cjack.meetingroomadmin.config.LayPage;
-import com.cjack.meetingroomadmin.dao.ConsultInfoDao;
 import com.cjack.meetingroomadmin.dao.EnterpriseSupportDao;
-import com.cjack.meetingroomadmin.model.ConsultInfoModel;
 import com.cjack.meetingroomadmin.model.EnterpriseSupportModel;
-import com.cjack.meetingroomadmin.table.ConsultInfoTable;
 import com.cjack.meetingroomadmin.table.EnterpriseSupportTable;
-import com.cjack.meetingroomadmin.util.CustomerStringUtil;
 import com.cjack.meetingroomadmin.util.EmptyUtil;
 import com.cjack.meetingroomadmin.util.ModelUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +18,8 @@ import org.springframework.stereotype.Service;
 import javax.persistence.criteria.Predicate;
 import java.util.ArrayList;
 import java.util.List;
+
+import static com.cjack.meetingroomadmin.util.CustomerStringUtil.toLikeStr;
 
 @Service
 public class EnterpriseSupportService {
@@ -71,7 +69,7 @@ public class EnterpriseSupportService {
         Specification< EnterpriseSupportTable> specification = (root, query, cb) -> {
             Predicate predicate = cb.conjunction();
             if( EmptyUtil.isNotEmpty( model.getName())){
-                predicate.getExpressions().add( cb.like( root.get("title"), CustomerStringUtil.toLikeStr( model.getName())));
+                predicate.getExpressions().add( cb.like( root.get("title"), toLikeStr( model.getName())));
             }
             return predicate;
         };

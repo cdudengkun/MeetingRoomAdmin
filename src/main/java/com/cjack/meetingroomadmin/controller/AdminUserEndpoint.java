@@ -3,7 +3,6 @@ package com.cjack.meetingroomadmin.controller;
 import com.cjack.meetingroomadmin.config.AjaxResult;
 import com.cjack.meetingroomadmin.config.CommonConfig;
 import com.cjack.meetingroomadmin.config.ErrorCodeDefine;
-import com.cjack.meetingroomadmin.config.LayPage;
 import com.cjack.meetingroomadmin.exception.AdminUserNotFoundException;
 import com.cjack.meetingroomadmin.exception.AdminUserPassErrorException;
 import com.cjack.meetingroomadmin.exception.CommonException;
@@ -12,11 +11,12 @@ import com.cjack.meetingroomadmin.model.UpdatePassWordModel;
 import com.cjack.meetingroomadmin.service.AdminUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpSession;
-import java.util.Date;
-import java.util.List;
 
 /**
  *
@@ -90,8 +90,8 @@ public class AdminUserEndpoint extends BaseEndpoint{
     public AjaxResult list( HttpSession session, AdminUserModel model) {
         try{
             Object adminUserId = session.getAttribute( CommonConfig.SESSION_NAME);
-            service.list( (Long)adminUserId, model);
-            return AjaxResult.SUCCESS();
+            model.setAdminUserId( (long)adminUserId);
+            return AjaxResult.SUCCESS( service.list(model));
         }catch ( Exception e) {
             e.printStackTrace();
             return AjaxResult.ERROR();
@@ -107,11 +107,12 @@ public class AdminUserEndpoint extends BaseEndpoint{
     @ResponseBody
     public AjaxResult addOrUpdate( HttpSession session, AdminUserModel model) {
         try{
+            Object adminUserId = session.getAttribute( CommonConfig.SESSION_NAME);
             if( isAdd( model.getId())){
                 model.setCreateTime( System.currentTimeMillis());
+                model.setAdminUserId( (Long)adminUserId);
             }
-            Object loginUserId = session.getAttribute( CommonConfig.SESSION_NAME);
-            service.save( (Long)loginUserId,model);
+            service.save( model);
             return AjaxResult.SUCCESS();
         }catch ( Exception e) {
             e.printStackTrace();

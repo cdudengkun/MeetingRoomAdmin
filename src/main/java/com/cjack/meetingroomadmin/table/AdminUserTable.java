@@ -1,12 +1,8 @@
 package com.cjack.meetingroomadmin.table;
 
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import lombok.Data;
 
 import javax.persistence.*;
-import java.util.Date;
-import java.util.List;
 
 /**
  * 后台管理端使用人账户信息
@@ -25,12 +21,12 @@ public class AdminUserTable {
     @Id
     @GeneratedValue( strategy= GenerationType.AUTO)
     private Long id;
-    private Date createTime;
-    private Date updateTime;
+    private Long createTime;
+    private Long updateTime;
 
     private String name;//姓名
     private String phone;//电话
-    private Date lastLoginTime;//最后登录时间
+    private Long lastLoginTime;//最后登录时间
     private String birthday;//生日
     private String email;//邮箱
     private String avatar;//头像

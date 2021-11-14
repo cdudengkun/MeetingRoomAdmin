@@ -102,6 +102,51 @@ layui.define(["form","jquery"],function(exports){
                 readForm.find( 'input,textarea,select').prop( 'disabled', readOnley);
                 readForm.find( '.layui-layedit iframe').contents().find( 'body').prop( 'contenteditable', !readOnley);
                 layui.form.render();
+            },
+            loadSelect: function ( url, selectName, val, valueName){
+                $.get( url, function( res){
+                    if( res.code == 200){
+                        var datas = res.data;
+                        var sel = $("select[name=" + selectName + "]");
+                        sel.empty();
+                        sel.append( "<option value='' selected>请选择</option>");
+                        for( var i = 0 ; i < datas.length ; i++){
+                            var data = datas[i];
+                            sel.append( "<option value='" + data.id + "'>" + data[valueName] + "</option> ")
+                        }
+                        //更新渲染
+                        layui.form.render( "select");
+                        sel.val( val);
+                        layui.form.render();
+                    }else{
+                        top.layer.msg( res.msg);
+                    }
+                });
+            },
+            loadFormData: function ( data){
+                if( data && data.id){
+                    layui.form.val( "formFilter", data);
+                }
+            },
+            //获取登录的用户信息
+            getUserInfo: function getUserInfo( callback){
+                $.ajaxSettings.async = false;
+                $.get("/adminUser/getUserInfo",function( res){
+                    try{
+                        res = JSON.parse( res);
+                    }catch (e) {
+
+                    }
+                    if( res.code == 200){
+                        callback( res.data);
+                    }else if( res.code == 304){
+                        top.layer.confirm( "用户尚未登录，点击跳转到登录页面", function(){
+                            window.location.href = "/pages/login.html";
+                        });
+                    }else{
+                        top.layer.alert( res.msg);
+                    }
+                });
             }
         };
     exports( "baseConfig", baseConfig);

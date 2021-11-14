@@ -15,12 +15,10 @@ public class AdminUserModel  extends BaseModel{
 
     private String name;//姓名
     private String phone;//电话
-    private Date lastLoginTime;//最后登录时间
-    private String birthday;//生日
+    private Long lastLoginTime;//最后登录时间
     private String email;//邮箱
     private String avatar;//头像
     private Integer sex;//性别 1-男，2-女
-    private String wechatOpenId;//绑定的微信公众号id
     private String loginName;//登录名称
     private String passWord;//登录密码
 

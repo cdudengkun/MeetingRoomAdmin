@@ -17,13 +17,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
-
 import javax.persistence.criteria.Join;
 import javax.persistence.criteria.JoinType;
 import javax.persistence.criteria.Predicate;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
+import static com.cjack.meetingroomadmin.util.CustomerStringUtil.*;
 
 @Service
 public class AdminUserService {
@@ -43,8 +42,7 @@ public class AdminUserService {
         if( !user.getPassWord().equals( Md5Util.stringToMD5( passWord))){
             throw new AdminUserPassErrorException();
         }
-        user.setLastLoginTime( new Date());
-        user.setUpdateTime( new Date());
+        user.setLastLoginTime( System.currentTimeMillis());
         dao.save( user);
         return ModelUtils.copySignModel( user, AdminUserModel.class);
     }
@@ -82,18 +80,25 @@ public class AdminUserService {
             throw new Exception();
         }
         table.setPassWord( Md5Util.stringToMD5( model.getNewPassword()));
-        table.setUpdateTime( new Date());
         dao.save( table);
     }
 
-    public List<AdminUserModel> list( Long loginUserId, AdminUserModel condition){
+    public List<AdminUserModel> list( AdminUserModel condition){
         List< Sort.Order> orders = new ArrayList<>();
         orders.add( new Sort.Order( Sort.Direction.DESC, "updateTime"));
-        Specification<AdminUserTable> specification = handleConditon( loginUserId, condition);
+        Specification<AdminUserTable> specification = handleConditon( condition);
         List<AdminUserTable> userTables = dao.findAll( specification);
         List<AdminUserModel> models = new ArrayList<>();
         for( AdminUserTable userTable : userTables){
             AdminUserModel model = ModelUtils.copySignModel( userTable, AdminUserModel.class);
+            //超管无法被编辑
+            if( model.getId().equals( 1l)){
+                continue;
+            }
+            AdminRoleTable adminRole = userTable.getAdminRole();
+            model.setRoleId( adminRole.getId());
+            model.setRoleName( adminRole.getRoleName());
+            model.setRoleContent( adminRole.getContent());
             models.add( model);
         }
         return models;
@@ -110,7 +115,7 @@ public class AdminUserService {
         dao.deleteInBatch( tables);
     }
 
-    public void save( Long loginUserId, AdminUserModel model){
+    public void save( AdminUserModel model){
         AdminUserTable table;
         if( EmptyUtil.isNotEmpty( model.getId())){
             table = dao.getOne( model.getId());
@@ -133,7 +138,7 @@ public class AdminUserService {
         if( EmptyUtil.isNotEmpty( model.getPassWord())){
             table.setPassWord( Md5Util.stringToMD5( model.getPassWord()));
         }
-        AdminUserTable loginUser = dao.getOne( loginUserId);
+
         dao.save( table);
     }
 
@@ -142,16 +147,21 @@ public class AdminUserService {
      * @param model
      * @return
      */
-    private Specification<AdminUserTable> handleConditon( Long loginUserId, AdminUserModel model){
+    private Specification<AdminUserTable> handleConditon( AdminUserModel model){
         Specification< AdminUserTable> specification = (root, query, cb) -> {
             Predicate predicate = cb.conjunction();
             if( EmptyUtil.isNotEmpty( model.getRoleId())){
                 Join<AdminUserTable, AdminRoleTable> join = root.join("adminRole", JoinType.LEFT);
                 predicate.getExpressions().add( cb.equal( join.get("id"), model.getRoleId()));
             }
-            if( EmptyUtil.isNotEmpty( loginUserId)){
-                AdminUserTable loginUser = dao.getOne( loginUserId);
-
+            if( EmptyUtil.isNotEmpty( model.getName())){
+                predicate.getExpressions().add( cb.like( root.get("name"), toLikeStr( model.getName())));
+            }
+            if( EmptyUtil.isNotEmpty( model.getPhone())){
+                predicate.getExpressions().add( cb.like( root.get("phone"), toLikeStr( model.getPhone())));
+            }
+            if( EmptyUtil.isNotEmpty( model.getEmail())){
+                predicate.getExpressions().add( cb.like( root.get("email"), toLikeStr( model.getEmail())));
             }
             return predicate;
         };
