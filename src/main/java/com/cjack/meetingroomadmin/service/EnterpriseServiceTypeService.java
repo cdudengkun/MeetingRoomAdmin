@@ -1,17 +1,12 @@
 package com.cjack.meetingroomadmin.service;
 
 
-import com.cjack.meetingroomadmin.config.LayPage;
 import com.cjack.meetingroomadmin.dao.EnterpriseServiceTypeDao;
 import com.cjack.meetingroomadmin.model.EnterpriseServiceTypeModel;
-import com.cjack.meetingroomadmin.table.ConsultInfoTable;
 import com.cjack.meetingroomadmin.table.EnterpriseServiceTypeTable;
 import com.cjack.meetingroomadmin.util.EmptyUtil;
 import com.cjack.meetingroomadmin.util.ModelUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
@@ -25,20 +20,17 @@ public class EnterpriseServiceTypeService {
     @Autowired
     private EnterpriseServiceTypeDao dao;
 
-    public void list( LayPage layPage, EnterpriseServiceTypeModel model){
+    public List<EnterpriseServiceTypeModel> list( EnterpriseServiceTypeModel model){
         List< Sort.Order> orders=new ArrayList<>();
-        orders.add( new Sort.Order( Sort.Direction.DESC, "updateTime"));
+        Sort sort = new Sort( "updateTime");
         Specification<EnterpriseServiceTypeTable> specification = handleConditon( model);
-        Pageable pageable = new PageRequest( layPage.getPage()-1, layPage.getLimit(), new Sort( orders));
-
-        Page<EnterpriseServiceTypeTable> pageTable = dao.findAll( specification, pageable);
+        List<EnterpriseServiceTypeTable> tables = dao.findAll( specification, sort);
         List<EnterpriseServiceTypeModel> datas = new ArrayList<>();
-        for( EnterpriseServiceTypeTable table : pageTable.getContent()){
+        for( EnterpriseServiceTypeTable table : tables){
             EnterpriseServiceTypeModel data = ModelUtils.copySignModel( table, EnterpriseServiceTypeModel.class);
             datas.add( data);
         }
-        layPage.setData( datas);
-        layPage.setCount( (Long.valueOf( pageTable.getTotalElements())).intValue());
+        return datas;
     }
 
     public void del( String ids){

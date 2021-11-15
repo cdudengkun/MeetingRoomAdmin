@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>layui</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link rel="stylesheet" href="/lib/layui-v2.6.3/css/layui.css" media="all">
+    <link rel="stylesheet" href="/css/public.css" media="all">
+    <script src="/lib/layui-v2.6.3/layui.js" charset="utf-8"></script>
+    <script src="/js/lay-config.js?v=2.0.0" charset="utf-8"></script>
+    <script type="text/javascript" src="formData.js"></script>
+    <style>
+        body {
+            background-color: #ffffff;
+        }
+        #coverImg_div{ width: 350px; height: 230px;cursor:pointer;}
+        #coverImg_div:after{ position:absolute; width:100%; height:100%; line-height:230px; z-index:-1; text-align:center; font-size:20px; content:"点击上传企业服务封面"; left:0; top:0; color:#9F9F9F;}
+        #coverImg_img{ width:100%; height:100%;}
+    </style>
+</head>
+<body>
+<div class="layui-form layuimini-form">
+    <form class="layui-form layui-row layui-col-space10" lay-filter="formFilter">
+        <input type="hidden" name="id">
+        <div id="content_div">
+            <div class="layui-form-item">
+                <label class="layui-form-label required">标题</label>
+                <div class="layui-input-inline">
+                    <input type="text" name="title" lay-verify="required" lay-reqtext="标题不能为空" placeholder="请输入标题"  class="layui-input">
+                </div>
+            </div>
+
+            <div class="layui-form-item magt3">
+                <label class="layui-form-label required">封面图片</label>
+                <div class="layui-input-block">
+                    <div class="layui-col-xs5 layui-upload-list" id="coverImg_div">
+                        <img class="layui-upload-img" id="coverImg_img">
+                        <input type="hidden" name="cover" lay-verify="required" lay-reqtext="封面图片不能为空" required>
+                    </div>
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label required">类别</label>
+                <div class="layui-input-inline">
+                    <select name="typeId">
+                        <option >请选择类别</option>
+                    </select>
+                </div>
+            </div>
+            <div class="layui-form-item layui-form-text">
+                <label class="layui-form-label">内容</label>
+                <div class="layui-input-block">
+                    <textarea name="content" class="layui-textarea"  lay-verify="required" lay-reqtext="内容不能为空" placeholder="请输入内容"></textarea>
+                </div>
+            </div>
+        </div>
+
+        <div class="layui-form-item" id="submitDiv">
+            <hr class="layui-bg-gray" />
+            <div class="layui-input-block layui-right">
+                <button class="layui-btn layui-btn-normal" lay-submit lay-filter="saveBtn">确认保存</button>
+            </div>
+        </div>
+        <div id="closeDiv">
+            <hr class="layui-bg-gray" />
+            <div class="layui-right">
+                <a class="layui-btn layui-btn-normal" id="closeBtn"><i class="layui-icon">&#xe609;</i>关闭</a>
+            </div>
+        </div>
+    </form>
+</div>
+
+</body>
+</html>

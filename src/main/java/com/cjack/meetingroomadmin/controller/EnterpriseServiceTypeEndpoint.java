@@ -2,7 +2,6 @@ package com.cjack.meetingroomadmin.controller;
 
 import com.cjack.meetingroomadmin.config.AjaxResult;
 import com.cjack.meetingroomadmin.config.CommonConfig;
-import com.cjack.meetingroomadmin.config.LayPage;
 import com.cjack.meetingroomadmin.model.EnterpriseServiceTypeModel;
 import com.cjack.meetingroomadmin.service.EnterpriseServiceTypeService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,12 +29,11 @@ public class EnterpriseServiceTypeEndpoint extends BaseEndpoint{
      */
     @RequestMapping(value = "/list", method = RequestMethod.GET)
     @ResponseBody
-    public AjaxResult list( HttpSession session, LayPage layPage, EnterpriseServiceTypeModel model) {
+    public AjaxResult list( HttpSession session, EnterpriseServiceTypeModel model) {
         try{
             Object adminUserId = session.getAttribute( CommonConfig.SESSION_NAME);
             model.setAdminUserId( (Long)adminUserId);
-            service.list( layPage, model);
-            return AjaxResult.SUCCESS( layPage);
+            return AjaxResult.SUCCESS( service.list( model));
         }catch ( Exception e) {
             e.printStackTrace();
             return AjaxResult.ERROR();

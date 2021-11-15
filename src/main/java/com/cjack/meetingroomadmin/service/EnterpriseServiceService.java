@@ -37,6 +37,8 @@ public class EnterpriseServiceService {
         List<EnterpriseServiceModel> datas = new ArrayList<>();
         for( EnterpriseServiceTable table : pageTable.getContent()){
             EnterpriseServiceModel data = ModelUtils.copySignModel( table, EnterpriseServiceModel.class);
+            data.setTypeId( table.getType().getId());
+            data.setTypeName( table.getType().getName());
             datas.add( data);
         }
         layPage.setData( datas);

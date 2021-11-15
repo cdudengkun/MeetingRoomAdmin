@@ -105,6 +105,13 @@
               "target": "_self"
             },
             {
+              "title": "企业服务类型",
+              "href": "/pages/enterpriseServiceType/list.html",
+              "icon": "fa fa-tachometer",
+              "privilegeName": "enterpriseServiceType",
+              "target": "_self"
+            },
+            {
               "title": "企业服务",
               "href": "/pages/enterpriseService/list.html",
               "icon": "fa fa-tachometer",
