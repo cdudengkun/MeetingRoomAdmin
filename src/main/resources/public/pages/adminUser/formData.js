@@ -68,6 +68,7 @@ layui.use(['form','layer', 'baseConfig'], function () {
                 top.layer.msg( res.msg);
             }
         });
+        return false;
     });
 
 });

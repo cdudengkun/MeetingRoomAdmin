@@ -122,6 +122,7 @@ layui.use(['form','layer', 'baseConfig', "upload", 'layarea'], function () {
                 top.layer.msg( res.msg);
             }
         });
+        return false;
     });
 
 });

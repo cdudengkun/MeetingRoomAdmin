@@ -17,7 +17,7 @@ layui.use(['form','layer','laydate','table','laytpl','element','util','baseConfi
     flow.load({
         elem: '#Images', //流加载容器
         done: function(page, next){ //加载下一页
-            var imgList = [],pics = data.imgs ? data.imgs.split( ",") : [];
+            var imgList = [],pics = data && data.imgs ? data.imgs.split( ",") : [];
             var maxPage = imgNums*page < pics.length ? imgNums*page : pics.length;
             if( pics && pics.length > 0){
                 setTimeout(function(){
@@ -26,13 +26,13 @@ layui.use(['form','layer','laydate','table','laytpl','element','util','baseConfi
                         if( !pic){
                             continue;
                         }
-                        imgList.push('<li>' +
+                        imgList.push('<li style="width: 200px;float: left;margin-right: 20px;">' +
                                         '<img style="width: 200px; height:200px;" layer-src="'+ pic +'" src="'+ pic +'">' +
-                                        '<div class="operate">' +
-                                            '<div class="check">' +
+                                        '<div class="operate" style="margin-top: 3px;">' +
+                                            '<div class="check" style="float: left;">' +
                                                 '<input type="checkbox" name="img" lay-filter="choose" value="' + pic + '" lay-skin="primary">' +
                                             '</div>' +
-                                            '<i class="layui-icon img_del">&#xe640;</i>' +
+                                            '<div style="height: 16px;width:16px;float:left;margin-top: 1px;"><i class="layui-icon img_del">&#xe640;</i></div>' +
                                         '</div>' +
                                       '</li>');
                     }
@@ -57,7 +57,7 @@ layui.use(['form','layer','laydate','table','laytpl','element','util','baseConfi
     //图片上传
     upload.render({
         elem: '.uploadNewImg',
-        url: '/file/upload?type=cooperationShoppingImg',
+        url: '/file/upload?type=meetingZoneImg',
         multiple: true,
         done: function(res){
             if( res.code == 200){
@@ -70,13 +70,13 @@ layui.use(['form','layer','laydate','table','laytpl','element','util','baseConfi
                     success: function( res){
                         if( res.code == 200){
                             top.layer.msg( "上传成功");
-                            $('#Images').prepend('<li>' +
+                            $('#Images').prepend('<li style="width: 200px;float: left;margin-right: 20px;">' +
                                     '<img style="width: 200px; height:200px;" layer-src="'+ filePath +'" src="'+ filePath +'"  class="layui-upload-img">' +
-                                    '<div class="operate">' +
-                                        '<div class="check">' +
+                                    '<div class="operate" style="margin-top: 3px;">' +
+                                        '<div class="check" style="float: left;">' +
                                             '<input type="checkbox" name="img" lay-filter="choose" value="' + filePath + '" lay-skin="primary">' +
                                         '</div>' +
-                                        '<i class="layui-icon img_del">&#xe640;</i>' +
+                                        '<div style="height: 16px;width:16px;float:left;margin-top: 1px;"><i class="layui-icon img_del">&#xe640;</i></div>' +
                                     '</div>' +
                                 '</li>');
                             //设置图片的高度

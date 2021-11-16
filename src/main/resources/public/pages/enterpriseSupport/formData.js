@@ -96,6 +96,7 @@ layui.use(['form','layer', 'baseConfig', "upload"], function () {
                 top.layer.msg( res.msg);
             }
         });
+        return false;
     });
 
 });

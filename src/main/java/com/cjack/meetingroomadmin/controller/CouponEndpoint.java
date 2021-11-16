@@ -2,8 +2,8 @@ package com.cjack.meetingroomadmin.controller;
 
 import com.cjack.meetingroomadmin.config.AjaxResult;
 import com.cjack.meetingroomadmin.config.LayPage;
-import com.cjack.meetingroomadmin.model.MeetingRoomModel;
-import com.cjack.meetingroomadmin.service.MeetingRoomService;
+import com.cjack.meetingroomadmin.model.CouponModel;
+import com.cjack.meetingroomadmin.service.CouponService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -19,7 +19,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 public class CouponEndpoint extends BaseEndpoint{
 
     @Autowired
-    MeetingRoomService service;
+    CouponService service;
 
     /**
      * 列表
@@ -27,7 +27,7 @@ public class CouponEndpoint extends BaseEndpoint{
      */
     @RequestMapping(value = "/list", method = RequestMethod.GET)
     @ResponseBody
-    public AjaxResult list( LayPage layPage, MeetingRoomModel model) {
+    public AjaxResult list( LayPage layPage, CouponModel model) {
         try{
             service.list( layPage, model);
             return AjaxResult.SUCCESS( layPage);
@@ -43,7 +43,7 @@ public class CouponEndpoint extends BaseEndpoint{
      */
     @RequestMapping(value = "/addOrUpdate", method = RequestMethod.POST)
     @ResponseBody
-    public AjaxResult addOrUpdate( MeetingRoomModel model) {
+    public AjaxResult addOrUpdate( CouponModel model) {
         try{
             if( isAdd( model.getId())){
                 model.setCreateTime( System.currentTimeMillis());
