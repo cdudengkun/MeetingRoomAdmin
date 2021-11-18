@@ -8,7 +8,7 @@ import javax.persistence.*;
  * 政策解读表视频表
  */
 @Entity
-@Table(name="enterprise_support_video", catalog = "meeting_room")
+@Table(name="policy_interpretation_video", catalog = "meeting_room")
 @Data
 public class PolicyInterpretationVideoTable {
 

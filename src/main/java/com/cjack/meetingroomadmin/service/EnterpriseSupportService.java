@@ -69,7 +69,7 @@ public class EnterpriseSupportService {
         Specification< EnterpriseSupportTable> specification = (root, query, cb) -> {
             Predicate predicate = cb.conjunction();
             if( EmptyUtil.isNotEmpty( model.getName())){
-                predicate.getExpressions().add( cb.like( root.get("title"), toLikeStr( model.getName())));
+                predicate.getExpressions().add( cb.like( root.get("name"), toLikeStr( model.getName())));
             }
             return predicate;
         };

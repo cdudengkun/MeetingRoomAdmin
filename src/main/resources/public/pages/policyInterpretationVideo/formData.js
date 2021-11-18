@@ -5,9 +5,10 @@ layui.use(['form','layer', 'baseConfig', "upload"], function () {
         upload = layui.upload,
         baseConfig = layui.baseConfig;
 
-    var pageName = "enterpriseSupport";
+    var pageName = "policyInterpretation";
     var data = baseConfig.getDataFromList( pageName);
     var actionType = baseConfig.getUrlParamer( "actionType");
+    var policyInterpretationId = baseConfig.getUrlParamer( "policyInterpretationId");
 
     /**
      * 将list页面通过url传过来的参数加载到form表单里面去
@@ -46,10 +47,11 @@ layui.use(['form','layer', 'baseConfig', "upload"], function () {
         var index = parent.layer.getFrameIndex( window.name);
         parent.layer.close( index);
     });
-    //上传封面
+
     upload.render({
         elem: '#uploadFile',
-        url: '/file/upload?type=enterpriseSupportFile',
+        url: '/file/upload?type=policyInterpretationVedio',
+        accept: "video",
         before: function(obj){ //obj参数包含的信息，跟 choose回调完全一致，可参见上文。
             obj.preview(function(index, file, result) {
                 var size = file.size;//文件大小填写到数据表里面，这里的单位是byte
@@ -70,6 +72,7 @@ layui.use(['form','layer', 'baseConfig', "upload"], function () {
             if( res.code == 200){
                 var filePath = res.data.filePath;
                 $( "input[name=url]").val( filePath);
+                $( "#fileVideo").attr( "src", filePath);
             }
         }
     });
@@ -81,8 +84,9 @@ layui.use(['form','layer', 'baseConfig', "upload"], function () {
         //弹出loading
         var index = top.layer.msg('数据提交中，请稍候',{icon: 16,time:false,shade:0.8});
         var jsonBody = data.field;
+        jsonBody.policyInterpretationId = policyInterpretationId;
         //提交数据
-        $.post("/" + pageName + "/addOrUpdate", jsonBody, function( res){
+        $.post("/" + pageName + "/uploadVideoFile", jsonBody, function( res){
             if( res.code == 200){
                 top.layer.close( index);
                 top.layer.msg( res.msg);

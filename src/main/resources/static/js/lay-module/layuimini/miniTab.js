@@ -70,6 +70,15 @@ layui.define(["element", "layer", "jquery"], function (exports) {
         },
 
         /**
+         * 切换选项卡
+         * @param tabId
+         */
+        changeIframe: function (tabId) {
+            var ele = parent.layui.element
+            ele.tabChange('layuiminiTab', tabId);
+        },
+
+        /**
          * 删除tab窗口
          * @param tabId
          * @param isParent
