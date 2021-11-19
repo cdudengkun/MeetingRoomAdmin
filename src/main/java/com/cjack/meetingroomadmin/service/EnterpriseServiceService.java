@@ -6,6 +6,7 @@ import com.cjack.meetingroomadmin.dao.EnterpriseServiceDao;
 import com.cjack.meetingroomadmin.model.EnterpriseServiceModel;
 import com.cjack.meetingroomadmin.table.EnterpriseServiceTable;
 import com.cjack.meetingroomadmin.table.EnterpriseServiceTypeTable;
+import com.cjack.meetingroomadmin.util.CustomerStringUtil;
 import com.cjack.meetingroomadmin.util.EmptyUtil;
 import com.cjack.meetingroomadmin.util.ModelUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -71,7 +72,7 @@ public class EnterpriseServiceService {
         Specification<EnterpriseServiceTable> specification = (root, query, cb) -> {
             Predicate predicate = cb.conjunction();
             if( EmptyUtil.isNotEmpty( model.getTitle())){
-                predicate.getExpressions().add( cb.equal( root.get("title"), model.getTitle()));
+                predicate.getExpressions().add( cb.like( root.get("title"), CustomerStringUtil.toLikeStr( model.getTitle())));
             }
             if( EmptyUtil.isNotEmpty( model.getTypeId())){
                 Join<EnterpriseServiceTable, EnterpriseServiceTypeTable> join = root.join("type", JoinType.LEFT);

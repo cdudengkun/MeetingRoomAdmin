@@ -18,7 +18,9 @@ public class MeetingRoomModel extends BaseModel{
     private String addrDetail;
     private String levelName;//规格
 
+    private MeetingZoneModel meetingZoneModel;
     private Long meetingZoneId;
+    private Long levelId;
 
     private Integer status;//状态，0-未审核，1-审核通过，2-审核拒绝
 }

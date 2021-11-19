@@ -1,8 +1,11 @@
 package com.cjack.meetingroomadmin.service;
 
 import com.cjack.meetingroomadmin.config.LayPage;
+import com.cjack.meetingroomadmin.dao.DefineSignValueDao;
 import com.cjack.meetingroomadmin.dao.MeetingRoomDao;
+import com.cjack.meetingroomadmin.dao.MeetingZoneDao;
 import com.cjack.meetingroomadmin.model.MeetingRoomModel;
+import com.cjack.meetingroomadmin.model.MeetingZoneModel;
 import com.cjack.meetingroomadmin.table.MeetingRoomTable;
 import com.cjack.meetingroomadmin.table.MeetingZoneTable;
 import com.cjack.meetingroomadmin.util.EmptyUtil;
@@ -20,12 +23,17 @@ import javax.persistence.criteria.JoinType;
 import javax.persistence.criteria.Predicate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class MeetingRoomService {
 
     @Autowired
     private MeetingRoomDao dao;
+    @Autowired
+    private MeetingZoneDao meetingZoneDao;
+    @Autowired
+    private DefineSignValueDao defineSignValueDao;
 
     public void list(LayPage page, MeetingRoomModel model){
         List< Sort.Order> orders=new ArrayList<>();
@@ -33,7 +41,14 @@ public class MeetingRoomService {
         Pageable pageable = new PageRequest( page.getPage()-1, page.getLimit(), new Sort( orders));
         Specification<MeetingRoomTable> specification = handleConditon( model);
         Page<MeetingRoomTable> pageTable = dao.findAll( specification, pageable);
-        page.setData( ModelUtils.copyListModel( pageTable.getContent(), MeetingRoomModel.class));
+        page.setData( pageTable.getContent().stream().map( e->{
+            MeetingRoomModel m = ModelUtils.copySignModel( e, MeetingRoomModel.class);
+            m.setMeetingZoneModel( ModelUtils.copySignModel( e.getMeetingZone(), MeetingZoneModel.class));
+            m.setMeetingZoneId( e.getMeetingZone().getId());
+            m.setLevelName( e.getLevel().getDataKey());
+            m.setLevelId( e.getLevel().getId());
+            return m;
+        }).collect(Collectors.toList()));
         page.setCount( Long.valueOf( pageTable.getTotalElements()).intValue());
     }
 
@@ -56,6 +71,8 @@ public class MeetingRoomService {
         }else{
             table = ModelUtils.copySignModel( model, MeetingRoomTable.class);
         }
+        table.setLevel( defineSignValueDao.getOne( model.getLevelId()));
+        table.setMeetingZone( meetingZoneDao.getOne( model.getMeetingZoneId()));
         dao.save( table);
     }
 

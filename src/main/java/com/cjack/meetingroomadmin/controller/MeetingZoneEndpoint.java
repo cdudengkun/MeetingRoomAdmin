@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpSession;
+import java.util.List;
 
 /**
  * 会议中心/楼宇
@@ -34,6 +35,22 @@ public class MeetingZoneEndpoint extends BaseEndpoint{
         try{
             service.list( layPage, model);
             return AjaxResult.SUCCESS( layPage);
+        }catch ( Exception e) {
+            e.printStackTrace();
+            return AjaxResult.ERROR();
+        }
+    }
+
+    /**
+     * 列表
+     * @return
+     */
+    @RequestMapping(value = "/listAll", method = RequestMethod.GET)
+    @ResponseBody
+    public AjaxResult listAll( MeetingZoneModel model) {
+        try{
+            List<MeetingZoneModel> datas = service.listAll(model);
+            return AjaxResult.SUCCESS( datas);
         }catch ( Exception e) {
             e.printStackTrace();
             return AjaxResult.ERROR();

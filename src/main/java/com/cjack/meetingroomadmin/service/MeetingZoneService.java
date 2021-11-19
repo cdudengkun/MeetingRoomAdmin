@@ -54,6 +54,29 @@ public class MeetingZoneService {
         page.setCount( Long.valueOf( pageTable.getTotalElements()).intValue());
     }
 
+    public List<MeetingZoneModel> listAll( MeetingZoneModel condition){
+        Specification<MeetingZoneTable> specification = handleConditon( condition);
+        List<MeetingZoneTable> tables = dao.findAll( specification);
+        List<MeetingZoneModel> models = new ArrayList<>();
+        for( MeetingZoneTable table : tables){
+            MeetingZoneModel model = ModelUtils.copySignModel( table, MeetingZoneModel.class);
+            if( table.getProvince() != null){
+                model.setProvinceId( table.getProvince().getAreaCode());
+                model.setProvinceName( table.getProvince().getName());
+            }
+            if( table.getCity() != null){
+                model.setCityId( table.getCity().getAreaCode());
+                model.setCityName( table.getCity().getName());
+            }
+            if( table.getCounty() != null){
+                model.setCountyId( table.getCounty().getAreaCode());
+                model.setCountyName( table.getCounty().getName());
+            }
+            models.add( model);
+        }
+        return models;
+    }
+
     //先删除文章段落，再删除文章
     public void del( String ids){
         List<MeetingZoneTable> tables = new ArrayList<>();
@@ -118,6 +141,9 @@ public class MeetingZoneService {
             Predicate predicate = cb.conjunction();
             if( EmptyUtil.isNotEmpty( model.getDetail())){
                 predicate.getExpressions().add( cb.like( root.get("detail"), CustomerStringUtil.toLikeStr( model.getDetail())));
+            }
+            if( EmptyUtil.isNotEmpty( model.getName())){
+                predicate.getExpressions().add( cb.like( root.get("name"), CustomerStringUtil.toLikeStr( model.getName())));
             }
             return predicate;
         };
