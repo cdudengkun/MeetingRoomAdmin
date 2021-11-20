@@ -12,6 +12,6 @@ public class ConsultInfoModel extends BaseModel{
     private String content;//解答内容
     private String keyWords;//关键字，多个关键字英文逗号分割
     private Integer isHot;//是否热门，1-是，2-否
-    private Integer matchCount;//匹配次数
+    private Integer matchCount = 0;//匹配次数
 
 }
