@@ -5,6 +5,7 @@ import com.cjack.meetingroomadmin.config.LayPage;
 import com.cjack.meetingroomadmin.dao.AdminUserDao;
 import com.cjack.meetingroomadmin.dao.AppUserDao;
 import com.cjack.meetingroomadmin.exception.CommonException;
+import com.cjack.meetingroomadmin.model.AppUserAccountModel;
 import com.cjack.meetingroomadmin.model.AppUserModel;
 import com.cjack.meetingroomadmin.table.AdminRoleTable;
 import com.cjack.meetingroomadmin.table.AdminUserTable;
@@ -65,6 +66,7 @@ public class AppUserService {
                 data.setCountyId( appUser.getCounty().getId());
                 data.setCountyName( appUser.getCounty().getName());
             }
+            data.setAccountModel( ModelUtils.copySignModel( appUser.getAppUserAccount(), AppUserAccountModel.class));
             datas.add( data);
         }
         layPage.setData( datas);
@@ -87,10 +89,15 @@ public class AppUserService {
      * 启用禁用
      * @return
      */
-    public void updateStatus( AppUserModel model) throws CommonException {
-        AppUserTable userTable = dao.getOne( model.getId());
-        userTable.setStatus( model.getStatus());
-        dao.save( userTable);
+    public void update( AppUserModel model) throws CommonException {
+        AppUserTable table;
+        if( EmptyUtil.isNotEmpty( model.getId())){
+            table = dao.findOne( model.getId());
+            ModelUtils.copySignModel( model, table);
+        }else{
+            table = ModelUtils.copySignModel( model, AppUserTable.class);
+        }
+        dao.save( table);
     }
 
     /**

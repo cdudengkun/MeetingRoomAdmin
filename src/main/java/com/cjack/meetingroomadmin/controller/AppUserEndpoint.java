@@ -43,11 +43,11 @@ public class AppUserEndpoint extends BaseEndpoint{
      * 启用禁用
      * @return
      */
-    @RequestMapping(value = "/updateStatus", method = RequestMethod.POST)
+    @RequestMapping(value = "/update", method = RequestMethod.POST)
     @ResponseBody
-    public AjaxResult updateStatus( AppUserModel model) {
+    public AjaxResult update( AppUserModel model) {
         try{
-            service.updateStatus( model);
+            service.update( model);
             return AjaxResult.SUCCESS();
         }catch ( CommonException e) {
             return AjaxResult.ERROR( e.getCode(), e.getMessage());
