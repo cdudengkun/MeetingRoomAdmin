@@ -15,6 +15,6 @@ public class FeedBackModel {
     private Date updateTime;
 
     private String content;//反馈内容
-    private String name;//联系人电话
-    private String phone;//联系人姓名
+    private String name;//联系人姓名
+    private String phone;//联系人电话
 }
