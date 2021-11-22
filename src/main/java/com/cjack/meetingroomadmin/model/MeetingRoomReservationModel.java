@@ -9,7 +9,7 @@ import lombok.Data;
  */
 @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 @Data
-public class MeetingRoomReservationModel  extends BaseModel{
+public class MeetingRoomReservationModel  extends MeetingRoomModel{
 
     private Long startTime;
     private Long endTime;

@@ -18,6 +18,9 @@ import java.util.List;
 public final class ModelUtils {
 
     public static <T> T copySignModel( Object source, Class< T> destClass) {
+        if( source == null){
+            return null;
+        }
         T dest = null;
         try {
             dest = destClass.newInstance();

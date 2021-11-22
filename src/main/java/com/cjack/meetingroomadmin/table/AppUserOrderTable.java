@@ -26,6 +26,7 @@ public class AppUserOrderTable {
     private Long payTime;//支付时间
     private Integer status;//状态，1-待付款，2-进行中，3-已完成，4-已取消
     private Integer vipHour;//如果是会议室，则是订单使用会员权益时长；如果是工位，则是会员权益天数
+    private Integer type;//商品类型 1-工位，2-会议室,3-vip
 
     @OneToOne( cascade = {CascadeType.REFRESH, CascadeType.MERGE})
     @JoinColumn( name = "app_user_id")
@@ -36,6 +37,19 @@ public class AppUserOrderTable {
     private AppUserCouponTable appUserCoupon;//使用优惠券
 
     @OneToOne( cascade = {CascadeType.REFRESH, CascadeType.MERGE})
-    private AppUserOrderDetailTable detail;//关联订单详细，这里现在订单和订单明细是一对一
+    @JoinColumn( name = "app_user_order_id")
+    private AppUserOrderTable order;
+
+    @OneToOne( cascade = {CascadeType.REFRESH, CascadeType.MERGE})
+    @JoinColumn( name = "meeting_room_reservation_id")
+    private MeetingRoomReservationTable meetingRoom;//关联会议室预定信息
+
+    @OneToOne( cascade = {CascadeType.REFRESH, CascadeType.MERGE})
+    @JoinColumn( name = "work_station_reservation_id")
+    private WorkStationReservationTable workStation;//关联工位预定信息
+
+    @OneToOne( cascade = {CascadeType.REFRESH, CascadeType.MERGE})
+    @JoinColumn( name = "meeting_zone_id")
+    private MeetingZoneTable meetingZone;//订单所属 会议中心信息
 
 }

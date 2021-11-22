@@ -157,6 +157,10 @@ layui.define(["form","jquery"],function(exports){
                 }
                 return str;
             },
+            diffToHour: function (start, end) {
+                var hour = (end - start)/ 1000 / 60 / 60;
+                return hour + "小时";
+            }
         };
     exports( "baseConfig", baseConfig);
 })

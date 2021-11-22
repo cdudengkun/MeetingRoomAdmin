@@ -17,7 +17,14 @@ public class AppUserOrderModel  extends BaseModel{
     private Long payTime;
     private Integer status;
     private Integer vipHour;
-    private CouponModel coupon;
+    private CouponModel couponModel;
     private Integer payType;
 
+    private AppUserModel appUserModel;
+
+    private MeetingRoomReservationModel meetingRoomReservationModel;
+    private WorkStationReservationModel workStationReservationModel;
+    private MeetingZoneModel meetingZoneModel;
+
+    private Integer type;//商品类型 1-工位，2-会议室,3-vip
 }

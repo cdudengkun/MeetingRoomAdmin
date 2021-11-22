@@ -2,7 +2,7 @@ package com.cjack.meetingroomadmin.service;
 
 import com.cjack.meetingroomadmin.config.LayPage;
 import com.cjack.meetingroomadmin.dao.AppUserOrderDao;
-import com.cjack.meetingroomadmin.model.AppUserOrderModel;
+import com.cjack.meetingroomadmin.model.*;
 import com.cjack.meetingroomadmin.table.AppUserOrderTable;
 import com.cjack.meetingroomadmin.util.EmptyUtil;
 import com.cjack.meetingroomadmin.util.ModelUtils;
@@ -13,6 +13,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
+
 import javax.persistence.criteria.Predicate;
 import java.util.ArrayList;
 import java.util.List;
@@ -32,7 +33,18 @@ public class OrderService {
         List<AppUserOrderModel> datas = new ArrayList<>();
         for( AppUserOrderTable table : pageTable.getContent()){
             AppUserOrderModel data = ModelUtils.copySignModel( table, AppUserOrderModel.class);
+            data.setAppUserModel( ModelUtils.copySignModel( table.getAppUser(), AppUserModel.class));
+            if( table.getAppUserCoupon() != null){
+                data.setCouponModel( ModelUtils.copySignModel( table.getAppUserCoupon().getCoupon(), CouponModel.class));
+            }
 
+            data.setMeetingZoneModel( ModelUtils.copySignModel( table.getMeetingZone(), MeetingZoneModel.class));
+
+            MeetingRoomReservationModel meetingRoomReservationModel = ModelUtils.copySignModel( table.getMeetingRoom(), MeetingRoomReservationModel.class);
+            ModelUtils.copySignModel( table.getMeetingRoom().getMeetingRoom(), meetingRoomReservationModel);
+            data.setMeetingRoomReservationModel( meetingRoomReservationModel);
+
+            data.setWorkStationReservationModel( ModelUtils.copySignModel( table.getWorkStation(), WorkStationReservationModel.class));
             datas.add( data);
         }
         page.setData( datas);

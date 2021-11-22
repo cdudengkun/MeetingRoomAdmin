@@ -21,7 +21,7 @@ public class OrderEndpoint {
     @Autowired
     OrderService service;
 
-    @RequestMapping(value = "/list", method = RequestMethod.POST)
+    @RequestMapping(value = "/list", method = RequestMethod.GET)
     @ResponseBody
     public AjaxResult list( LayPage layPage, AppUserOrderModel model) {
         service.list( layPage, model);
