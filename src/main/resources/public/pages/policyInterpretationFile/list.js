@@ -9,28 +9,25 @@ layui.use(['form', 'table', 'util', 'baseConfig'], function () {
     var pageName = "policyInterpretation";
     var minWidth = 900;
     var minHeight = 500;
-    var formTitleSuffix = "视频内容";
+    var formTitleSuffix = "附件";
     var policyInterpretationId = baseConfig.getUrlParamer( "policyInterpretationId");
 
     table.render({
         id : "listTable",
         elem: '#currentTableId',
-        url : '/' + pageName + '/video/list?policyInterpretationId=' + policyInterpretationId,
+        url : '/' + pageName + '/attachment/list?policyInterpretationId=' + policyInterpretationId,
         toolbar: '#toolbar',
         defaultToolbar: [],
         cols: [[
-            {field: 'title', width: 300, title: '标题'},
-            {field: 'url', width: 500, title: '视频文件地址'},
-            {field: 'size', width: 150, title: '视频文件大小'},
-            {field: 'downloadCount', width: 150, title: '视频观看次数'},
+            {field: 'name', width: 300, title: '名称'},
+            {field: 'url', width: 500, title: '下载地址'},
+            {field: 'size', width: 150, title: '文件大小'},
+            {field: 'downloadCount', width: 150, title: '下载次数'},
             {field: 'createTime', width: 200, title: '创建时间', templet : function( d){
                 return util.toDateString( d.createTime);
             }},
             {title: '操作', minWidth: 150, toolbar: '#currentTableBar', align: "center"}
         ]],
-        limits: [10, 15, 20, 25, 50, 100],
-        limit: 15,
-        page: true,
         response : {
             statusCode: 200 //规定成功的状态码，默认：0
         },
@@ -38,8 +35,8 @@ layui.use(['form', 'table', 'util', 'baseConfig'], function () {
             return {
                 "code": res.code, //解析接口状态
                 "msg": res.msg, //解析提示文本
-                "count": res.data.count, //解析数据长度
-                "data": res.data.data //解析数据列表
+                "count": res.data.length, //解析数据长度
+                "data": res.data //解析数据列表
             };
         }
     });

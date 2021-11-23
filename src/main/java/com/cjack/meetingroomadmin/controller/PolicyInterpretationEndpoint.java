@@ -168,7 +168,7 @@ public class PolicyInterpretationEndpoint extends BaseEndpoint{
      * 列表
      * @return
      */
-    @RequestMapping(value = "/file/list", method = RequestMethod.GET)
+    @RequestMapping(value = "/attachment/list", method = RequestMethod.GET)
     @ResponseBody
     public AjaxResult fileList( HttpSession session , PolicyInterpretationFileModel model) {
         try{

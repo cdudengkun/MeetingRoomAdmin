@@ -4,11 +4,9 @@ import lombok.Data;
 
 import javax.persistence.*;
 
-/**
- * 企业助力表
- */
+
 @Entity
-@Table(name="enterprise_support", catalog = "meeting_room")
+@Table(name="policy_interpretation_file", catalog = "meeting_room")
 @Data
 public class PolicyInterpretationFileTable {
 

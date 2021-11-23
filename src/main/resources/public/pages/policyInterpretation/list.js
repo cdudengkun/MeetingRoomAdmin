@@ -41,6 +41,7 @@ layui.use(['form', 'table', 'util', 'baseConfig',"miniTab"], function () {
                         str += '<a class="layui-btn layui-btn-normal layui-btn-xs data-count-edit" lay-event="editVideo">编辑视频文件</a>\n';
                        break;
                     case 2:
+                        str += '<a class="layui-btn layui-btn-normal layui-btn-xs data-count-edit" lay-event="editAttachment">编辑附件文件</a>\n';
                         break;
                     case 3:
                         str += '<a class="layui-btn layui-btn-normal layui-btn-xs data-count-edit" lay-event="editImg">编辑图片内容</a>\n';
@@ -132,12 +133,21 @@ layui.use(['form', 'table', 'util', 'baseConfig',"miniTab"], function () {
             });
         } else if (obj.event === 'editVideo') {
             miniTab.create({
-                title: "政策解读[" + data.name + "]视频详情",
+                title: "政策解读[" + data.title + "]视频详情编辑",
                 href: "/pages/policyInterpretationVideo/list.html?policyInterpretationId=" + data.id,
                 tabId: "policyInterpretationVideo" + data.id,
                 isIframe : true
             });
             miniTab.changeIframe( "policyInterpretationVideo" + data.id);
+
+        } else if (obj.event === 'editAttachment') {
+            miniTab.create({
+                title: "政策解读[" + data.title + "]附件内容编辑",
+                href: "/pages/policyInterpretationFile/list.html?policyInterpretationId=" + data.id,
+                tabId: "policyInterpretationFile" + data.id,
+                isIframe : true
+            });
+            miniTab.changeIframe( "policyInterpretationFile" + data.id);
 
         } else if (obj.event === 'delete') {
             layer.confirm('确认删除？', function (index) {
