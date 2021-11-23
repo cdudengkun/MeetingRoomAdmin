@@ -6,7 +6,6 @@ import com.cjack.meetingroomadmin.model.AppUserOrderModel;
 import com.cjack.meetingroomadmin.service.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -31,7 +30,7 @@ public class OrderEndpoint {
     //修改订单状态
     @RequestMapping(value = "/updateOrderStatus", method = RequestMethod.POST)
     @ResponseBody
-    public AjaxResult updateOrderStatus(@RequestBody AppUserOrderModel model) {
+    public AjaxResult updateOrderStatus( AppUserOrderModel model) {
         service.updateOrderStatus( model);
         return AjaxResult.SUCCESS();
     }

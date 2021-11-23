@@ -19,18 +19,20 @@ layui.use(['form', 'table', 'util', 'baseConfig'], function () {
         defaultToolbar: [],
         cols: [[
             {field: 'orderNo', width: 150, title: '订单号'},
-            {field: 'type', width: 150, title: '订单类型', templet : function( d){
+            {field: 'type', width: 100, title: '订单类型', templet : function( d){
                 switch (d.type) {
                     case 1: return "工位";
                     case 2: return "会议室";
                 }
             }},
-            {field: 'status', width: 100, title: '订单状态', templet : function( d){
+            {field: 'status', width: 120, title: '订单状态', templet : function( d){
                 switch (d.status) {
                     case 1: return "待付款";
                     case 2: return "进行中";
                     case 3: return "已完成";
-                    case 4: return "已取消";
+                    case 4: return "用户申请取消";
+                    case 5: return "取消审核通过";
+                    case 6: return "取消审核未通过";
                 }
             }},
             {field: 'name', width: 100, title: '预订人', templet : function( d){
@@ -52,7 +54,7 @@ layui.use(['form', 'table', 'util', 'baseConfig'], function () {
             {field: 'meetingZoneName', width: 200, title: '所属会议中心', templet : function( d){
                 return d.meetingZoneModel.name;
             }},
-            {field: '', width: 300, title: '订单内容', templet : function( d){
+            {field: '', width: 250, title: '订单内容', templet : function( d){
                     switch (d.type) {
                         case 1:
                             var str = "工位数：" + d.workStationReservationModel.count + "<br/>";
@@ -71,7 +73,13 @@ layui.use(['form', 'table', 'util', 'baseConfig'], function () {
             {field: 'payTime', width: 150, title: '支付时间', templet : function( d){
                 return util.toDateString( d.payTime);
             }},
-            {title: '操作', minWidth: 150, toolbar: '#currentTableBar', align: "center"}
+            {title: '操作', minWidth: 150, align: "center", templet : function( d){
+                var str = '<a class="layui-btn layui-btn-xs" lay-event="detail">详细</a>';
+                if( d.status == 3){
+                    str += "<a class=\"layui-btn layui-btn-normal layui-btn-xs data-count-edit\" lay-event=\"review\">审核</a>";
+                }
+                return str;
+            }}
         ]],
         limits: [10, 15, 20, 25, 50, 100],
         limit: 15,
@@ -139,7 +147,7 @@ layui.use(['form', 'table', 'util', 'baseConfig'], function () {
                 shade: 0.2,
                 shadeClose: true,
                 area: [ baseConfig.getWidth( minWidth), baseConfig.getHeight( minHeight)],
-                content: 'formData.html?actionType=2',
+                content: 'formData.html?actionType=4',
             });
         } else if (obj.event === 'delete') {
             layer.confirm('确认删除？', function (index) {

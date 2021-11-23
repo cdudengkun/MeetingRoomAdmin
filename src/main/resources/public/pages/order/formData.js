@@ -14,6 +14,8 @@ layui.use(['form', 'layer', 'baseConfig', 'util'], function () {
      * @param data
      */
     function loadFormData( data){
+        $( "input[name=id]").val( data.id);
+
         $(".order_content").css( "display", "none");
         switch ( data.type) {
             case 1:
@@ -91,8 +93,10 @@ layui.use(['form', 'layer', 'baseConfig', 'util'], function () {
         //弹出loading
         var index = top.layer.msg('数据提交中，请稍候',{icon: 16,time:false,shade:0.8});
         var jsonBody = data.field;
+        jsonBody.createTime = null;
+        jsonBody.payType = null;
         //提交数据
-        $.post("/" + pageName + "/addOrUpdate", jsonBody, function( res){
+        $.post("/" + pageName + "/updateOrderStatus", jsonBody, function( res){
             if( res.code == 200){
                 top.layer.close( index);
                 top.layer.msg( res.msg);

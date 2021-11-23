@@ -34,7 +34,7 @@
                     <div class="layui-form-item">
                         <label class="layui-form-label required">使用时间</label>
                         <div class="layui-input-inline">
-                            <input type="text" name="reservationTime" lay-verify="required" lay-reqtext="标题不能为空" placeholder="请输入标题"  class="layui-input">
+                            <input type="text" name="reservationTime" readonly class="layui-input">
                         </div>
                     </div>
                     <div class="layui-form-item">
@@ -140,6 +140,29 @@
                     <label class="layui-form-label required">合计费用</label>
                     <div class="layui-input-inline">
                         <input type="text" name="totalMoney" readonly class="layui-input">
+                    </div>
+                </div>
+            </fieldset>
+        </div>
+
+        <div id="review_div">
+            <fieldset class="layui-elem-field">
+                <legend>审核信息</legend>
+                <div class="layui-form-item magt3">
+                    <label class="layui-form-label width_120">审核结果</label>
+                    <div class="layui-input-inline">
+                        <select name="status" lay-verify="state" required>
+                            <option value="">请选择</option>
+                            <option value="5">审核通过</option>
+                            <option value="6">审核失败</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="layui-form-item magt3">
+                    <label class="layui-form-label width_120">审核结果备注</label>
+                    <div class="layui-input-inline">
+                        <textarea name="memo" placeholder="请填写审核结果备注" class="layui-textarea" style="min-height: 170px;width: 600px;"></textarea>
                     </div>
                 </div>
             </fieldset>

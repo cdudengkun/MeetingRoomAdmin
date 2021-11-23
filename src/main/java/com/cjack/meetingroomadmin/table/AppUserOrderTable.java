@@ -24,7 +24,7 @@ public class AppUserOrderTable {
     private String memo;//订单说明
     private Integer payType;//支付方式，这里默认全部都是 1-微信支付
     private Long payTime;//支付时间
-    private Integer status;//状态，1-待付款，2-进行中，3-已完成，4-已取消
+    private Integer status;//状态，1-待付款，2-进行中，3-已完成，4-用户申请取消，5-取消审核通过，6-取消审核未通过
     private Integer vipHour;//如果是会议室，则是订单使用会员权益时长；如果是工位，则是会员权益天数
     private Integer type;//商品类型 1-工位，2-会议室,3-vip
 

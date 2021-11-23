@@ -55,6 +55,7 @@ public class OrderService {
     public void updateOrderStatus( AppUserOrderModel model){
         AppUserOrderTable order = dao.getOne( model.getId());
         order.setStatus( model.getStatus());
+        order.setMemo( model.getMemo());
         dao.save( order);
     }
 
