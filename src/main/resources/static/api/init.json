@@ -135,6 +135,13 @@
           "target": "_self"
         },
         {
+          "title": "加入我们信息查看",
+          "href": "/pages/companyJoinInfo/list.html",
+          "icon": "fa fa-window-maximize",
+          "privilegeName": "companyJoinInfo",
+          "target": "_self"
+        },
+        {
           "title": "用户管理",
           "href": "",
           "icon": "fa fa-window-maximize",
