@@ -85,7 +85,7 @@
             },
             {
               "title": "Banner栏管理",
-              "href": "/pages/advertiseMent/list.html",
+              "href": "/pages/advertisement/list.html",
               "icon": "fa fa-tachometer",
               "privilegeName": "advertiseMent",
               "target": "_self"

@@ -1,72 +1,14 @@
-layui.use(['form','layer', 'baseConfig', "upload", 'layarea','flow'], function () {
+layui.use(['form','layer', 'baseConfig', "upload", 'layarea'], function () {
     var form = layui.form,
         $ = layui.jquery,
         layer = parent.layer === undefined ? layui.layer : top.layer,
         upload = layui.upload,
         baseConfig = layui.baseConfig,
-        flow = layui.flow,
         layarea = layui.layarea;
 
-    var pageName = "companyJoinInfo";
+    var pageName = "advertisement";
     var data = baseConfig.getDataFromList( pageName);
     var actionType = baseConfig.getUrlParamer( "actionType");
-
-    //省市区下拉框
-    layarea.render({
-        elem: '#area-picker',
-        data: {
-            provinceId: data ? data.provinceId : null,
-            cityId: data ? data.cityId : null,
-            countyId: data ? data.countyId : null,
-        },
-        change: function (res) {
-            //选择结果
-            console.log(res);
-        }
-    });
-
-    //处理图片相关
-    //流加载图片
-    var imgNums = 15;  //单页显示图片数量
-    flow.load({
-        elem: '#Images', //流加载容器
-        done: function(page, next){ //加载下一页
-            var imgList = [],pics = data && data.licences ? data.licences.split( ",") : [];
-            var maxPage = imgNums*page < pics.length ? imgNums*page : pics.length;
-            if( pics && pics.length > 0){
-                setTimeout(function(){
-                    for(var i = imgNums * ( page - 1); i < maxPage; i++){
-                        var pic = pics[i];
-                        if( !pic){
-                            continue;
-                        }
-                        imgList.push('<li style="width: 200px;float: left;margin-right: 20px;">' +
-                            '<img style="width: 200px; height:200px;" layer-src="'+ pic +'" src="'+ pic +'">' +
-                            '<div class="operate" style="margin-top: 3px;">' +
-                            '<div class="check" style="float: left;">' +
-                            '<input type="checkbox" name="img" lay-filter="choose" value="' + pic + '" lay-skin="primary">' +
-                            '</div>' +
-                            '<div style="height: 16px;width:16px;float:left;margin-top: 1px;"><i class="layui-icon img_del">&#xe640;</i></div>' +
-                            '</div>' +
-                            '</li>');
-                    }
-                    next(imgList.join(''), page < (pics.length/imgNums));
-                    form.render();
-                    if( actionType == baseConfig.ACTION.DETAIL){
-                        $( ".operate").hide();
-                    }
-                }, 500);
-            }else{
-                next( '', false);
-                form.render();
-            }
-        }
-    });
-
-    //设置图片的高度
-    $(window).resize(function(){
-        $("#Images li img").height($("#Images li img").width());
-    });
 
     /**
      * 将list页面通过url传过来的参数加载到form表单里面去
@@ -109,7 +51,7 @@ layui.use(['form','layer', 'baseConfig', "upload", 'layarea','flow'], function (
     //上传封面
     upload.render({
         elem: '#coverImg_div',
-        url: '/file/upload?type=companyJoinInfoLicence',
+        url: '/file/upload?type=advertisementCover',
         multiple: true,
         done: function(res){
             if( res.code == 200){
