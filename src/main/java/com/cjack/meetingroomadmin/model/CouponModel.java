@@ -11,7 +11,6 @@ import lombok.Data;
 @Data
 public class CouponModel  extends BaseModel{
 
-    private Long createTime;
     private Integer mount;
     private String name;
     private Long startTime;

@@ -3,7 +3,6 @@ package com.cjack.meetingroomadmin.service;
 import com.cjack.meetingroomadmin.config.LayPage;
 import com.cjack.meetingroomadmin.dao.CouponDao;
 import com.cjack.meetingroomadmin.model.CouponModel;
-import com.cjack.meetingroomadmin.model.MeetingRoomModel;
 import com.cjack.meetingroomadmin.table.CouponTable;
 import com.cjack.meetingroomadmin.table.MeetingRoomTable;
 import com.cjack.meetingroomadmin.table.MeetingZoneTable;
@@ -16,6 +15,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
+
 import javax.persistence.criteria.Join;
 import javax.persistence.criteria.JoinType;
 import javax.persistence.criteria.Predicate;
@@ -34,7 +34,7 @@ public class CouponService {
         Pageable pageable = new PageRequest( page.getPage()-1, page.getLimit(), new Sort( orders));
         Specification<CouponTable> specification = handleConditon( model);
         Page<CouponTable> pageTable = dao.findAll( specification, pageable);
-        page.setData( ModelUtils.copyListModel( pageTable.getContent(), MeetingRoomModel.class));
+        page.setData( ModelUtils.copyListModel( pageTable.getContent(), CouponModel.class));
         page.setCount( Long.valueOf( pageTable.getTotalElements()).intValue());
     }
 

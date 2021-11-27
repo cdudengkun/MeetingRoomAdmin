@@ -160,6 +160,19 @@ layui.define(["form","jquery"],function(exports){
             diffToHour: function (start, end) {
                 var hour = (end - start)/ 1000 / 60 / 60;
                 return hour + "小时";
+            },
+            formatDateToDay: function( dateStr){
+                var date = new Date( dateStr);
+                var y = date.getFullYear().toString();        // 年
+                var m = (date.getMonth() + 1).toString();     // 月
+                var d = date.getDate().toString();            // 日
+                if( m < 10){
+                    m = "0" + m;
+                }
+                if( d < 10){
+                    d = "0" + d;
+                }
+                return y + "-" + m + "-" + d;
             }
         };
     exports( "baseConfig", baseConfig);

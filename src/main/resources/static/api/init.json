@@ -66,6 +66,13 @@
               "icon": "fa fa-tachometer",
               "privilegeName": "cooperationShopping",
               "target": "_self"
+            },
+            {
+              "title": "优惠券管理",
+              "href": "/pages/coupon/list.html",
+              "icon": "fa fa-tachometer",
+              "privilegeName": "coupon",
+              "target": "_self"
             }
           ]
         },
