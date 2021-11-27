@@ -1,10 +1,11 @@
-layui.use(['form','layer', 'baseConfig', "upload",'flow'], function () {
+layui.use(['form','layer', 'baseConfig', "upload",'flow','wangEditor'], function () {
     var form = layui.form,
         $ = layui.jquery,
         layer = parent.layer === undefined ? layui.layer : top.layer,
         upload = layui.upload,
         flow = layui.flow,
-        baseConfig = layui.baseConfig;
+        baseConfig = layui.baseConfig,
+        wangEditor = layui.wangEditor;
 
     var pageName = "policyInterpretation";
     var data = baseConfig.getDataFromList( pageName);
@@ -15,12 +16,46 @@ layui.use(['form','layer', 'baseConfig', "upload",'flow'], function () {
         $( "#content" + type).css( "display", "block");
     }
 
+    //处理富文本编辑器
+    var editor = new wangEditor('#contentEditor');
+    editor.customConfig.uploadImgServer = "/file/upload?type=wangEditor";
+    editor.customConfig.uploadFileName = 'image';
+    editor.customConfig.pasteFilterStyle = false;
+    editor.customConfig.uploadImgMaxLength = 5;
+    editor.customConfig.zIndex=0;
+    editor.customConfig.uploadImgHooks = {
+        // 上传超时
+        timeout: function (xhr, editor) {
+            layer.msg('上传超时！')
+        },
+        // 如果服务器端返回的不是 {errno:0, data: [...]} 这种格式，可使用该配置
+        customInsert: function (insertImg, result, editor) {
+            console.log(result);
+            if (result.code == 1) {
+                var url = result.data.filePath;
+                url.forEach(function (e) {
+                    insertImg(e);
+                })
+            } else {
+                layer.msg(result.msg);
+            }
+        }
+    };
+    editor.customConfig.customAlert = function (info) {
+        layer.msg(info);
+    };
+    editor.customConfig.onchange = function (html) {
+        $("input[name=content]").val( html);
+    };
+    editor.create();
+
     /**
      * 将list页面通过url传过来的参数加载到form表单里面去
      * @param data
      */
     if( data){
         baseConfig.loadFormData( data);
+        editor.txt.html( data.content);
         $( "#coverImg_img").attr( "src", data.cover);
         handleContentShow( data.type);
     }else{

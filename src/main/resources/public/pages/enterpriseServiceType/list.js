@@ -25,9 +25,6 @@ layui.use(['form', 'table', 'util', 'baseConfig'], function () {
             }},
             {title: '操作', minWidth: 150, toolbar: '#currentTableBar', align: "center"}
         ]],
-        limits: [10, 15, 20, 25, 50, 100],
-        limit: 15,
-        page: true,
         response : {
             statusCode: 200 //规定成功的状态码，默认：0
         },
@@ -35,8 +32,8 @@ layui.use(['form', 'table', 'util', 'baseConfig'], function () {
             return {
                 "code": res.code, //解析接口状态
                 "msg": res.msg, //解析提示文本
-                "count": res.data.count, //解析数据长度
-                "data": res.data.data //解析数据列表
+                "count": res.data.length, //解析数据长度
+                "data": res.data //解析数据列表
             };
         }
     });

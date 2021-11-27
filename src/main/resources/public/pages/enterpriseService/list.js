@@ -18,7 +18,7 @@ layui.use(['form', 'table', 'util', 'baseConfig'], function () {
         toolbar: '#toolbar',
         defaultToolbar: [],
         cols: [[
-            {field: 'title', width: 200, title: '标题'},
+            {field: 'title', width: 400, title: '标题'},
             {field: 'typeName', width: 150, title: '类别'},
             {field: 'createTime', width: 200, title: '创建时间', templet : function( d){
                 return util.toDateString( d.createTime);

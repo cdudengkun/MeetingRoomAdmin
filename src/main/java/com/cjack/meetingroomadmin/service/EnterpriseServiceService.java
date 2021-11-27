@@ -3,6 +3,7 @@ package com.cjack.meetingroomadmin.service;
 
 import com.cjack.meetingroomadmin.config.LayPage;
 import com.cjack.meetingroomadmin.dao.EnterpriseServiceDao;
+import com.cjack.meetingroomadmin.dao.EnterpriseServiceTypeDao;
 import com.cjack.meetingroomadmin.model.EnterpriseServiceModel;
 import com.cjack.meetingroomadmin.table.EnterpriseServiceTable;
 import com.cjack.meetingroomadmin.table.EnterpriseServiceTypeTable;
@@ -27,6 +28,8 @@ public class EnterpriseServiceService {
 
     @Autowired
     private EnterpriseServiceDao dao;
+    @Autowired
+    private EnterpriseServiceTypeDao typeDao;
 
     public void list( LayPage layPage, EnterpriseServiceModel model){
         List< Sort.Order> orders=new ArrayList<>();
@@ -65,6 +68,7 @@ public class EnterpriseServiceService {
         }else{
             table = ModelUtils.copySignModel( model, EnterpriseServiceTable.class);
         }
+        table.setType( typeDao.getOne( model.getTypeId()));
         dao.save( table);
     }
 

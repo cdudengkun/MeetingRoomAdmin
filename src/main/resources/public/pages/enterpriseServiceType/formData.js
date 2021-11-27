@@ -5,7 +5,7 @@ layui.use(['form','layer', 'baseConfig', "upload"], function () {
         upload = layui.upload,
         baseConfig = layui.baseConfig;
 
-    var pageName = "enterpriseService";
+    var pageName = "enterpriseServiceType";
     var data = baseConfig.getDataFromList( pageName);
     var actionType = baseConfig.getUrlParamer( "actionType");
 
