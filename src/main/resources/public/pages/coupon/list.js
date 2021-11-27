@@ -20,13 +20,28 @@ layui.use(['form', 'table', 'util', 'baseConfig'], function () {
         cols: [[
             {field: 'name', width: 300, title: '优惠券名称'},
             {field: 'mount', width: 100, title: '金额'},
+            {field: 'status', width: 100, title: '状态', templet : function( d){
+                switch (d.status) {
+                    case 1: return "未发布";
+                    case 2: return "已发布";
+                }
+            }},
             {field: 'startTime', width: 400, title: '可用时间', templet : function( d){
                 return baseConfig.formatDateToDay( d.startTime) + "至" + baseConfig.formatDateToDay( d.endTime);
             }},
             {field: 'createTime', width: 200, title: '发布时间', templet : function( d){
                 return util.toDateString( d.createTime);
             }},
-            {title: '操作', minWidth: 150, toolbar: '#currentTableBar', align: "center"}
+            {title: '操作', minWidth: 150, align: "center", templet:function ( d) {
+                var str = "";
+                if( d.status == 1){
+                    str = '<a class="layui-btn layui-btn-normal layui-btn-xs data-count-edit" lay-event="edit">编辑</a>\n' +
+                        '<a class="layui-btn layui-btn-normal layui-btn-xs data-count-edit" lay-event="publish">编辑</a>\n' +
+                        '<a class="layui-btn layui-btn-xs layui-btn-danger data-count-delete" lay-event="delete">删除</a>';
+                }
+                str += '<a class="layui-btn layui-btn-xs" lay-event="detail">详细</a>\n';
+                return str;
+            }}
         ]],
         limits: [10, 15, 20, 25, 50, 100],
         limit: 15,
@@ -96,7 +111,26 @@ layui.use(['form', 'table', 'util', 'baseConfig'], function () {
                 area: [ baseConfig.getWidth( minWidth), baseConfig.getHeight( minHeight)],
                 content: 'formData.html?actionType=2',
             });
-        } else if (obj.event === 'delete') {
+
+        } else if (obj.event === 'publish') {
+            layer.confirm('确认发布？发布之后，所有用户都会收到该优惠券，本操作无法撤销！', function (index) {
+                $.post("/" + pageName + "/publish", { "id": data.id}, function( res){
+                    if( res.code == 200){
+                        layer.close(index);
+                        layer.msg( "发布优惠券成功");
+                        table.reload('listTable', {
+                            page: {
+                                curr: 1
+                            }
+                            , where: result
+                        }, 'data');
+                    }else{
+                        layer.close( index);
+                        layer.msg( res.msg);
+                    }
+                });
+            });
+        }else if (obj.event === 'delete') {
             layer.confirm('确认删除？', function (index) {
                 obj.del();
                 layer.close(index);

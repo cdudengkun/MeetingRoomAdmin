@@ -65,7 +65,7 @@ public class MessageService {
         dao.deleteInBatch( tables);
     }
 
-    public void save( MessageModel model){
+    public void sendMessage( MessageModel model){
         MessageTable message = ModelUtils.copySignModel( model, MessageTable.class);
         dao.save( message);
         List<AppUserTable> appUserTables = appUserDao.findAll( );

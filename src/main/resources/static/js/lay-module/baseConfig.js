@@ -1,5 +1,6 @@
-layui.define(["form","jquery"],function(exports){
-    var $ = layui.jquery;
+layui.define(["form","jquery",'echarts'],function(exports){
+    var $ = layui.jquery,
+        echarts = layui.echarts;
     var baseConfig = {
             ROLE:{
                 SUPER_ID : 1,//超级管理员
@@ -173,6 +174,53 @@ layui.define(["form","jquery"],function(exports){
                     d = "0" + d;
                 }
                 return y + "-" + m + "-" + d;
+            },
+            loadEchart: function( eId, dataUrl, title){
+                $.get( dataUrl, function( res){
+                    try{
+                        res = JSON.parse( res);
+                    }catch (e) {
+
+                    }
+                    if( res.code == 200){
+                        var data = res.data;
+                        var echartsRecords = echarts.init(document.getElementById( eId), 'walden');
+                        var optionRecords = {
+                            tooltip: {
+                                trigger: 'axis'
+                            },
+                            legend: {
+                                data:[title]
+                            },
+                            grid: {
+                                left: '3%',
+                                right: '4%',
+                                bottom: '3%',
+                                containLabel: true
+                            },
+                            toolbox: {
+                                feature: {
+                                    saveAsImage: {}
+                                }
+                            },
+                            xAxis: {
+                                type: 'category',
+                                boundaryGap: false,
+                                data: data.xseries
+                            },
+                            yAxis: {
+                                type: 'value'
+                            },
+                            series: [{
+                                name: title,
+                                type: 'line',
+                                data: data.yseries
+                            },]
+
+                        };
+                        echartsRecords.setOption( optionRecords);
+                    }
+                });
             }
         };
     exports( "baseConfig", baseConfig);

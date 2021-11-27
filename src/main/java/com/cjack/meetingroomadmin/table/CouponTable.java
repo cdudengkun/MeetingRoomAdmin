@@ -23,6 +23,7 @@ public class CouponTable {
     private Long startTime;//可用开始时间
     private Long endTime;//过期时间
     private Long adminUserId;//创建人id
+    private Integer status;//1-未发布，2-已发布
 
     @ManyToOne( cascade = {CascadeType.REFRESH, CascadeType.MERGE})
     @JoinColumn( name = "meeting_zone_id")

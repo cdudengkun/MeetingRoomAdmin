@@ -48,6 +48,7 @@ public class CouponEndpoint extends BaseEndpoint{
             if( isAdd( model.getId())){
                 model.setCreateTime( System.currentTimeMillis());
             }
+            model.setStatus( 1);
             service.save( model);
             return AjaxResult.SUCCESS();
         }catch ( Exception e) {
@@ -55,6 +56,23 @@ public class CouponEndpoint extends BaseEndpoint{
             return AjaxResult.ERROR();
         }
     }
+
+    /**
+     * 发布优惠券
+     * @return
+     */
+    @RequestMapping(value = "/publish", method = RequestMethod.POST)
+    @ResponseBody
+    public AjaxResult publish( CouponModel model) {
+        try{
+            service.publish( model);
+            return AjaxResult.SUCCESS();
+        }catch ( Exception e) {
+            e.printStackTrace();
+            return AjaxResult.ERROR();
+        }
+    }
+
 
     /**
      * 删除

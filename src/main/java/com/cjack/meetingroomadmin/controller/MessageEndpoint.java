@@ -3,7 +3,6 @@ package com.cjack.meetingroomadmin.controller;
 import com.cjack.meetingroomadmin.config.AjaxResult;
 import com.cjack.meetingroomadmin.config.CommonConfig;
 import com.cjack.meetingroomadmin.config.LayPage;
-import com.cjack.meetingroomadmin.exception.JPushException;
 import com.cjack.meetingroomadmin.model.MessageModel;
 import com.cjack.meetingroomadmin.service.MessageService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,7 +13,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpSession;
-import java.util.Date;
 
 /**
  * 消息管理
@@ -56,7 +54,7 @@ public class MessageEndpoint extends BaseEndpoint{
             Object adminUserId = session.getAttribute( CommonConfig.SESSION_NAME);
             model.setAdminUserId( (Long)adminUserId);
             model.setType( 1);
-            service.save( model);
+            service.sendMessage( model);
             return AjaxResult.SUCCESS();
         }catch ( Exception e) {
             e.printStackTrace();

@@ -26,6 +26,7 @@ import javax.persistence.criteria.Join;
 import javax.persistence.criteria.JoinType;
 import javax.persistence.criteria.Predicate;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import static com.cjack.meetingroomadmin.util.CustomerStringUtil.toLikeStr;
@@ -98,6 +99,11 @@ public class AppUserService {
             table = ModelUtils.copySignModel( model, AppUserTable.class);
         }
         dao.save( table);
+    }
+
+    //查询某天登录的用户的数量
+    public Integer queryUserLoginCount( Date date){
+        return dao.countLoginUserByDay( date.getTime());
     }
 
     /**

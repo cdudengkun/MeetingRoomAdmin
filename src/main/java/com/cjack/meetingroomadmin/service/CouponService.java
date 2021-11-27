@@ -3,9 +3,11 @@ package com.cjack.meetingroomadmin.service;
 import com.cjack.meetingroomadmin.config.LayPage;
 import com.cjack.meetingroomadmin.dao.CouponDao;
 import com.cjack.meetingroomadmin.model.CouponModel;
+import com.cjack.meetingroomadmin.model.MessageModel;
 import com.cjack.meetingroomadmin.table.CouponTable;
 import com.cjack.meetingroomadmin.table.MeetingRoomTable;
 import com.cjack.meetingroomadmin.table.MeetingZoneTable;
+import com.cjack.meetingroomadmin.util.DateFormatUtil;
 import com.cjack.meetingroomadmin.util.EmptyUtil;
 import com.cjack.meetingroomadmin.util.ModelUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +22,7 @@ import javax.persistence.criteria.Join;
 import javax.persistence.criteria.JoinType;
 import javax.persistence.criteria.Predicate;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -27,6 +30,8 @@ public class CouponService {
 
     @Autowired
     private CouponDao dao;
+    @Autowired
+    private MessageService messageService;
 
     public void list(LayPage page, CouponModel model){
         List< Sort.Order> orders=new ArrayList<>();
@@ -58,6 +63,20 @@ public class CouponService {
             table = ModelUtils.copySignModel( model, CouponTable.class);
         }
         dao.save( table);
+    }
+
+    public void publish( CouponModel model){
+        CouponTable table = dao.findOne( model.getId());
+        table.setStatus( 2);
+        dao.save( table);
+        //发送通知消息
+        MessageModel messageModel = new MessageModel();
+        messageModel.setType( 2);
+        messageModel.setTitle( "优惠券领取通知");
+        messageModel.setContent( "系统给您发送了优惠券[" + model.getName() + "]，有效期["
+                + DateFormatUtil.format( new Date( model.getStartTime()), DateFormatUtil.DATE_RULE_2) + "至"
+                + DateFormatUtil.format( new Date( model.getEndTime()), DateFormatUtil.DATE_RULE_2)  + "]，请至礼包页面领取");
+        messageService.sendMessage( messageModel);
     }
 
     /**

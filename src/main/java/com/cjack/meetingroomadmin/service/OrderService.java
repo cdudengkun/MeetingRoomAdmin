@@ -16,6 +16,7 @@ import org.springframework.stereotype.Service;
 
 import javax.persistence.criteria.Predicate;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -51,12 +52,21 @@ public class OrderService {
         page.setCount( Long.valueOf( pageTable.getTotalElements()).intValue());
     }
 
+    public List<OrderStatementModel> statement( OrderStatementQueryModel condition){
+
+        return null;
+    }
+
 
     public void updateOrderStatus( AppUserOrderModel model){
         AppUserOrderTable order = dao.getOne( model.getId());
         order.setStatus( model.getStatus());
         order.setMemo( model.getMemo());
         dao.save( order);
+    }
+
+    public Integer queryTradeMount( Date date){
+        return dao.queryTradeMount( date.getTime());
     }
 
     /**

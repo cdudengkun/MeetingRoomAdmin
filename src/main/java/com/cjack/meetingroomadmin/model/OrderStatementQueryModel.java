@@ -5,19 +5,13 @@ import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import lombok.Data;
 
 /**
- * 优惠券
+ * 用户订单表
  */
 @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 @Data
-public class CouponModel  extends BaseModel{
+public class OrderStatementQueryModel extends BaseModel{
 
-    private Integer mount;
-    private String name;
-    private Long startTime;
-    private Long endTime;
-    private Integer drawed;
-
-    private Long meetingZoneId;
-
-    private Integer status;//1-未发布，2-已发布
+    private Integer type;//统计类型，1-日，2-周，3-月
+    private Long meetingZoneId;//订单成交地点
+    private String company;//公司名称
 }

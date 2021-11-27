@@ -50,6 +50,7 @@ layui.use(['form','layer', 'baseConfig', "upload"], function () {
     upload.render({
         elem: '#uploadFile',
         url: '/file/upload?type=enterpriseSupportFile',
+        accept: "file",
         before: function(obj){ //obj参数包含的信息，跟 choose回调完全一致，可参见上文。
             obj.preview(function(index, file, result) {
                 var size = file.size;//文件大小填写到数据表里面，这里的单位是byte
