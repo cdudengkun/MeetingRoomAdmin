@@ -45,13 +45,13 @@
                         <div class="layui-card">
                             <div class="layui-card-header"><i class="fa fa-line-chart icon"></i>用户报表统计</div>
                             <div class="layui-card-body">
-                                <div id="echarts-records-user" style="width: 100%;min-height:500px"></div>
+                                <div id="echarts-records-user" style="width: 100%;min-height:400px"></div>
                             </div>
                         </div>
                     </div>
                     <div class="layui-col-md12">
                         <div class="layui-card">
-                            <div class="layui-card-header"><i class="fa fa-line-chart icon"></i>订单报表统计</div>
+                            <div class="layui-card-header"><i class="fa fa-line-chart icon"></i>日订单报表统计</div>
                             <div class="layui-card-body">
                                 <div id="echarts-records-order" style="width: 100%;min-height:500px"></div>
                             </div>
@@ -63,14 +63,16 @@
             <div class="layui-col-md4">
 
                 <div class="layui-card">
-                    <div class="layui-card-header"><i class="fa fa-bullhorn icon icon-tip"></i>系统公告</div>
-
+                    <div class="layui-card-header"><i class="fa fa-line-chart icon"></i>周订单报表统计</div>
+                    <div class="layui-card-body">
+                        <div id="echarts-records-order-week" style="width: 100%;min-height:400px"></div>
+                    </div>
                 </div>
 
                 <div class="layui-card">
-                    <div class="layui-card-header"><i class="fa fa-fire icon"></i>版本信息</div>
-                    <div class="layui-card-body layui-text">
-
+                    <div class="layui-card-header"><i class="fa fa-line-chart icon"></i>月订单报表统计</div>
+                    <div class="layui-card-body">
+                        <div id="echarts-records-order-month" style="width: 100%;min-height:400px"></div>
                     </div>
                 </div>
             </div>
@@ -120,10 +122,16 @@
         });
 
         //用户图表
-        baseConfig.loadEchart( "echarts-records-user", "/statement/userLoginCount", "日活跃用户数量");
+        baseConfig.loadLineEchart( "echarts-records-user", "/statement/userLoginCount", "日活跃用户数量");
 
-        //订单图表
-        baseConfig.loadEchart( "echarts-records-order", "/statement/orderMount", "日订单总额");
+        //日订单图表
+        baseConfig.loadLineEchart( "echarts-records-order", "/statement/orderMount", "日订单总额");
+
+        //周订单图表
+        baseConfig.loadBarEchart( "echarts-records-order-week", "/statement/weekOrderMount", "周订单总额");
+
+        //月订单图表
+        baseConfig.loadBarEchart( "echarts-records-order-month", "/statement/monthOrderMount", "月订单总额");
 
     });
 </script>

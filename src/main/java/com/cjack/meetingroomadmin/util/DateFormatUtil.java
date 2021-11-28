@@ -16,10 +16,18 @@ public class DateFormatUtil {
     public final static String DATE_RULE_6 = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'";
     public final static String DATE_RULE_7 = "dd-MM-yyyy";
     public final static String DATE_RULE_8 = "MM-dd";
+    public final static String DATE_RULE_9 = "MM月";
 
     public static String format( Date date, String rule){
         DateFormat df = new SimpleDateFormat( rule);
         return df.format( date);
+    }
+
+    public static String formatWeek( int i){
+        if( i == 0){
+            return "本周";
+        }
+        return "前" + i + "周";
     }
 
     /**
@@ -30,6 +38,20 @@ public class DateFormatUtil {
         Calendar c = Calendar.getInstance();
         c.setTimeInMillis( System.currentTimeMillis());
         c.add( Calendar.DATE, -n);
+        return c.getTime();
+    }
+
+    public static Date formatLastNWeek( Integer n){
+        Calendar c = Calendar.getInstance();
+        c.setTimeInMillis( System.currentTimeMillis());
+        c.add( Calendar.WEEK_OF_YEAR, -n);
+        return c.getTime();
+    }
+
+    public static Date formatLastNMonth( Integer n){
+        Calendar c = Calendar.getInstance();
+        c.setTimeInMillis( System.currentTimeMillis());
+        c.add( Calendar.MONTH, -n);
         return c.getTime();
     }
 
@@ -101,6 +123,6 @@ public class DateFormatUtil {
     }
 
     public static void main(String[] args) {
-        System.out.println( getThisMonthFirstDay());
+        System.out.println( formatLastNWeek( 1));
     }
 }

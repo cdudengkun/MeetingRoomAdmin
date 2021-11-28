@@ -69,6 +69,14 @@ public class OrderService {
         return dao.queryTradeMount( date.getTime());
     }
 
+    public Integer queryTradeMountWeek( Date date){
+        return dao.queryTradeMountWeek( date.getTime());
+    }
+
+    public Integer queryTradeMountMonth( Date date){
+        return dao.queryTradeMountMonth( date.getTime());
+    }
+
     /**
      * 组装查询条件
      * @param model

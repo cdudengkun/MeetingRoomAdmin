@@ -41,4 +41,28 @@ public class StatementService {
         return model;
     }
 
+    //按周统计订单总额 6
+    public EchartDataModel weekOrderMount(){
+        EchartDataModel model = new EchartDataModel();
+        for( int i = 6; i>= 0; i--){
+            Date date = DateFormatUtil.formatLastNWeek( i);
+            model.addX( DateFormatUtil.formatWeek( i));
+            Integer y = orderService.queryTradeMountWeek( date);
+            model.addY( y == null ? 0 : y);
+        }
+        return model;
+    }
+
+    //按月统计订单总额 6
+    public EchartDataModel monthOrderMount(){
+        EchartDataModel model = new EchartDataModel();
+        for( int i = 6; i>= 0; i--){
+            Date date = DateFormatUtil.formatLastNMonth( i);
+            model.addX( DateFormatUtil.format( date, DateFormatUtil.DATE_RULE_9));
+            Integer y = orderService.queryTradeMountMonth( date);
+            model.addY( y == null ? 0 : y);
+        }
+        return model;
+    }
+
 }

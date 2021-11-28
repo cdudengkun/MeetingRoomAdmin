@@ -13,4 +13,10 @@ public interface AppUserOrderDao extends JpaRepository<AppUserOrderTable, Long>,
     @Query( value = "select sum(amount) from app_user_order where DATE_FORMAT(FROM_UNIXTIME(pay_time/1000),'%Y-%m-%d')=DATE_FORMAT(FROM_UNIXTIME(?1/1000),'%Y-%m-%d')", nativeQuery = true)
     Integer queryTradeMount( Long timeStamps);
 
+    @Query( value = "select sum(amount) from app_user_order where DATE_FORMAT(FROM_UNIXTIME(pay_time/1000),'%Y-%u')=DATE_FORMAT(FROM_UNIXTIME(?1/1000),'%Y-%u')", nativeQuery = true)
+    Integer queryTradeMountWeek( Long timeStamps);
+
+    @Query( value = "select sum(amount) from app_user_order where DATE_FORMAT(FROM_UNIXTIME(pay_time/1000),'%Y-%m')=DATE_FORMAT(FROM_UNIXTIME(?1/1000),'%Y-%m')", nativeQuery = true)
+    Integer queryTradeMountMonth( Long timeStamps);
+
 }

@@ -47,4 +47,34 @@ public class StatementEndpoint extends BaseEndpoint{
             return AjaxResult.ERROR();
         }
     }
+
+    /**
+     * 系统订单图表数据
+     * @return
+     */
+    @RequestMapping(value = "/weekOrderMount", method = RequestMethod.GET)
+    @ResponseBody
+    public AjaxResult weekOrderMount() {
+        try{
+            return AjaxResult.SUCCESS( service.weekOrderMount());
+        }catch ( Exception e) {
+            e.printStackTrace();
+            return AjaxResult.ERROR();
+        }
+    }
+
+    /**
+     * 系统订单图表数据
+     * @return
+     */
+    @RequestMapping(value = "/monthOrderMount", method = RequestMethod.GET)
+    @ResponseBody
+    public AjaxResult monthOrderMount() {
+        try{
+            return AjaxResult.SUCCESS( service.monthOrderMount());
+        }catch ( Exception e) {
+            e.printStackTrace();
+            return AjaxResult.ERROR();
+        }
+    }
 }
