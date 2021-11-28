@@ -98,3 +98,7 @@ body {
     margin-right: 40px;
     margin-bottom: 15px;
 }
+
+.width_500{
+    width: 500px !important;
+}

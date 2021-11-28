@@ -129,10 +129,7 @@ layui.use(['form', 'table', 'util', 'baseConfig'], function () {
                 updateStatus( data.id, 1, index);
             });
         } else if (obj.event === 'delete') {
-            layer.confirm('确认删除？', function (index) {
-                obj.del();
-                layer.close(index);
-            });
+            del( data.id);
         }
     });
 

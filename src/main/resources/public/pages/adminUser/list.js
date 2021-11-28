@@ -60,6 +60,24 @@ layui.use(['form', 'table', 'util', 'baseConfig'], function () {
         return false;
     });
 
+    //删除
+    function del( id){
+        layer.confirm('确定删除选中的数据项？', {icon: 3, title: '提示信息'}, function (index) {
+            $.post("/" + pageName + "/del",{
+                "ids" : id
+            },function( res){
+                if( res.code == 200){
+                    table.reload();
+                    layer.close( index);
+                    top.layer.msg( res.msg);
+                }else{
+                    top.layer.close( index);
+                    top.layer.msg( res.msg);
+                }
+            });
+        });
+    }
+
     //------------表格头部工具栏，一般放新增等按钮
     table.on('toolbar(currentTableFilter)', function (obj) {
         if (obj.event === 'add') {  // 监听添加操作
@@ -99,10 +117,7 @@ layui.use(['form', 'table', 'util', 'baseConfig'], function () {
                 content: 'formData.html?actionType=2',
             });
         } else if (obj.event === 'delete') {
-            layer.confirm('确认删除？', function (index) {
-                obj.del();
-                layer.close(index);
-            });
+            del( data.id);
         }
     });
 

@@ -4,7 +4,7 @@
     "href": "/pages/welcome.html"
   },
   "logoInfo": {
-    "title": "LAYUI MINI",
+    "title": "",
     "image": "/images/logo.png",
     "href": ""
   },
@@ -19,14 +19,14 @@
         {
           "title": "系统管理",
           "href": "",
-          "icon": "fa fa-window-maximize",
+          "icon": "fa fa-gears",
           "privilegeName": "sysAdminMenu",
           "target": "_self",
           "child": [
             {
               "title": "后台账户管理",
               "href": "/pages/adminUser/list.html",
-              "icon": "fa fa-tachometer",
+              "icon": "fa fa-user-secret",
               "privilegeName": "adminUser",
               "target": "_self"
             }
@@ -35,43 +35,36 @@
         {
           "title": "系统消息管理",
           "href": "/pages/message/list.html",
-          "icon": "fa fa-window-maximize",
+          "icon": "fa fa-align-justify",
           "privilegeName": "message",
           "target": "_self"
         },
         {
           "title": "楼宇管理",
           "href": "",
-          "icon": "fa fa-window-maximize",
+          "icon": "fa fa-building",
           "privilegeName": "meetingZoneAdminMenu",
           "target": "_self",
           "child": [
             {
               "title": "会议中心管理",
               "href": "/pages/meetingZone/list.html",
-              "icon": "fa fa-tachometer",
+              "icon": "fa fa-building",
               "privilegeName": "meetingZone",
               "target": "_self"
             },
             {
               "title": "会议室管理",
               "href": "/pages/meetingRoom/list.html",
-              "icon": "fa fa-tachometer",
+              "icon": "fa fa-university",
               "privilegeName": "meetingRoom",
               "target": "_self"
             },
             {
               "title": "商家管理",
               "href": "/pages/cooperationShopping/list.html",
-              "icon": "fa fa-tachometer",
+              "icon": "fa fa-briefcase",
               "privilegeName": "cooperationShopping",
-              "target": "_self"
-            },
-            {
-              "title": "优惠券管理",
-              "href": "/pages/coupon/list.html",
-              "icon": "fa fa-tachometer",
-              "privilegeName": "coupon",
               "target": "_self"
             }
           ]
@@ -79,56 +72,56 @@
         {
           "title": "发布管理",
           "href": "",
-          "icon": "fa fa-window-maximize",
+          "icon": "fa fa-newspaper-o",
           "privilegeName": "publishAdminMenu",
           "target": "_self",
           "child": [
             {
               "title": "客服管理",
               "href": "/pages/consultInfo/list.html",
-              "icon": "fa fa-tachometer",
+              "icon": "fa fa-street-view",
               "privilegeName": "consultInfo",
               "target": "_self"
             },
             {
               "title": "Banner栏管理",
               "href": "/pages/advertisement/list.html",
-              "icon": "fa fa-tachometer",
+              "icon": "fa fa-institution",
               "privilegeName": "advertiseMent",
               "target": "_self"
             },
             {
               "title": "政策解读管理",
               "href": "/pages/policyInterpretation/list.html",
-              "icon": "fa fa-tachometer",
+              "icon": "fa fa-newspaper-o",
               "privilegeName": "policyInterpretation",
               "target": "_self"
             },
             {
               "title": "优惠券管理",
               "href": "/pages/coupon/list.html",
-              "icon": "fa fa-tachometer",
+              "icon": "fa fa-money",
               "privilegeName": "coupon",
               "target": "_self"
             },
             {
               "title": "企业服务类型",
               "href": "/pages/enterpriseServiceType/list.html",
-              "icon": "fa fa-tachometer",
+              "icon": "fa fa-umbrella",
               "privilegeName": "enterpriseServiceType",
               "target": "_self"
             },
             {
               "title": "企业服务",
               "href": "/pages/enterpriseService/list.html",
-              "icon": "fa fa-tachometer",
+              "icon": "fa fa-suitcase",
               "privilegeName": "enterpriseService",
               "target": "_self"
             },
             {
               "title": "企业助力",
               "href": "/pages/enterpriseSupport/list.html",
-              "icon": "fa fa-tachometer",
+              "icon": "fa fa-road",
               "privilegeName": "enterpriseSupport",
               "target": "_self"
             }
@@ -137,28 +130,28 @@
         {
           "title": "意见反馈管理",
           "href": "/pages/feedBack/list.html",
-          "icon": "fa fa-window-maximize",
+          "icon": "fa fa-envelope",
           "privilegeName": "feedBack",
           "target": "_self"
         },
         {
           "title": "加入我们信息查看",
           "href": "/pages/companyJoinInfo/list.html",
-          "icon": "fa fa-window-maximize",
+          "icon": "fa fa-puzzle-piece",
           "privilegeName": "companyJoinInfo",
           "target": "_self"
         },
         {
           "title": "用户管理",
           "href": "",
-          "icon": "fa fa-window-maximize",
+          "icon": "fa fa-users",
           "privilegeName": "userAdminMenu",
           "target": "_self",
           "child": [
             {
               "title": "订单管理",
               "href": "/pages/order/list.html",
-              "icon": "fa fa-window-maximize",
+              "icon": "fa fa-server",
               "privilegeName": "order",
               "target": "_self"
             },

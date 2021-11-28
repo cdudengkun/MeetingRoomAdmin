@@ -71,6 +71,24 @@ layui.use(['form', 'table', 'util', 'baseConfig'], function () {
         }
     });
 
+    //删除
+    function del( id){
+        layer.confirm('确定删除选中的数据项？', {icon: 3, title: '提示信息'}, function (index) {
+            $.post("/" + pageName + "/del",{
+                "ids" : id
+            },function( res){
+                if( res.code == 200){
+                    table.reload();
+                    layer.close( index);
+                    top.layer.msg( res.msg);
+                }else{
+                    top.layer.close( index);
+                    top.layer.msg( res.msg);
+                }
+            });
+        });
+    }
+
     //------------表格数据工具栏，一般放表格行数据的编辑、删除等按钮
     table.on('tool(currentTableFilter)', function (obj) {
         var data = obj.data;
@@ -95,10 +113,7 @@ layui.use(['form', 'table', 'util', 'baseConfig'], function () {
                 content: 'formData.html?actionType=2',
             });
         } else if (obj.event === 'delete') {
-            layer.confirm('确认删除？', function (index) {
-                obj.del();
-                layer.close(index);
-            });
+            del( data.id);
         }
     });
 
