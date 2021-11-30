@@ -10,6 +10,6 @@ public class DefineSignKeyModel extends BaseModel{
 
     private Long id;
     private String dataKey;
-    private Integer type;//1-会议室规格，2-企业服务类型,3-合作商城的商品类别
+    private Integer type;//1-会议室规格,3-合作商城的商品类别
 }
 
