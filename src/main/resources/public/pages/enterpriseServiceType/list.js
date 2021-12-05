@@ -9,7 +9,7 @@ layui.use(['form', 'table', 'util', 'baseConfig'], function () {
     var pageName = "enterpriseServiceType";
     var minWidth = 900;
     var minHeight = 800;
-    var formTitleSuffix = "企业服务类型";
+    var formTitleSuffix = "首页服务类型";
 
     table.render({
         id : "listTable",
@@ -19,6 +19,14 @@ layui.use(['form', 'table', 'util', 'baseConfig'], function () {
         defaultToolbar: [],
         cols: [[
             {field: 'name', width: 200, title: '名称'},
+            {field: 'type', width: 200, title: '所属服务', templet : function( d){
+                switch (d.type) {
+                    case 1: return "企业服务";
+                    case 2: return "政策解读";
+                    case 3: return "礼包领取";
+                    case 4: return "企业助力";
+                }
+            }},
             {field: 'priority', width: 400, title: '展示优先级,越大展示越前面'},
             {field: 'createTime', width: 200, title: '创建时间', templet : function( d){
                 return util.toDateString( d.createTime);

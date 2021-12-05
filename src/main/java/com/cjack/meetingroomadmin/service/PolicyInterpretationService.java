@@ -2,12 +2,14 @@ package com.cjack.meetingroomadmin.service;
 
 
 import com.cjack.meetingroomadmin.config.LayPage;
+import com.cjack.meetingroomadmin.dao.EnterpriseServiceTypeDao;
 import com.cjack.meetingroomadmin.dao.PolicyInterpretationDao;
 import com.cjack.meetingroomadmin.dao.PolicyInterpretationFileDao;
 import com.cjack.meetingroomadmin.dao.PolicyInterpretationVedioDao;
 import com.cjack.meetingroomadmin.model.PolicyInterpretationFileModel;
 import com.cjack.meetingroomadmin.model.PolicyInterpretationModel;
 import com.cjack.meetingroomadmin.model.PolicyInterpretationVideoModel;
+import com.cjack.meetingroomadmin.table.EnterpriseServiceTypeTable;
 import com.cjack.meetingroomadmin.table.PolicyInterpretationFileTable;
 import com.cjack.meetingroomadmin.table.PolicyInterpretationTable;
 import com.cjack.meetingroomadmin.table.PolicyInterpretationVideoTable;
@@ -37,6 +39,8 @@ public class PolicyInterpretationService {
     private PolicyInterpretationFileDao fileDao;
     @Autowired
     private PolicyInterpretationVedioDao vedioFileDao;
+    @Autowired
+    private EnterpriseServiceTypeDao typeDao;
 
     public void list( LayPage layPage, PolicyInterpretationModel model){
         List< Sort.Order> orders=new ArrayList<>();
@@ -50,6 +54,8 @@ public class PolicyInterpretationService {
             PolicyInterpretationModel data = ModelUtils.copySignModel( table, PolicyInterpretationModel.class);
             data.setFiles( ModelUtils.copyListModel( table.getFiles(), PolicyInterpretationFileModel.class));
             data.setVideos( ModelUtils.copyListModel( table.getVideos(), PolicyInterpretationVideoModel.class));
+            data.setTypeId( table.getEnterpriseServiceTypeTable().getId());
+            data.setTypeName( table.getEnterpriseServiceTypeTable().getName());
             datas.add( data);
         }
         layPage.setData( datas);
@@ -149,6 +155,7 @@ public class PolicyInterpretationService {
         }else{
             table = ModelUtils.copySignModel( model, PolicyInterpretationTable.class);
         }
+        table.setEnterpriseServiceTypeTable( typeDao.getOne( model.getTypeId()));
         dao.save( table);
     }
 
@@ -160,6 +167,10 @@ public class PolicyInterpretationService {
             }
             if( EmptyUtil.isNotEmpty( model.getType())){
                 predicate.getExpressions().add( cb.equal( root.get("type"), model.getType()));
+            }
+            if( EmptyUtil.isNotEmpty( model.getTypeId())){
+                Join<PolicyInterpretationTable, EnterpriseServiceTypeTable> join = root.join("enterpriseServiceTypeTable", JoinType.LEFT);
+                predicate.getExpressions().add( cb.equal( join.get("id"), model.getTypeId()));
             }
             return predicate;
         };

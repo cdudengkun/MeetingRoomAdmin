@@ -2,8 +2,10 @@ package com.cjack.meetingroomadmin.service;
 
 
 import com.cjack.meetingroomadmin.config.LayPage;
+import com.cjack.meetingroomadmin.dao.EnterpriseServiceTypeDao;
 import com.cjack.meetingroomadmin.dao.EnterpriseSupportDao;
 import com.cjack.meetingroomadmin.model.EnterpriseSupportModel;
+import com.cjack.meetingroomadmin.table.EnterpriseServiceTypeTable;
 import com.cjack.meetingroomadmin.table.EnterpriseSupportTable;
 import com.cjack.meetingroomadmin.util.EmptyUtil;
 import com.cjack.meetingroomadmin.util.ModelUtils;
@@ -15,6 +17,8 @@ import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
+import javax.persistence.criteria.Join;
+import javax.persistence.criteria.JoinType;
 import javax.persistence.criteria.Predicate;
 import java.util.ArrayList;
 import java.util.List;
@@ -26,6 +30,8 @@ public class EnterpriseSupportService {
 
     @Autowired
     private EnterpriseSupportDao dao;
+    @Autowired
+    private EnterpriseServiceTypeDao typeDao;
 
     public void list( LayPage layPage, EnterpriseSupportModel model){
         List< Sort.Order> orders=new ArrayList<>();
@@ -37,6 +43,8 @@ public class EnterpriseSupportService {
         List<EnterpriseSupportModel> datas = new ArrayList<>();
         for( EnterpriseSupportTable table : pageTable.getContent()){
             EnterpriseSupportModel data = ModelUtils.copySignModel( table, EnterpriseSupportModel.class);
+            data.setTypeId( table.getType().getId());
+            data.setTypeName( table.getType().getName());
             datas.add( data);
         }
         layPage.setData( datas);
@@ -62,6 +70,7 @@ public class EnterpriseSupportService {
         }else{
             table = ModelUtils.copySignModel( model, EnterpriseSupportTable.class);
         }
+        table.setType( typeDao.getOne( model.getTypeId()));
         dao.save( table);
     }
 
@@ -70,6 +79,10 @@ public class EnterpriseSupportService {
             Predicate predicate = cb.conjunction();
             if( EmptyUtil.isNotEmpty( model.getName())){
                 predicate.getExpressions().add( cb.like( root.get("name"), toLikeStr( model.getName())));
+            }
+            if( EmptyUtil.isNotEmpty( model.getTypeId())){
+                Join<EnterpriseSupportTable, EnterpriseServiceTypeTable> join = root.join("type", JoinType.LEFT);
+                predicate.getExpressions().add( cb.equal( join.get("id"), model.getTypeId()));
             }
             return predicate;
         };

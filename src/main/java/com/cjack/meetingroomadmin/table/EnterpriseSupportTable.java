@@ -24,4 +24,8 @@ public class EnterpriseSupportTable {
     private Integer downloadCount;//下载次数
     private Long adminUserId;//创建人id
 
+    @OneToOne( cascade = {CascadeType.REFRESH, CascadeType.MERGE})
+    @JoinColumn( name = "type_id")
+    private EnterpriseServiceTypeTable type;//企业服务类型
+
 }

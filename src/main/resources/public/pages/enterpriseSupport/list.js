@@ -19,6 +19,7 @@ layui.use(['form', 'table', 'util', 'baseConfig'], function () {
         defaultToolbar: [],
         cols: [[
             {field: 'name', width: 300, title: '名称'},
+            {field: 'typeName', width: 150, title: '服务类别'},
             {field: 'url', width: 500, title: '下载地址'},
             {field: 'size', width: 150, title: '文件大小'},
             {field: 'downloadCount', width: 150, title: '下载次数'},
@@ -42,6 +43,9 @@ layui.use(['form', 'table', 'util', 'baseConfig'], function () {
             };
         }
     });
+
+    //------------加载搜索表单下拉框
+    baseConfig.loadSelect( "/enterpriseServiceType/list?type=4", "typeId", null, "name");
 
     //------------表单搜索
     form.on('submit(data-search-btn)', function (data) {

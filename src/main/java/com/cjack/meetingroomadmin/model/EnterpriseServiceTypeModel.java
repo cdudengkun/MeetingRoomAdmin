@@ -13,4 +13,6 @@ public class EnterpriseServiceTypeModel extends BaseModel{
     private String name;//类型名称
     private Integer priority;//展示优先级,越大展示越前面
 
+    private Integer type;//类型，1-企业服务,2-政策解读,3-礼包领取,4-企业助力
+
 }

@@ -19,7 +19,7 @@ layui.use(['form', 'table', 'util', 'baseConfig'], function () {
         defaultToolbar: [],
         cols: [[
             {field: 'title', width: 400, title: '标题'},
-            {field: 'typeName', width: 150, title: '类别'},
+            {field: 'typeName', width: 150, title: '服务类别'},
             {field: 'createTime', width: 200, title: '创建时间', templet : function( d){
                 return util.toDateString( d.createTime);
             }},
@@ -42,7 +42,7 @@ layui.use(['form', 'table', 'util', 'baseConfig'], function () {
     });
 
     //------------加载搜索表单下拉框
-    baseConfig.loadSelect( "/enterpriseServiceType/list", "typeId", null, "name");
+    baseConfig.loadSelect( "/enterpriseServiceType/list?type=1", "typeId", null, "name");
 
     //------------表单搜索
     form.on('submit(data-search-btn)', function (data) {

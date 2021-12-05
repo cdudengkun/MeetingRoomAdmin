@@ -18,6 +18,7 @@ public class CouponModel  extends BaseModel{
     private Integer drawed;
 
     private Long meetingZoneId;
-
+    private Long typeId;//类型id
+    private String typeName;//类型名称
     private Integer status;//1-未发布，2-已发布
 }

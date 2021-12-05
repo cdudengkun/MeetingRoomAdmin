@@ -11,6 +11,9 @@ layui.use(['form','layer', 'baseConfig', "upload",'flow','wangEditor'], function
     var data = baseConfig.getDataFromList( pageName);
     var actionType = baseConfig.getUrlParamer( "actionType");
 
+    var typeId = data ? data.typeId: null;
+    baseConfig.loadSelect( "/enterpriseServiceType/list?type=2", "typeId", typeId, "name");
+
     function handleContentShow( type){
         $( ".policyInterpretation_content").css( "display", "none");
         $( "#content" + type).css( "display", "block");

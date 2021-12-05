@@ -28,4 +28,8 @@ public class CouponTable {
     @ManyToOne( cascade = {CascadeType.REFRESH, CascadeType.MERGE})
     @JoinColumn( name = "meeting_zone_id")
     private MeetingZoneTable meetingZone;// 所属会议空间
+
+    @OneToOne( cascade = {CascadeType.REFRESH, CascadeType.MERGE})
+    @JoinColumn( name = "type_id")
+    private EnterpriseServiceTypeTable type;//企业服务类型
 }

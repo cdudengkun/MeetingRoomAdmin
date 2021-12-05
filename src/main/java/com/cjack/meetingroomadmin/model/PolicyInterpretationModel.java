@@ -23,4 +23,7 @@ public class PolicyInterpretationModel extends BaseModel{
 
     private List<PolicyInterpretationVideoModel> videos;//视频章节列表
 
+    private Long typeId;//类型id
+    private String typeName;//类型名称
+
 }

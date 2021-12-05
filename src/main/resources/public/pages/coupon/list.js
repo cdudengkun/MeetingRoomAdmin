@@ -19,6 +19,7 @@ layui.use(['form', 'table', 'util', 'baseConfig'], function () {
         defaultToolbar: [],
         cols: [[
             {field: 'name', width: 300, title: '优惠券名称'},
+            {field: 'typeName', width: 150, title: '服务类别'},
             {field: 'mount', width: 100, title: '金额'},
             {field: 'status', width: 100, title: '状态', templet : function( d){
                 switch (d.status) {
@@ -58,6 +59,9 @@ layui.use(['form', 'table', 'util', 'baseConfig'], function () {
             };
         }
     });
+
+    //------------加载搜索表单下拉框
+    baseConfig.loadSelect( "/enterpriseServiceType/list?type=3", "typeId", null, "name");
 
     //------------表单搜索
     form.on('submit(data-search-btn)', function (data) {

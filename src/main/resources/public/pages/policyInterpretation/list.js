@@ -21,6 +21,7 @@ layui.use(['form', 'table', 'util', 'baseConfig',"miniTab"], function () {
         defaultToolbar: [],
         cols: [[
             {field: 'title', width: 300, title: '标题'},
+            {field: 'typeName', width: 150, title: '服务类别'},
             {field: 'type', width: 150, title: '内容类型', templet : function( d){
                 switch (d.type) {
                     case 1: return "视频讲解";
@@ -68,6 +69,9 @@ layui.use(['form', 'table', 'util', 'baseConfig',"miniTab"], function () {
             };
         }
     });
+
+    //------------加载搜索表单下拉框
+    baseConfig.loadSelect( "/enterpriseServiceType/list?type=2", "typeId", null, "name");
 
     //------------表单搜索
     form.on('submit(data-search-btn)', function (data) {

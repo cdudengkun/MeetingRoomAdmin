@@ -105,7 +105,7 @@
               "target": "_self"
             },
             {
-              "title": "企业服务类型",
+              "title": "首页服务类型",
               "href": "/pages/enterpriseServiceType/list.html",
               "icon": "fa fa-umbrella",
               "privilegeName": "enterpriseServiceType",

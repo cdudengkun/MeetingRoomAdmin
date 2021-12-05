@@ -34,4 +34,8 @@ public class PolicyInterpretationTable {
     @OrderBy("id asc")
     private List<PolicyInterpretationVideoTable> videos;//视频章节列表
 
+    @OneToOne( cascade = {CascadeType.REFRESH, CascadeType.MERGE})
+    @JoinColumn( name = "type_id")
+    private EnterpriseServiceTypeTable enterpriseServiceTypeTable;//企业服务类型
+
 }

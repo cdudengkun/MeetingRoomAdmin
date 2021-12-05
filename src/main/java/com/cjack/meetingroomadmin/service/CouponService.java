@@ -2,11 +2,10 @@ package com.cjack.meetingroomadmin.service;
 
 import com.cjack.meetingroomadmin.config.LayPage;
 import com.cjack.meetingroomadmin.dao.CouponDao;
+import com.cjack.meetingroomadmin.dao.EnterpriseServiceTypeDao;
 import com.cjack.meetingroomadmin.model.CouponModel;
 import com.cjack.meetingroomadmin.model.MessageModel;
-import com.cjack.meetingroomadmin.table.CouponTable;
-import com.cjack.meetingroomadmin.table.MeetingRoomTable;
-import com.cjack.meetingroomadmin.table.MeetingZoneTable;
+import com.cjack.meetingroomadmin.table.*;
 import com.cjack.meetingroomadmin.util.DateFormatUtil;
 import com.cjack.meetingroomadmin.util.EmptyUtil;
 import com.cjack.meetingroomadmin.util.ModelUtils;
@@ -32,6 +31,8 @@ public class CouponService {
     private CouponDao dao;
     @Autowired
     private MessageService messageService;
+    @Autowired
+    private EnterpriseServiceTypeDao typeDao;
 
     public void list(LayPage page, CouponModel model){
         List< Sort.Order> orders=new ArrayList<>();
@@ -39,7 +40,14 @@ public class CouponService {
         Pageable pageable = new PageRequest( page.getPage()-1, page.getLimit(), new Sort( orders));
         Specification<CouponTable> specification = handleConditon( model);
         Page<CouponTable> pageTable = dao.findAll( specification, pageable);
-        page.setData( ModelUtils.copyListModel( pageTable.getContent(), CouponModel.class));
+        List<CouponModel> datas = new ArrayList<>();
+        for( CouponTable table : pageTable.getContent()){
+            CouponModel data = ModelUtils.copySignModel( table, CouponModel.class);
+            data.setTypeId( table.getType().getId());
+            data.setTypeName( table.getType().getName());
+            datas.add( data);
+        }
+        page.setData( datas);
         page.setCount( Long.valueOf( pageTable.getTotalElements()).intValue());
     }
 
@@ -62,6 +70,7 @@ public class CouponService {
         }else{
             table = ModelUtils.copySignModel( model, CouponTable.class);
         }
+        table.setType( typeDao.getOne( model.getTypeId()));
         dao.save( table);
     }
 
@@ -93,6 +102,10 @@ public class CouponService {
             }
             if( EmptyUtil.isNotEmpty( model.getName())){
                 predicate.getExpressions().add( cb.equal( root.get("name"), model.getName()));
+            }
+            if( EmptyUtil.isNotEmpty( model.getTypeId())){
+                Join<EnterpriseSupportTable, EnterpriseServiceTypeTable> join = root.join("type", JoinType.LEFT);
+                predicate.getExpressions().add( cb.equal( join.get("id"), model.getTypeId()));
             }
             return predicate;
         };

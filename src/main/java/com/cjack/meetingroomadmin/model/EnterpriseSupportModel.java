@@ -13,4 +13,7 @@ public class EnterpriseSupportModel extends BaseModel{
     private String size;//文件大小，内容为22MB这种格式
     private Integer downloadCount = 0;//下载次数
 
+    private Long typeId;//类型id
+    private String typeName;//类型名称
+
 }

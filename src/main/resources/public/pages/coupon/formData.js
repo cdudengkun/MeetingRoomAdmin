@@ -9,6 +9,9 @@ layui.use(['form', 'layer', 'baseConfig', 'laydate'], function () {
     var data = baseConfig.getDataFromList( pageName);
     var actionType = baseConfig.getUrlParamer( "actionType");
 
+    var typeId = data ? data.typeId: null;
+    baseConfig.loadSelect( "/enterpriseServiceType/list?type=3", "typeId", typeId, "name");
+
     /**
      * 将list页面通过url传过来的参数加载到form表单里面去
      * @param data
