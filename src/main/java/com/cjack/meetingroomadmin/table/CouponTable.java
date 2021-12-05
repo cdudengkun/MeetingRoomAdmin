@@ -20,6 +20,7 @@ public class CouponTable {
 
     private Integer mount;//金额
     private String name;//优惠券名称
+    private String cover;//封面图片地址
     private Long startTime;//可用开始时间
     private Long endTime;//过期时间
     private Long adminUserId;//创建人id

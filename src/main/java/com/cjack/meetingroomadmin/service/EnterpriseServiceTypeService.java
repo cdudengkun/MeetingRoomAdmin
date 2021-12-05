@@ -22,7 +22,7 @@ public class EnterpriseServiceTypeService {
 
     public List<EnterpriseServiceTypeModel> list( EnterpriseServiceTypeModel model){
         List< Sort.Order> orders=new ArrayList<>();
-        Sort sort = new Sort( "updateTime");
+        Sort sort = new Sort( "type");
         Specification<EnterpriseServiceTypeTable> specification = handleConditon( model);
         List<EnterpriseServiceTypeTable> tables = dao.findAll( specification, sort);
         List<EnterpriseServiceTypeModel> datas = new ArrayList<>();

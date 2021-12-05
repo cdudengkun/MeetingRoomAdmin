@@ -19,6 +19,7 @@ public class EnterpriseSupportTable {
     private Long updateTime;
 
     private String name;//类型名称
+    private String cover;//封面图片地址
     private String url;//文件下载地址
     private String size;//文件大小，内容为22MB这种格式
     private Integer downloadCount;//下载次数

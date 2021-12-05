@@ -20,6 +20,7 @@ layui.use(['form', 'layer', 'baseConfig', 'laydate'], function () {
         if( data && data.id){
             data.startTime = baseConfig.formatDateToDay( data.startTime);
             data.endTime = baseConfig.formatDateToDay( data.endTime);
+            $( "#coverImg_img").attr( "src", data.cover);
             form.val( "formFilter", data);
         }
     }
@@ -59,6 +60,20 @@ layui.use(['form', 'layer', 'baseConfig', 'laydate'], function () {
 
     }
     handleFormItem();
+
+    //上传封面
+    upload.render({
+        elem: '#coverImg_div',
+        url: '/file/upload?type=couponCover',
+        multiple: true,
+        done: function(res){
+            if( res.code == 200){
+                var filePath = res.data.filePath;
+                $( "input[name=cover]").val( filePath);
+                $( "#coverImg_img").attr( "src", filePath);
+            }
+        }
+    });
 
     //关闭弹窗页面
     $( "#closeBtn").on( "click", function(){
