@@ -24,29 +24,12 @@
 <div class="layui-form layuimini-form">
     <form class="layui-form layui-row layui-col-space10" lay-filter="formFilter">
         <input type="hidden" name="id">
-        <input type="model" name="id" value="2">
+        <input type="model" name="id" value="1">
         <div id="content_div">
             <div class="layui-form-item">
                 <label class="layui-form-label required">优惠券名称</label>
                 <div class="layui-input-inline width_500">
                     <input type="text" name="name" lay-verify="required" lay-reqtext="优惠券名称不能为空" placeholder="请输入优惠券名称"  class="layui-input">
-                </div>
-            </div>
-            <div class="layui-form-item magt3">
-                <label class="layui-form-label required">封面图片</label>
-                <div class="layui-input-block">
-                    <div class="layui-col-xs5 layui-upload-list" id="coverImg_div">
-                        <img class="layui-upload-img" id="coverImg_img">
-                        <input type="hidden" name="cover" lay-verify="required" lay-reqtext="封面图片不能为空" required>
-                    </div>
-                </div>
-            </div>
-            <div class="layui-form-item">
-                <label class="layui-form-label required">类别</label>
-                <div class="layui-input-inline">
-                    <select name="typeId">
-                        <option >请选择类别</option>
-                    </select>
                 </div>
             </div>
             <div class="layui-form-item">

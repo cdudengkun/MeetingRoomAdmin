@@ -116,6 +116,7 @@ public class PolicyInterpretationService {
     public void uploadVideoFile( PolicyInterpretationVideoModel model){
         PolicyInterpretationVideoTable table = ModelUtils.copySignModel( model, PolicyInterpretationVideoTable.class);
         table.setPolicyInterpretation( dao.getOne( model.getPolicyInterpretationId()));
+        table.setCreateTime( System.currentTimeMillis());
         vedioFileDao.save( table);
     }
 
@@ -140,6 +141,7 @@ public class PolicyInterpretationService {
     public void uploadAttachment( PolicyInterpretationFileModel model){
         PolicyInterpretationFileTable table = ModelUtils.copySignModel( model, PolicyInterpretationFileTable.class);
         table.setPolicyInterpretation( dao.getOne( model.getPolicyInterpretationId()));
+        table.setCreateTime( System.currentTimeMillis());
         fileDao.save( table);
     }
 

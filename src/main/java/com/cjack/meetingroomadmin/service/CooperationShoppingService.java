@@ -2,6 +2,7 @@ package com.cjack.meetingroomadmin.service;
 
 import com.cjack.meetingroomadmin.config.LayPage;
 import com.cjack.meetingroomadmin.dao.CooperationShoppingDao;
+import com.cjack.meetingroomadmin.dao.DefineSignValueDao;
 import com.cjack.meetingroomadmin.model.CooperationShoppingModel;
 import com.cjack.meetingroomadmin.table.CooperationShoppingTable;
 import com.cjack.meetingroomadmin.table.DefineSignKeyTable;
@@ -28,6 +29,8 @@ public class CooperationShoppingService {
 
     @Autowired
     private CooperationShoppingDao dao;
+    @Autowired
+    private DefineSignValueDao defineSignValueDao;
 
     public void list(LayPage page, CooperationShoppingModel condition){
         List< Sort.Order> orders=new ArrayList<>();
@@ -58,7 +61,15 @@ public class CooperationShoppingService {
     }
 
     public void save( CooperationShoppingModel model){
-        dao.save( ModelUtils.copySignModel( model, CooperationShoppingTable.class));
+        CooperationShoppingTable table;
+        if( EmptyUtil.isNotEmpty( model.getId())){
+            table = dao.findOne( model.getId());
+            ModelUtils.copySignModel( model, table);
+        }else{
+            table = ModelUtils.copySignModel( model, CooperationShoppingTable.class);
+        }
+        table.setType( defineSignValueDao.getOne( model.getTypeId()));
+        dao.save( table);
     }
 
     /**

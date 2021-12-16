@@ -99,6 +99,13 @@
             },
             {
               "title": "优惠券管理",
+              "href": "/pages/onlineCoupon/list.html",
+              "icon": "fa fa-money",
+              "privilegeName": "coupon",
+              "target": "_self"
+            },
+            {
+              "title": "礼品券管理",
               "href": "/pages/coupon/list.html",
               "icon": "fa fa-money",
               "privilegeName": "coupon",

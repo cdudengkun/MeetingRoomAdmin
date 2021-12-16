@@ -17,6 +17,8 @@ public class CouponModel  extends BaseModel{
     private Long endTime;
     private Integer drawed;
 
+    private Integer model;//1-线上优惠券，2-线下优惠券
+
     private Long meetingZoneId;
     private Long typeId;//类型id
     private String typeName;//类型名称
