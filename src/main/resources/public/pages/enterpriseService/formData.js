@@ -17,7 +17,7 @@ layui.use(['form','layer', 'baseConfig', "upload",'wangEditor'], function () {
     //处理富文本编辑器
     var editor = new wangEditor('#contentEditor');
     editor.customConfig.uploadImgServer = "/file/upload?type=wangEditor";
-    editor.customConfig.uploadFileName = 'image';
+    editor.customConfig.uploadFileName = 'file';
     editor.customConfig.pasteFilterStyle = false;
     editor.customConfig.zIndex=0;
     editor.customConfig.uploadImgMaxLength = 5;
@@ -29,9 +29,10 @@ layui.use(['form','layer', 'baseConfig', "upload",'wangEditor'], function () {
         // 如果服务器端返回的不是 {errno:0, data: [...]} 这种格式，可使用该配置
         customInsert: function (insertImg, result, editor) {
             console.log(result);
-            if (result.code == 1) {
+            if (result.code == 200) {
                 var url = result.data.filePath;
-                url.forEach(function (e) {
+                var urls = url.split( ",");
+                urls.forEach(function (e) {
                     insertImg(e);
                 })
             } else {

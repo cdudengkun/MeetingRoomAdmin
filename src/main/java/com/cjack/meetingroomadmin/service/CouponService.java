@@ -43,8 +43,11 @@ public class CouponService {
         List<CouponModel> datas = new ArrayList<>();
         for( CouponTable table : pageTable.getContent()){
             CouponModel data = ModelUtils.copySignModel( table, CouponModel.class);
-            data.setTypeId( table.getType().getId());
-            data.setTypeName( table.getType().getName());
+            if( table.getType() != null){
+                data.setTypeId( table.getType().getId());
+                data.setTypeName( table.getType().getName());
+            }
+
             datas.add( data);
         }
         page.setData( datas);

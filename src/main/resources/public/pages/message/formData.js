@@ -2,6 +2,7 @@ layui.use(['form', 'layer', 'baseConfig'], function () {
     var form = layui.form,
         $ = layui.jquery,
         layer = parent.layer === undefined ? layui.layer : top.layer,
+        upload = layui.upload,
         baseConfig = layui.baseConfig;
 
     var pageName = "message";
@@ -14,6 +15,7 @@ layui.use(['form', 'layer', 'baseConfig'], function () {
      */
     function loadFormData( data){
         if( data && data.id){
+            $( "#img_img").attr( "src", data.img);
             form.val( "formFilter", data);
         }
     }
@@ -41,6 +43,20 @@ layui.use(['form', 'layer', 'baseConfig'], function () {
 
     }
     handleFormItem();
+
+    //上传封面
+    upload.render({
+        elem: '#img_div',
+        url: '/file/upload?type=messageImg',
+        multiple: true,
+        done: function(res){
+            if( res.code == 200){
+                var filePath = res.data.filePath;
+                $( "input[name=img]").val( filePath);
+                $( "#img_img").attr( "src", filePath);
+            }
+        }
+    });
 
     //关闭弹窗页面
     $( "#closeBtn").on( "click", function(){

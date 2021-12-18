@@ -22,7 +22,7 @@ layui.use(['form','layer', 'baseConfig', "upload",'flow','wangEditor'], function
     //处理富文本编辑器
     var editor = new wangEditor('#contentEditor');
     editor.customConfig.uploadImgServer = "/file/upload?type=wangEditor";
-    editor.customConfig.uploadFileName = 'image';
+    editor.customConfig.uploadFileName = 'file';
     editor.customConfig.pasteFilterStyle = false;
     editor.customConfig.uploadImgMaxLength = 5;
     editor.customConfig.zIndex=0;

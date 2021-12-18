@@ -20,6 +20,7 @@ public class MessageTable {
 
     private String title;//消息标题
     private String content;//消息内容
+    private String img;
     private Integer type;//1-后台手动发送消息，2-系统发送消息
     private Long adminUserId;//创建人id
 }

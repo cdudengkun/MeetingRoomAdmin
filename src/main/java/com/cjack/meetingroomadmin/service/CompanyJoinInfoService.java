@@ -88,12 +88,12 @@ public class CompanyJoinInfoService {
 
     public void uploadImg( CompanyJoinInfoModel model){
         CompanyJoinInfoTable table = dao.findOne( model.getId());
-        if( EmptyUtil.isNotEmpty( table.getLicences())){
-            if( !table.getLicences().contains( model.getLicences())){
-                table.setLicences( table.getLicences() + "," + model.getLicences());
+        if( EmptyUtil.isNotEmpty( table.getLicence())){
+            if( !table.getLicence().contains( model.getLicence())){
+                table.setLicence( table.getLicence() + "," + model.getLicence());
             }
         }else{
-            table.setLicences( model.getLicences());
+            table.setLicence( model.getLicence());
         }
 
         dao.save( table);
@@ -101,9 +101,9 @@ public class CompanyJoinInfoService {
 
     public void delImg( CompanyJoinInfoModel model){
         CompanyJoinInfoTable table = dao.findOne( model.getId());
-        if( EmptyUtil.isNotEmpty( table.getLicences()) && EmptyUtil.isNotEmpty( model.getLicences())){
-            for( String img : model.getLicences().split( ",")){
-                table.setLicences( table.getLicences().replace( img + ",", ""));
+        if( EmptyUtil.isNotEmpty( table.getLicence()) && EmptyUtil.isNotEmpty( model.getLicence())){
+            for( String img : model.getLicence().split( ",")){
+                table.setLicence( table.getLicence().replace( img + ",", ""));
             }
         }
         dao.save( table);

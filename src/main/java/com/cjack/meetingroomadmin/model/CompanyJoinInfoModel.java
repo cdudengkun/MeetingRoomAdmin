@@ -19,5 +19,5 @@ public class CompanyJoinInfoModel  extends BaseModel{
     private String companyName;//公司名称
     private String name;//联系人
     private String phone;//联系电话
-    private String licences;//营业执照列表，多个英文逗号分割
+    private String licence;//营业执照列表，多个英文逗号分割
 }

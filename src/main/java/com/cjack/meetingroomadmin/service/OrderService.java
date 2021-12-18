@@ -42,7 +42,7 @@ public class OrderService {
             data.setMeetingZoneModel( ModelUtils.copySignModel( table.getMeetingZone(), MeetingZoneModel.class));
 
             MeetingRoomReservationModel meetingRoomReservationModel = ModelUtils.copySignModel( table.getMeetingRoom(), MeetingRoomReservationModel.class);
-            ModelUtils.copySignModel( table.getMeetingRoom().getMeetingRoom(), meetingRoomReservationModel);
+            ModelUtils.copySignModel( table.getMeetingRoom(), meetingRoomReservationModel);
             data.setMeetingRoomReservationModel( meetingRoomReservationModel);
 
             data.setWorkStationReservationModel( ModelUtils.copySignModel( table.getWorkStation(), WorkStationReservationModel.class));

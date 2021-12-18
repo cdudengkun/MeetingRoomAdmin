@@ -31,7 +31,7 @@ layui.use(['form','layer', 'baseConfig', "upload", 'layarea','flow'], function (
     flow.load({
         elem: '#Images', //流加载容器
         done: function(page, next){ //加载下一页
-            var imgList = [],pics = data && data.licences ? data.licences.split( ",") : [];
+            var imgList = [],pics = data && data.licence ? data.licence.split( ",") : [];
             var maxPage = imgNums*page < pics.length ? imgNums*page : pics.length;
             if( pics && pics.length > 0){
                 setTimeout(function(){

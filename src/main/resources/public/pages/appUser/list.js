@@ -19,18 +19,19 @@ layui.use(['form', 'table', 'util', 'baseConfig'], function () {
         defaultToolbar: [],
         cols: [[
             {field: 'name', width: 200, title: '昵称'},
-            {field: 'loginName', width: 200, title: '登录账号'},
             {field: 'phone', width: 200, title: '电话'},
             {field: 'status', width: 300, title: '状态', templet : function( d){
                 switch (d.status) {
                     case 1: return "启用";
                     case 2: return "禁用";
+                    default: return "启用";
                 }
             }},
             {field: 'isVip', width: 200, title: '是否vip', templet : function( d){
                 switch (d.accountModel.isVip) {
                     case 1: return "是";
                     case 2: return "否";
+                    default: return "否";
                 }
             }},
             {field: 'lastLoginTime', width: 200, title: '最近登录时间', templet : function( d){

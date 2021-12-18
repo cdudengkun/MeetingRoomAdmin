@@ -28,6 +28,15 @@
                     <input type="text" name="title" lay-verify="required" lay-reqtext="标题不能为空" placeholder="请输入标题"  class="layui-input">
                 </div>
             </div>
+            <div class="layui-form-item magt3">
+                <label class="layui-form-label required">图片</label>
+                <div class="layui-input-block">
+                    <div class="layui-col-xs5 layui-upload-list" id="img_div">
+                        <img class="layui-upload-img" id="img_img">
+                        <input type="hidden" name="img" lay-verify="required" lay-reqtext="图片不能为空" required>
+                    </div>
+                </div>
+            </div>
             <div class="layui-form-item layui-form-text">
                 <label class="layui-form-label">内容</label>
                 <div class="layui-input-block">

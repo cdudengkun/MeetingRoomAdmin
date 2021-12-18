@@ -1,7 +1,8 @@
-layui.use(['form', 'layer', 'baseConfig', 'laydate'], function () {
+layui.use(['form', 'layer', 'baseConfig', 'laydate', "upload"], function () {
     var form = layui.form,
         $ = layui.jquery,
         layer = parent.layer === undefined ? layui.layer : top.layer,
+        upload = layui.upload,
         baseConfig = layui.baseConfig,
         laydate = layui.laydate;
 

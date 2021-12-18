@@ -18,7 +18,7 @@ layui.use(['form', 'table', 'util', 'baseConfig'], function () {
         toolbar: '#toolbar',
         defaultToolbar: [],
         cols: [[
-            {field: 'orderNo', width: 150, title: '订单号'},
+            {field: 'orderNo', width: 200, title: '订单号'},
             {field: 'type', width: 100, title: '订单类型', templet : function( d){
                 switch (d.type) {
                     case 1: return "工位";
@@ -43,7 +43,7 @@ layui.use(['form', 'table', 'util', 'baseConfig'], function () {
                         return d.meetingRoomReservationModel.name;
                 }
             }},
-            {field: 'phone', width: 100, title: '电话', templet : function( d){
+            {field: 'phone', width: 150, title: '电话', templet : function( d){
                 switch (d.type) {
                     case 1:
                         return d.workStationReservationModel.phone;
@@ -58,7 +58,7 @@ layui.use(['form', 'table', 'util', 'baseConfig'], function () {
                     switch (d.type) {
                         case 1:
                             var str = "工位数：" + d.workStationReservationModel.count + "<br/>";
-                                str += "使用时间：" + util.toDateString( d.workStationReservationModel.reservationTime) + "";
+                                str += "预定日期：" + baseConfig.formatDateToDay( d.workStationReservationModel.reservationTime) + "";
                             return str;
                         case 2:
                             var str = "" + d.meetingRoomReservationModel.addrDetail + "<br/>";
@@ -67,10 +67,10 @@ layui.use(['form', 'table', 'util', 'baseConfig'], function () {
                             return str;
                     }
             }},
-            {field: 'createTime', width: 150, title: '下单时间', templet : function( d){
+            {field: 'createTime', width: 200, title: '下单时间', templet : function( d){
                 return util.toDateString( d.createTime);
             }},
-            {field: 'payTime', width: 150, title: '支付时间', templet : function( d){
+            {field: 'payTime', width: 200, title: '支付时间', templet : function( d){
                 return util.toDateString( d.payTime);
             }},
             {title: '操作', minWidth: 150, align: "center", templet : function( d){
