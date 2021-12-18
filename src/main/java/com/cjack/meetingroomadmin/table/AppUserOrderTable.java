@@ -20,6 +20,7 @@ public class AppUserOrderTable {
 
 
     private Integer amount;//订单金额
+    private Integer payAmount;//实际金额
     private String orderNo;//订单编号
     private String memo;//订单说明
     private Integer payType;//支付方式，这里默认全部都是 1-微信支付

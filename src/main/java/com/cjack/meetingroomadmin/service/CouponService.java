@@ -1,6 +1,8 @@
 package com.cjack.meetingroomadmin.service;
 
 import com.cjack.meetingroomadmin.config.LayPage;
+import com.cjack.meetingroomadmin.dao.AppUserCouponDao;
+import com.cjack.meetingroomadmin.dao.AppUserDao;
 import com.cjack.meetingroomadmin.dao.CouponDao;
 import com.cjack.meetingroomadmin.dao.EnterpriseServiceTypeDao;
 import com.cjack.meetingroomadmin.model.CouponModel;
@@ -33,6 +35,10 @@ public class CouponService {
     private MessageService messageService;
     @Autowired
     private EnterpriseServiceTypeDao typeDao;
+    @Autowired
+    private AppUserDao appUserDao;
+    @Autowired
+    private AppUserCouponDao appUserCouponDao;
 
     public void list(LayPage page, CouponModel model){
         List< Sort.Order> orders=new ArrayList<>();
@@ -81,13 +87,27 @@ public class CouponService {
         CouponTable table = dao.findOne( model.getId());
         table.setStatus( 2);
         dao.save( table);
+        //给每个人发送优惠券
+        if( table.getModel().equals( 1)){
+            List<AppUserTable> appUserTables = appUserDao.findAll( );
+            for( AppUserTable appUserTable : appUserTables){
+                AppUserCouponTable appUserCouponTable = new AppUserCouponTable();
+                appUserCouponTable.setCoupon( table);
+                appUserCouponTable.setAppUser( appUserTable);
+                appUserCouponTable.setCreateTime( System.currentTimeMillis());
+                appUserCouponTable.setStatus( 2);
+                appUserCouponTable.setEndTime( table.getEndTime());
+                appUserCouponTable.setUpdateTime( System.currentTimeMillis());
+                appUserCouponDao.save( appUserCouponTable);
+            }
+        }
         //发送通知消息
         MessageModel messageModel = new MessageModel();
         messageModel.setType( 2);
         messageModel.setTitle( "优惠券领取通知");
         messageModel.setContent( "系统给您发送了优惠券[" + model.getName() + "]，有效期["
                 + DateFormatUtil.format( new Date( model.getStartTime()), DateFormatUtil.DATE_RULE_2) + "至"
-                + DateFormatUtil.format( new Date( model.getEndTime()), DateFormatUtil.DATE_RULE_2)  + "]，请至礼包页面领取");
+                + DateFormatUtil.format( new Date( model.getEndTime()), DateFormatUtil.DATE_RULE_2)  + "]");
         messageService.sendMessage( messageModel);
     }
 

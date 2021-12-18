@@ -11,7 +11,8 @@ import lombok.Data;
 @Data
 public class AppUserOrderModel  extends BaseModel{
 
-    private Double amount;
+    private Integer amount;
+    private Integer payAmount;//实际金额
     private String orderNo;
     private String memo;
     private Long payTime;

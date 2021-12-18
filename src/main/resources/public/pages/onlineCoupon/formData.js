@@ -1,8 +1,9 @@
-layui.use(['form', 'layer', 'baseConfig', 'laydate'], function () {
+layui.use(['form', 'layer', 'baseConfig', 'laydate', "upload"], function () {
     var form = layui.form,
         $ = layui.jquery,
         layer = parent.layer === undefined ? layui.layer : top.layer,
         baseConfig = layui.baseConfig,
+        upload = layui.upload,
         laydate = layui.laydate;
 
     var pageName = "coupon";

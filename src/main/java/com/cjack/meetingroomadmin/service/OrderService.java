@@ -5,6 +5,7 @@ import com.cjack.meetingroomadmin.dao.AppUserOrderDao;
 import com.cjack.meetingroomadmin.model.*;
 import com.cjack.meetingroomadmin.table.AppUserOrderTable;
 import com.cjack.meetingroomadmin.util.EmptyUtil;
+import com.cjack.meetingroomadmin.util.MathUtil;
 import com.cjack.meetingroomadmin.util.ModelUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -46,6 +47,8 @@ public class OrderService {
             data.setMeetingRoomReservationModel( meetingRoomReservationModel);
 
             data.setWorkStationReservationModel( ModelUtils.copySignModel( table.getWorkStation(), WorkStationReservationModel.class));
+            data.setAmount( MathUtil.divide( data.getAmount(), 100));
+            data.setPayAmount( MathUtil.divide( data.getPayAmount(), 100));
             datas.add( data);
         }
         page.setData( datas);

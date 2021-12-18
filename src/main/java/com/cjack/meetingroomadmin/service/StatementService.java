@@ -2,6 +2,7 @@ package com.cjack.meetingroomadmin.service;
 
 import com.cjack.meetingroomadmin.model.EchartDataModel;
 import com.cjack.meetingroomadmin.util.DateFormatUtil;
+import com.cjack.meetingroomadmin.util.MathUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -36,6 +37,7 @@ public class StatementService {
             Date date = DateFormatUtil.formatLastNDay( i);
             model.addX( DateFormatUtil.format( date, DateFormatUtil.DATE_RULE_8));
             Integer y = orderService.queryTradeMount( date);
+            y = MathUtil.divide( y, 100);
             model.addY( y == null ? 0 : y);
         }
         return model;
@@ -48,6 +50,7 @@ public class StatementService {
             Date date = DateFormatUtil.formatLastNWeek( i);
             model.addX( DateFormatUtil.formatWeek( i));
             Integer y = orderService.queryTradeMountWeek( date);
+            y = MathUtil.divide( y, 100);
             model.addY( y == null ? 0 : y);
         }
         return model;
@@ -60,6 +63,7 @@ public class StatementService {
             Date date = DateFormatUtil.formatLastNMonth( i);
             model.addX( DateFormatUtil.format( date, DateFormatUtil.DATE_RULE_9));
             Integer y = orderService.queryTradeMountMonth( date);
+            y = MathUtil.divide( y, 100);
             model.addY( y == null ? 0 : y);
         }
         return model;
