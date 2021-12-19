@@ -37,7 +37,7 @@ layui.use(['form', 'table', 'util', 'baseConfig'], function () {
                 var str = "";
                 if( d.status == 1){
                     str = '<a class="layui-btn layui-btn-normal layui-btn-xs data-count-edit" lay-event="edit">编辑</a>\n' +
-                        '<a class="layui-btn layui-btn-normal layui-btn-xs data-count-edit" lay-event="publish">编辑</a>\n' +
+                        '<a class="layui-btn layui-btn-normal layui-btn-xs data-count-edit" lay-event="publish">发布</a>\n' +
                         '<a class="layui-btn layui-btn-xs layui-btn-danger data-count-delete" lay-event="delete">删除</a>';
                 }
                 str += '<a class="layui-btn layui-btn-xs" lay-event="detail">详细</a>\n';

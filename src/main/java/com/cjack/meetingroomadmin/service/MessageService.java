@@ -67,6 +67,8 @@ public class MessageService {
 
     public void sendMessage( MessageModel model){
         MessageTable message = ModelUtils.copySignModel( model, MessageTable.class);
+        message.setCreateTime( System.currentTimeMillis());
+        message.setUpdateTime( System.currentTimeMillis());
         dao.save( message);
         List<AppUserTable> appUserTables = appUserDao.findAll( );
         //保存到message_read表

@@ -1,5 +1,6 @@
 package com.cjack.meetingroomadmin.service;
 
+import com.cjack.meetingroomadmin.dao.AppUserLoginDao;
 import com.cjack.meetingroomadmin.model.EchartDataModel;
 import com.cjack.meetingroomadmin.util.DateFormatUtil;
 import com.cjack.meetingroomadmin.util.MathUtil;
@@ -16,6 +17,8 @@ public class StatementService {
 
     @Autowired
     private OrderService orderService;
+    @Autowired
+    private AppUserLoginDao appUserLoginDao;
 
     //按天统计每天登录的用户，查询最近14天的吧
     public EchartDataModel userLoginCount(){
@@ -23,7 +26,7 @@ public class StatementService {
         for( int i = 13; i>= 0; i--){
             Date date = DateFormatUtil.formatLastNDay( i);
             model.addX( DateFormatUtil.format( date, DateFormatUtil.DATE_RULE_8));
-            Integer y = appUserService.queryUserLoginCount( date);
+            Integer y = appUserLoginDao.countLoginUserByDay( date.getTime());
             model.addY( y == null ? 0 : y);
         }
 

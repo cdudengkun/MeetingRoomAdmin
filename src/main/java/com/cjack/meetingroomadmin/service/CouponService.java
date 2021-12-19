@@ -79,7 +79,9 @@ public class CouponService {
         }else{
             table = ModelUtils.copySignModel( model, CouponTable.class);
         }
-        table.setType( typeDao.getOne( model.getTypeId()));
+        if( EmptyUtil.isNotEmpty( model.getTypeId())){
+            table.setType( typeDao.getOne( model.getTypeId()));
+        }
         dao.save( table);
     }
 
@@ -105,9 +107,9 @@ public class CouponService {
         MessageModel messageModel = new MessageModel();
         messageModel.setType( 2);
         messageModel.setTitle( "优惠券领取通知");
-        messageModel.setContent( "系统给您发送了优惠券[" + model.getName() + "]，有效期["
-                + DateFormatUtil.format( new Date( model.getStartTime()), DateFormatUtil.DATE_RULE_2) + "至"
-                + DateFormatUtil.format( new Date( model.getEndTime()), DateFormatUtil.DATE_RULE_2)  + "]");
+        messageModel.setContent( "系统给您发送了优惠券[" + table.getName() + "]，有效期["
+                + DateFormatUtil.format( new Date( table.getStartTime()), DateFormatUtil.DATE_RULE_2) + "至"
+                + DateFormatUtil.format( new Date( table.getEndTime()), DateFormatUtil.DATE_RULE_2)  + "]");
         messageService.sendMessage( messageModel);
     }
 
