@@ -21,8 +21,9 @@ layui.use(['form', 'table', 'util', 'baseConfig'], function () {
             {field: 'orderNo', width: 200, title: '订单号'},
             {field: 'type', width: 100, title: '订单类型', templet : function( d){
                 switch (d.type) {
-                    case 1: return "工位";
-                    case 2: return "会议室";
+                    case 1: return "工位预定";
+                    case 2: return "会议室预定";
+                    case 3: return "Vip预定";
                 }
             }},
             {field: 'status', width: 120, title: '订单状态', templet : function( d){
@@ -41,6 +42,8 @@ layui.use(['form', 'table', 'util', 'baseConfig'], function () {
                         return d.workStationReservationModel.name;
                     case 2:
                         return d.meetingRoomReservationModel.name;
+                    case 3:
+                        return d.appUserModel.name;
                 }
             }},
             {field: 'phone', width: 150, title: '电话', templet : function( d){
@@ -49,6 +52,8 @@ layui.use(['form', 'table', 'util', 'baseConfig'], function () {
                         return d.workStationReservationModel.phone;
                     case 2:
                         return d.meetingRoomReservationModel.phone;
+                    case 3:
+                        return d.appUserModel.phone;
                 }
             }},
             {field: 'meetingZoneName', width: 200, title: '所属会议中心', templet : function( d){
@@ -57,14 +62,16 @@ layui.use(['form', 'table', 'util', 'baseConfig'], function () {
             {field: '', width: 250, title: '订单内容', templet : function( d){
                     switch (d.type) {
                         case 1:
-                            var str = "工位数：" + d.workStationReservationModel.count + "<br/>";
+                            var str = "预定工位数：" + d.workStationReservationModel.count + "<br/>";
                                 str += "预定日期：" + baseConfig.formatDateToDay( d.workStationReservationModel.reservationTime) + "";
                             return str;
                         case 2:
-                            var str = "" + d.meetingRoomReservationModel.addrDetail + "<br/>";
+                            var str = "预定会议室：" + d.meetingRoomReservationModel.addrDetail + "<br/>";
                             str += "开始时间：" + util.toDateString( d.meetingRoomReservationModel.startTime) + "<br/>";
                             str += "结束时间：" + util.toDateString( d.meetingRoomReservationModel.endTime) + "<br/>";
                             return str;
+                        case 3:
+                            return "开通会员";
                     }
             }},
             {field: 'createTime', width: 200, title: '下单时间', templet : function( d){

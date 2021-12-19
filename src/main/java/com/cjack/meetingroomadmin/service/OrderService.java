@@ -41,12 +41,25 @@ public class OrderService {
             }
 
             data.setMeetingZoneModel( ModelUtils.copySignModel( table.getMeetingZone(), MeetingZoneModel.class));
+            if( table.getMeetingRoom() != null){
+                MeetingRoomReservationModel meetingRoomReservationModel = ModelUtils.copySignModel( table.getMeetingRoom().getMeetingRoom(), MeetingRoomReservationModel.class);
+                meetingRoomReservationModel.setStartTime( table.getMeetingRoom().getStartTime());
+                meetingRoomReservationModel.setEndTime( table.getMeetingRoom().getEndTime());
+                meetingRoomReservationModel.setHour( table.getMeetingRoom().getHour());
+                meetingRoomReservationModel.setName( table.getMeetingRoom().getName());
+                meetingRoomReservationModel.setPhone( table.getMeetingRoom().getPhone());
 
-            MeetingRoomReservationModel meetingRoomReservationModel = ModelUtils.copySignModel( table.getMeetingRoom(), MeetingRoomReservationModel.class);
-            ModelUtils.copySignModel( table.getMeetingRoom(), meetingRoomReservationModel);
-            data.setMeetingRoomReservationModel( meetingRoomReservationModel);
+                ModelUtils.copySignModel( table.getMeetingRoom(), meetingRoomReservationModel);
+                data.setMeetingRoomReservationModel( meetingRoomReservationModel);
+            }
 
-            data.setWorkStationReservationModel( ModelUtils.copySignModel( table.getWorkStation(), WorkStationReservationModel.class));
+            if( table.getWorkStation() != null){
+                WorkStationReservationModel workStationReservationModel = ModelUtils.copySignModel(table.getWorkStation(), WorkStationReservationModel.class);
+
+                data.setWorkStationReservationModel( workStationReservationModel);
+            }
+
+
             data.setAmount( MathUtil.divide( data.getAmount(), 100));
             data.setPayAmount( MathUtil.divide( data.getPayAmount(), 100));
             datas.add( data);
