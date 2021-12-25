@@ -3,16 +3,16 @@ package com.cjack.meetingroomadmin.service;
 import com.cjack.meetingroomadmin.config.LayPage;
 import com.cjack.meetingroomadmin.dao.CityDao;
 import com.cjack.meetingroomadmin.dao.CompanyJoinInfoDao;
+import com.cjack.meetingroomadmin.dao.DefineKeyValueDao;
 import com.cjack.meetingroomadmin.model.CompanyJoinInfoModel;
+import com.cjack.meetingroomadmin.model.DefineKeyValueModel;
 import com.cjack.meetingroomadmin.table.CompanyJoinInfoTable;
+import com.cjack.meetingroomadmin.table.DefineKeyValueTable;
 import com.cjack.meetingroomadmin.util.CustomerStringUtil;
 import com.cjack.meetingroomadmin.util.EmptyUtil;
 import com.cjack.meetingroomadmin.util.ModelUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
+import org.springframework.data.domain.*;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
@@ -27,6 +27,8 @@ public class CompanyJoinInfoService {
     private CompanyJoinInfoDao dao;
     @Autowired
     private CityDao cityDao;
+    @Autowired
+    private DefineKeyValueDao defineKeyValueDao;
 
     public void list(LayPage page, CompanyJoinInfoModel condition){
         List< Sort.Order> orders=new ArrayList<>();
@@ -84,6 +86,24 @@ public class CompanyJoinInfoService {
             table.setCounty( cityDao.getByAreaCode( model.getCountyId()));
         }
         dao.save( table);
+    }
+
+    public void updateIntroduce( DefineKeyValueModel model){
+        DefineKeyValueTable table = null;
+        if( EmptyUtil.isNotEmpty( model.getId())){
+            table = defineKeyValueDao.findOne( model.getId());
+            ModelUtils.copySignModel( model, table);
+        }else{
+            table = ModelUtils.copySignModel( model, DefineKeyValueTable.class);
+        }
+        defineKeyValueDao.save( table);
+    }
+
+    public DefineKeyValueModel getIntroduce(){
+        DefineKeyValueTable condition = new DefineKeyValueTable();
+        condition.setType( 2);
+        Example< DefineKeyValueTable> example = Example.of( condition);
+        return ModelUtils.copySignModel( defineKeyValueDao.findAll( example).get( 0), DefineKeyValueModel.class);
     }
 
     public void uploadImg( CompanyJoinInfoModel model){

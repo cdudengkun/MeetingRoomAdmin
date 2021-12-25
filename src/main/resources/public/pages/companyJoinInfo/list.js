@@ -80,14 +80,16 @@ layui.use(['form', 'table', 'util', 'baseConfig'], function () {
     //------------表格头部工具栏，一般放新增等按钮
     table.on('toolbar(currentTableFilter)', function (obj) {
         if (obj.event === 'add') {  // 监听添加操作
-            baseConfig.sendDataToForm( pageName, null);
-            var index = layer.open({
-                title: baseConfig.getTitleByType( 1, formTitleSuffix),
-                type: 2,
-                shade: 0.2,
-                shadeClose: true,
-                area: [ baseConfig.getWidth( minWidth), baseConfig.getHeight( minHeight)],
-                content: 'formData.html',
+            $.get( '/' + pageName + '/getIntroduce', function( res){
+                baseConfig.sendDataToForm( pageName, res.data);
+                var index = layer.open({
+                    title: "设置加入我们图片",
+                    type: 2,
+                    shade: 0.2,
+                    shadeClose: true,
+                    area: [ baseConfig.getWidth( minWidth), baseConfig.getHeight( minHeight)],
+                    content: 'formData_introduce.html',
+                });
             });
         }
     });

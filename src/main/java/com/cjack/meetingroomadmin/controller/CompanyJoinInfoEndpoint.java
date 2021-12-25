@@ -4,6 +4,7 @@ import com.cjack.meetingroomadmin.config.AjaxResult;
 import com.cjack.meetingroomadmin.config.CommonConfig;
 import com.cjack.meetingroomadmin.config.LayPage;
 import com.cjack.meetingroomadmin.model.CompanyJoinInfoModel;
+import com.cjack.meetingroomadmin.model.DefineKeyValueModel;
 import com.cjack.meetingroomadmin.service.CompanyJoinInfoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -33,6 +34,37 @@ public class CompanyJoinInfoEndpoint extends BaseEndpoint{
         try{
             service.list( layPage, model);
             return AjaxResult.SUCCESS( layPage);
+        }catch ( Exception e) {
+            e.printStackTrace();
+            return AjaxResult.ERROR();
+        }
+    }
+
+    /**
+     * 列表
+     * @return
+     */
+    @RequestMapping(value = "/getIntroduce", method = RequestMethod.GET)
+    @ResponseBody
+    public AjaxResult getIntroduce() {
+        try{
+            return AjaxResult.SUCCESS( service.getIntroduce());
+        }catch ( Exception e) {
+            e.printStackTrace();
+            return AjaxResult.ERROR();
+        }
+    }
+
+    /**
+     * 更新加入我们图文说明
+     * @return
+     */
+    @RequestMapping(value = "/updateIntroduce", method = RequestMethod.POST)
+    @ResponseBody
+    public AjaxResult updateIntroduce( DefineKeyValueModel model) {
+        try{
+            service.updateIntroduce( model);
+            return AjaxResult.SUCCESS();
         }catch ( Exception e) {
             e.printStackTrace();
             return AjaxResult.ERROR();

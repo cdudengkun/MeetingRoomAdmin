@@ -57,6 +57,9 @@ layui.use(['form', 'table', 'util', 'baseConfig'], function () {
                 }
             }},
             {field: 'meetingZoneName', width: 200, title: '所属会议中心', templet : function( d){
+                if( d.meetingZoneModel == null){
+                    return "/";
+                }
                 return d.meetingZoneModel.name;
             }},
             {field: '', width: 250, title: '订单内容', templet : function( d){

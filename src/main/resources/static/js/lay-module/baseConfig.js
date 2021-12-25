@@ -268,6 +268,9 @@ layui.define(["form","jquery",'echarts'],function(exports){
                         echartsRecords.setOption( optionRecords);
                     }
                 });
+            },
+            parseImgSize: function( originSize){
+                return parseInt( originSize);
             }
         };
     exports( "baseConfig", baseConfig);

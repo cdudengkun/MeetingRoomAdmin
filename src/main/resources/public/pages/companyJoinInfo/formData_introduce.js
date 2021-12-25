@@ -1,56 +1,14 @@
-layui.use(['form','layer', 'baseConfig', "upload",'flow','wangEditor'], function () {
+layui.use(['form','layer', 'baseConfig', "upload", 'layarea'], function () {
     var form = layui.form,
         $ = layui.jquery,
         layer = parent.layer === undefined ? layui.layer : top.layer,
         upload = layui.upload,
-        flow = layui.flow,
         baseConfig = layui.baseConfig,
-        wangEditor = layui.wangEditor;
+        layarea = layui.layarea;
 
-    var pageName = "policyInterpretation";
+    var pageName = "companyJoinInfo";
     var data = baseConfig.getDataFromList( pageName);
     var actionType = baseConfig.getUrlParamer( "actionType");
-
-    var typeId = data ? data.typeId: null;
-    baseConfig.loadSelect( "/enterpriseServiceType/list?type=2", "typeId", typeId, "name");
-
-    function handleContentShow( type){
-        $( ".policyInterpretation_content").css( "display", "none");
-        $( "#content" + type).css( "display", "block");
-    }
-
-    //处理富文本编辑器
-    var editor = new wangEditor('#contentEditor');
-    editor.customConfig.uploadImgServer = "/file/upload?type=wangEditor";
-    editor.customConfig.uploadFileName = 'file';
-    editor.customConfig.pasteFilterStyle = false;
-    editor.customConfig.uploadImgMaxLength = 5;
-    editor.customConfig.zIndex=0;
-    editor.customConfig.uploadImgHooks = {
-        // 上传超时
-        timeout: function (xhr, editor) {
-            layer.msg('上传超时！')
-        },
-        // 如果服务器端返回的不是 {errno:0, data: [...]} 这种格式，可使用该配置
-        customInsert: function (insertImg, result, editor) {
-            console.log(result);
-            if (result.code == 200) {
-                var url = result.data.filePath;
-                url.forEach(function (e) {
-                    insertImg(e);
-                })
-            } else {
-                layer.msg(result.msg);
-            }
-        }
-    };
-    editor.customConfig.customAlert = function (info) {
-        layer.msg(info);
-    };
-    editor.customConfig.onchange = function (html) {
-        $("input[name=content]").val( html);
-    };
-    editor.create();
 
     /**
      * 将list页面通过url传过来的参数加载到form表单里面去
@@ -58,11 +16,7 @@ layui.use(['form','layer', 'baseConfig', "upload",'flow','wangEditor'], function
      */
     if( data){
         baseConfig.loadFormData( data);
-        editor.txt.html( data.content);
-        $( "#coverImg_img").attr( "src", data.cover);
-        handleContentShow( data.type);
-    }else{
-        handleContentShow( 0);
+        $( "#dataKey_img").attr( "src", data.dataKey);
     }
 
     /**
@@ -96,27 +50,25 @@ layui.use(['form','layer', 'baseConfig', "upload",'flow','wangEditor'], function
     });
     //上传封面
     upload.render({
-        elem: '#coverImg_div',
-        url: '/file/upload?type=policyInterpretationCover',
-        multiple: true,
+        elem: '#dataKey_div',
+        url: '/file/upload?type=dataKeyImg',
         auto: false,
+        multiple: true,
         choose: function(obj){  //上传前选择回调方法
             var flag = true;
             obj.preview( function(index, file, result){
                 console.log(file);            //file表示文件信息，result表示文件src地址
                 var img = new Image();
                 img.src = result;
-                var c_width = 247;
-                var c_height = 247;
                 img.onload = function () { //初始化夹在完成后获取上传图片宽高，判断限制上传图片的大小。
                     var width =  baseConfig.parseImgSize( img.width);
                     var height = baseConfig.parseImgSize( img.height);
-                    if( width == c_width && height == c_height){
+                    if( width == 689 && height == 253){
                         obj.upload( index, file);
                         return true;
                     }else{
                         flag = false;
-                        top.layer.msg("您上传的图片必须是"+c_width+"*"+c_height+"尺寸");
+                        top.layer.msg("您上传的图片必须是689*253尺寸");
                         return false;
                     }
                 }
@@ -126,15 +78,12 @@ layui.use(['form','layer', 'baseConfig', "upload",'flow','wangEditor'], function
         done: function(res){
             if( res.code == 200){
                 var filePath = res.data.filePath;
-                $( "input[name=cover]").val( filePath);
-                $( "#coverImg_img").attr( "src", filePath);
+                $( "input[name=dataKey]").val( filePath);
+                $( "#dataKey_img").attr( "src", filePath);
             }
         }
     });
-    form.on('select(typeFilter)', function(data){
-        var type = data.value;
-        handleContentShow( type);
-    });
+
 
     //监听提交
     form.on('submit(saveBtn)', function (data) {
@@ -143,7 +92,7 @@ layui.use(['form','layer', 'baseConfig', "upload",'flow','wangEditor'], function
         var index = top.layer.msg('数据提交中，请稍候',{icon: 16,time:false,shade:0.8});
         var jsonBody = data.field;
         //提交数据
-        $.post("/" + pageName + "/addOrUpdate", jsonBody, function( res){
+        $.post("/" + pageName + "/updateIntroduce", jsonBody, function( res){
             if( res.code == 200){
                 top.layer.close( index);
                 top.layer.msg( res.msg);
@@ -157,4 +106,5 @@ layui.use(['form','layer', 'baseConfig', "upload",'flow','wangEditor'], function
         });
         return false;
     });
+
 });

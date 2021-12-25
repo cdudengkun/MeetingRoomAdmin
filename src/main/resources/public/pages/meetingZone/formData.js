@@ -92,6 +92,30 @@ layui.use(['form','layer', 'baseConfig', "upload", 'layarea'], function () {
         elem: '#coverImg_div',
         url: '/file/upload?type=cooperationShoppingCover',
         multiple: true,
+        auto: false,
+        choose: function(obj){  //上传前选择回调方法
+            var flag = true;
+            obj.preview( function(index, file, result){
+                console.log(file);            //file表示文件信息，result表示文件src地址
+                var img = new Image();
+                img.src = result;
+                var c_width = 497;
+                var c_height = 332;
+                img.onload = function () { //初始化夹在完成后获取上传图片宽高，判断限制上传图片的大小。
+                    var width =  baseConfig.parseImgSize( img.width);
+                    var height = baseConfig.parseImgSize( img.height);
+                    if( width == c_width && height == c_height){
+                        obj.upload( index, file);
+                        return true;
+                    }else{
+                        flag = false;
+                        top.layer.msg("您上传的图片必须是"+c_width+"*"+c_height+"尺寸");
+                        return false;
+                    }
+                }
+                return flag;
+            });
+        },
         done: function(res){
             if( res.code == 200){
                 var filePath = res.data.filePath;
