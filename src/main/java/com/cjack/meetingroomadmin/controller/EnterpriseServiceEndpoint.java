@@ -5,6 +5,7 @@ import com.cjack.meetingroomadmin.config.CommonConfig;
 import com.cjack.meetingroomadmin.config.LayPage;
 import com.cjack.meetingroomadmin.model.EnterpriseServiceModel;
 import com.cjack.meetingroomadmin.service.EnterpriseServiceService;
+import com.cjack.meetingroomadmin.util.CustomerStringUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -54,6 +55,7 @@ public class EnterpriseServiceEndpoint extends BaseEndpoint{
                 Object adminUserId = session.getAttribute( CommonConfig.SESSION_NAME);
                 model.setAdminUserId( (Long)adminUserId);
             }
+            model.setContent(CustomerStringUtil.replaceWidth( model.getContent()));
             service.save( model);
             return AjaxResult.SUCCESS();
         }catch ( Exception e) {
