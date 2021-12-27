@@ -99,8 +99,8 @@ layui.use(['form','layer', 'baseConfig', "upload",'wangEditor'], function () {
                 console.log(file);            //file表示文件信息，result表示文件src地址
                 var img = new Image();
                 img.src = result;
-                var c_width = 750;
-                var c_height = 613;
+                var c_width = 173;
+                var c_height = 115;
                 img.onload = function () { //初始化夹在完成后获取上传图片宽高，判断限制上传图片的大小。
                     var width =  baseConfig.parseImgSize( img.width);
                     var height = baseConfig.parseImgSize( img.height);

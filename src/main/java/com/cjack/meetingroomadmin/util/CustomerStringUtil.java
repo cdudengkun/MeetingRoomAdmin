@@ -82,7 +82,7 @@ public class CustomerStringUtil {
         Matcher m = p.matcher( content) ;
         while( m.find() ){
             String tmp = m.group() ;
-            String v = "";
+            String v = "width: 100%;";
             //注意，在替换字符串中使用反斜线 (\) 和美元符号 ($) 可能导致与作为字面值替换字符串时所产生的结果不同。
             //美元符号可视为到如上所述已捕获子序列的引用，反斜线可用于转义替换字符串中的字面值字符。
             v = v.replace("\\", "\\\\").replace("$", "\\$");

@@ -85,6 +85,11 @@ layui.use(['form','layer', 'baseConfig', "upload"], function () {
         var index = top.layer.msg('数据提交中，请稍候',{icon: 16,time:false,shade:0.8});
         var jsonBody = data.field;
         jsonBody.policyInterpretationId = policyInterpretationId;
+        if( !jsonBody.url){
+            top.layer.close( index);
+            top.layer.msg( "请上传视频文件，或者等待文件上传完成");
+            returnl
+        }
         //提交数据
         $.post("/" + pageName + "/uploadVideoFile", jsonBody, function( res){
             if( res.code == 200){

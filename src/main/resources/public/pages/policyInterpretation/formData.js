@@ -36,9 +36,10 @@ layui.use(['form','layer', 'baseConfig', "upload",'flow','wangEditor'], function
             console.log(result);
             if (result.code == 200) {
                 var url = result.data.filePath;
-                url.forEach(function (e) {
+                var urls = url.split( ",");
+                urls.forEach(function (e) {
                     insertImg(e);
-                })
+                });
             } else {
                 layer.msg(result.msg);
             }
