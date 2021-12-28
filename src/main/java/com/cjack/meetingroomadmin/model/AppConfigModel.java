@@ -11,6 +11,14 @@ import lombok.Data;
 @Data
 public class AppConfigModel  extends BaseModel{
 
-    private String title;//标题
-    private String content;//内容
+    private Long id;
+    private Integer menmberPrice1;
+    private Integer menmberPrice3;
+    private Integer menmberPrice12;
+    private String memberRight;
+
+    private String textEnterpriseService;
+    private String textPolicyInterpretation;
+    private String textGift;
+    private String textEnterpriseSupport;
 }

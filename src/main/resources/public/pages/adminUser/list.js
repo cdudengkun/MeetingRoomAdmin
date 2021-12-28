@@ -67,7 +67,7 @@ layui.use(['form', 'table', 'util', 'baseConfig'], function () {
                 "ids" : id
             },function( res){
                 if( res.code == 200){
-                    table.reload();
+                    tableIns.reload();
                     layer.close( index);
                     top.layer.msg( res.msg);
                 }else{
@@ -90,8 +90,20 @@ layui.use(['form', 'table', 'util', 'baseConfig'], function () {
                 area: [ baseConfig.getWidth( minWidth), baseConfig.getHeight( minHeight)],
                 content: 'formData.html',
             });
+        }else if (obj.event === 'updateAppConfig') {  // 监听添加操作
+            $.get( '/appConfig/getConfig', function( res) {
+                baseConfig.sendDataToForm( "appConfig", res.data);
+                var index = layer.open({
+                    title: baseConfig.getTitleByType(2, "小程序参数配置"),
+                    type: 2,
+                    shade: 0.2,
+                    shadeClose: true,
+                    area: [baseConfig.getWidth(minWidth), baseConfig.getHeight(minHeight)],
+                    content: 'updateAppConfig.html',
+                });
+            });
         }
-    });
+    })
 
     //------------表格数据工具栏，一般放表格行数据的编辑、删除等按钮
     table.on('tool(currentTableFilter)', function (obj) {

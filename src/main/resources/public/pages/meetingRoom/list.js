@@ -11,7 +11,7 @@ layui.use(['form', 'table', 'util', 'baseConfig'], function () {
     var minHeight = 800;
     var formTitleSuffix = "会议室";
 
-    table.render({
+    var tableIns = table.render({
         id : "listTable",
         elem: '#currentTableId',
         url : '/' + pageName + '/list',
@@ -71,7 +71,7 @@ layui.use(['form', 'table', 'util', 'baseConfig'], function () {
                 "ids" : id
             },function( res){
                 if( res.code == 200){
-                    table.reload();
+                    tableIns.reload();
                     layer.close( index);
                     top.layer.msg( res.msg);
                 }else{

@@ -4,6 +4,7 @@ import com.cjack.meetingroomadmin.config.AjaxResult;
 import com.cjack.meetingroomadmin.config.LayPage;
 import com.cjack.meetingroomadmin.model.CouponModel;
 import com.cjack.meetingroomadmin.service.CouponService;
+import com.cjack.meetingroomadmin.util.CustomerStringUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -47,6 +48,7 @@ public class CouponEndpoint extends BaseEndpoint{
         try{
             if( isAdd( model.getId())){
                 model.setCreateTime( System.currentTimeMillis());
+                model.setNumberNo( CustomerStringUtil.randomStrOnlyUpperChar( 16));
             }
             model.setStatus( 1);
             service.save( model);

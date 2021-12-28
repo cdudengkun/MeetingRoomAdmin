@@ -12,7 +12,7 @@ layui.use(['form', 'table', 'util', 'baseConfig'], function () {
     var formTitleSuffix = "附件";
     var policyInterpretationId = baseConfig.getUrlParamer( "policyInterpretationId");
 
-    table.render({
+    var tableIns = table.render({
         id : "listTable",
         elem: '#currentTableId',
         url : '/' + pageName + '/attachment/list?policyInterpretationId=' + policyInterpretationId,
@@ -58,11 +58,11 @@ layui.use(['form', 'table', 'util', 'baseConfig'], function () {
     //删除
     function del( id){
         layer.confirm('确定删除选中的数据项？', {icon: 3, title: '提示信息'}, function (index) {
-            $.post("/" + pageName + "/del",{
-                "ids" : id
+            $.post("/" + pageName + "/delAttachment",{
+                "id" : id
             },function( res){
                 if( res.code == 200){
-                    table.reload();
+                    tableIns.reload();
                     layer.close( index);
                     top.layer.msg( res.msg);
                 }else{
