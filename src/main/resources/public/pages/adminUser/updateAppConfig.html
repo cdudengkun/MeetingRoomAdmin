@@ -48,6 +48,13 @@
                 </div>
             </div>
             <div class="layui-form-item">
+                <label class="layui-form-label required">会员福利</label>
+                <div class="layui-input-block">
+                    <input type="text" name="memberWelfare" lay-verify="required" lay-reqtext="会员福利不能为空" placeholder="请输入会员福利"  class="layui-input">
+                    <span style="color: red;">(多个福利，使用英文逗号分割，最好不要超过4个福利，每个福利5个字左右)</span>
+                </div>
+            </div>
+            <div class="layui-form-item">
                 <label class="layui-form-label required">企业服务名称</label>
                 <div class="layui-input-inline">
                     <input type="text" name="textEnterpriseService" lay-verify="required" lay-reqtext="企业服务名称不能为空" placeholder="请输入企业服务名称"  class="layui-input">

@@ -16,6 +16,7 @@ public class AppConfigModel  extends BaseModel{
     private Integer menmberPrice3;
     private Integer menmberPrice12;
     private String memberRight;
+    private String memberWelfare;//会员福利，多个英文逗号分割
 
     private String textEnterpriseService;
     private String textPolicyInterpretation;
