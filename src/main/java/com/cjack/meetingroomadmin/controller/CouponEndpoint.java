@@ -51,6 +51,7 @@ public class CouponEndpoint extends BaseEndpoint{
                 model.setNumberNo( CustomerStringUtil.randomStrOnlyUpperChar( 16));
             }
             model.setStatus( 1);
+            model.setContent(CustomerStringUtil.replaceWidth( model.getContent()));
             service.save( model);
             return AjaxResult.SUCCESS();
         }catch ( Exception e) {

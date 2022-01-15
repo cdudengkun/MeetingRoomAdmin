@@ -18,6 +18,7 @@ layui.use(['form', 'table', 'util', 'baseConfig'], function () {
         toolbar: '#toolbar',
         defaultToolbar: [],
         cols: [[
+            {field: "id", fixed:"left",title: 'id', width:50},
             {field: 'title', width: 400, title: '标题'},
             {field: 'typeName', width: 150, title: '服务类别'},
             {field: 'createTime', width: 200, title: '创建时间', templet : function( d){

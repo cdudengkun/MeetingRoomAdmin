@@ -18,6 +18,7 @@ layui.use(['form', 'table', 'util', 'baseConfig'], function () {
         toolbar: '#toolbar',
         defaultToolbar: [],
         cols: [[
+            {field: "id", fixed:"left",title: 'id', width:50},
             {field: 'name', width: 300, title: '优惠券名称'},
             {field: 'typeName', width: 150, title: '服务类别'},
             {field: 'mount', width: 100, title: '金额'},

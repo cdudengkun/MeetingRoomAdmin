@@ -18,6 +18,7 @@ layui.use(['form', 'table', 'util', 'baseConfig'], function () {
         toolbar: '#toolbar',
         defaultToolbar: [],
         cols: [[
+            {field: "id", fixed:"left",title: 'id', width:50},
             {field: 'name', width: 300, title: '名称'},
             {field: 'typeName', width: 150, title: '服务类别'},
             {field: 'url', width: 500, title: '下载地址'},

@@ -19,6 +19,7 @@ public class AdvertisementTable {
     private Long updateTime;
 
     private String cover;//广告图片地址
+    private Integer urlType;//1-外部网站跳转，2-跳转企业服务，3-跳转政策解读，4-跳转礼包领取，5-跳转企业助力，6-跳转共享办公中心
     private String url;//广告点击跳转地址
     private String sequence;//广告出现顺序，从小到大
     private String title;//广告标题

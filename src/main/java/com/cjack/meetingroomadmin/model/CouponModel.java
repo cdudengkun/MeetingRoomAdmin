@@ -24,6 +24,7 @@ public class CouponModel  extends BaseModel{
     private String typeName;//类型名称
     private Integer status;//1-未发布，2-已发布
 
+    private String content;//图文详情，只有礼包领取里面有这个
     private String numberNo;//优惠券编号
     private String cover;//封面图片地址
 }

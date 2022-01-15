@@ -18,6 +18,7 @@ layui.use(['form', 'table', 'util', 'baseConfig'], function () {
         toolbar: '#toolbar',
         defaultToolbar: [],
         cols: [[
+            {field: "id", fixed:"left",title: 'id', width:50},
             {field: 'name', width: 200, title: '名称'},
             {field: 'detail', width: 400, title: '地点', templet : function( d){
                 return d.provinceName + d.cityName + d.countyName + d.detail;

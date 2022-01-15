@@ -19,6 +19,16 @@ layui.use(['form', 'table', 'util', 'baseConfig'], function () {
         defaultToolbar: [],
         cols: [[
             {field: 'title', width: 200, title: '广告标题'},
+            {field: 'urlType', width: 200, title: '跳转类型', templet : function( d){
+                switch (d.urlType) {
+                    case 1: return "外部网站跳转";
+                    case 2: return "跳转企业服务";
+                    case 3: return "跳转政策解读";
+                    case 4: return "跳转礼包领取";
+                    case 5: return "跳转企业助力";
+                    case 6: return "跳转共享办公中心";
+                }
+            }},
             {field: 'url', width: 400, title: '广告点击跳转地址'},
             {field: 'sequence', width: 200, title: '广告出现顺序'},
             {field: 'position', width: 200, title: '广告位置', templet : function( d){
