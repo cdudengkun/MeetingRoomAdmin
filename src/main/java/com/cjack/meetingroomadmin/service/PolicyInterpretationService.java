@@ -66,9 +66,10 @@ public class PolicyInterpretationService {
         List<PolicyInterpretationTable> tables = new ArrayList<>();
         String[] idArr = ids.split( ",");
         for( String id : idArr){
-            PolicyInterpretationTable table = new PolicyInterpretationTable();
-            table.setId( Long.valueOf( id));
+            PolicyInterpretationTable table = dao.getOne( Long.valueOf( id));
             tables.add( table);
+            vedioFileDao.delete( table.getVideos());
+            fileDao.delete( table.getFiles());
         }
         dao.deleteInBatch( tables);
     }

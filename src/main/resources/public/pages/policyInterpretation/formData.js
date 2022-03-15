@@ -108,16 +108,14 @@ layui.use(['form','layer', 'baseConfig', "upload",'flow','wangEditor'], function
                 var img = new Image();
                 img.src = result;
                 var c_width = 247;
-                var c_height = 247;
                 img.onload = function () { //初始化夹在完成后获取上传图片宽高，判断限制上传图片的大小。
                     var width =  baseConfig.parseImgSize( img.width);
-                    var height = baseConfig.parseImgSize( img.height);
-                    if( width == c_width && height == c_height){
+                    if( width == c_width){
                         obj.upload( index, file);
                         return true;
                     }else{
                         flag = false;
-                        top.layer.msg("您上传的图片必须是"+c_width+"*"+c_height+"尺寸");
+                        top.layer.msg("您上传的图片宽度必须是"+c_width+"尺寸");
                         return false;
                     }
                 }
