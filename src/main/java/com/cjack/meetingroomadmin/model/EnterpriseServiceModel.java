@@ -14,4 +14,5 @@ public class EnterpriseServiceModel  extends BaseModel{
     private String content;//内容
     private Long typeId;//类型id
     private String typeName;//类型名称
+    private Integer sorting;//展示顺序，越高展示越前面
 }

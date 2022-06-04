@@ -22,6 +22,7 @@ public class EnterpriseServiceTable {
     private String title;//消息标题
     private String content;//消息内容
     private Long adminUserId;//创建人id
+    private Integer sorting;//展示顺序，越高展示越前面
 
     @OneToOne( cascade = {CascadeType.REFRESH, CascadeType.MERGE})
     @JoinColumn( name = "type_id")

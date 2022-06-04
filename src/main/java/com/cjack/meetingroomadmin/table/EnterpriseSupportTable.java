@@ -25,6 +25,7 @@ public class EnterpriseSupportTable {
     private Integer downloadCount;//下载次数
     private Long adminUserId;//创建人id
     private String content;//内容
+    private Integer sorting;//展示顺序，越高展示越前面
 
     @OneToOne( cascade = {CascadeType.REFRESH, CascadeType.MERGE})
     @JoinColumn( name = "type_id")

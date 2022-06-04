@@ -28,6 +28,7 @@ public class CouponTable {
     private Integer model;//1-线上优惠券，2-线下优惠券
     private String numberNo;//优惠券编号
     private String content;//图文详情，只有礼包领取里面有这个
+    private Integer sorting;//展示顺序，越高展示越前面
 
     @ManyToOne( cascade = {CascadeType.REFRESH, CascadeType.MERGE})
     @JoinColumn( name = "meeting_zone_id")

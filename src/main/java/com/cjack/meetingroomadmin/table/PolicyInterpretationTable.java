@@ -25,6 +25,7 @@ public class PolicyInterpretationTable {
     private String content;//内容
     private Long adminUserId;//创建人id
     private String imgs;//内容3图片列表
+    private Integer sorting;//展示顺序，数字越大展示越前面
 
     @OneToMany( cascade = {CascadeType.REFRESH, CascadeType.MERGE},mappedBy = "policyInterpretation" , fetch = FetchType.LAZY)
     @OrderBy("id asc")
