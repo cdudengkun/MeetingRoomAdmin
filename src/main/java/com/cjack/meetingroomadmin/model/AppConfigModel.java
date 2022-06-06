@@ -22,4 +22,6 @@ public class AppConfigModel  extends BaseModel{
     private String textPolicyInterpretation;
     private String textGift;
     private String textEnterpriseSupport;
+
+
 }

@@ -29,6 +29,13 @@
               "icon": "fa fa-user-secret",
               "privilegeName": "adminUser",
               "target": "_self"
+            },
+            {
+              "title": "配置管理",
+              "href": "/pages/sysConfig/list.html",
+              "icon": "fa fa-user-secret",
+              "privilegeName": "sysConfig",
+              "target": "_self"
             }
           ]
         },

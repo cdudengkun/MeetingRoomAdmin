@@ -38,11 +38,8 @@
                 <div class="layui-input-inline">
                     <select name="urlType">
                         <option value="1">外部网站跳转</option>
-                        <option value="2">跳转企业服务</option>
-                        <option value="3">跳转政策解读</option>
-                        <option value="4">跳转礼包领取</option>
-                        <option value="5">跳转企业助力</option>
-                        <option value="6">跳转共享办公中心</option>
+                        <option value="2">跳转资源共享广告图文页面</option>
+                        <option value="3">跳转礼包领取广告图文页面</option>
                     </select>
                 </div>
             </div>
@@ -72,15 +69,19 @@
                 <div class="layui-input-inline">
                     <select name="position">
                         <option value="1">首页广告</option>
+                        <option value="2">资源共享页面广告</option>
+                        <option value="3">礼包领取页面广告</option>
                     </select>
+                    <span style="color: red;">(如果要配置轮播图之类的，就一个位置配置多条广告即可)</span>
                 </div>
             </div>
 
             <div class="layui-form-item">
-                <label class="layui-form-label required">广告出现顺序</label>
+                <label class="layui-form-label required">广告出现顺序（）</label>
                 <div class="layui-input-inline">
                     <input type="text" name="sequence" placeholder="请输入广告出现顺序"  class="layui-input">
                 </div>
+                <span style="color: red;">(同一个位置，出现的多条广告轮播图的顺序)</span>
             </div>
         </div>
 

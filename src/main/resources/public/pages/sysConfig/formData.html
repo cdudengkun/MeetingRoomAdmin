@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>layui</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link rel="stylesheet" href="/lib/layui-v2.6.3/css/layui.css" media="all">
+    <link rel="stylesheet" href="/css/public.css" media="all">
+    <script src="/lib/layui-v2.6.3/layui.js" charset="utf-8"></script>
+    <script src="/js/lay-config.js?v=2.0.0" charset="utf-8"></script>
+    <script type="text/javascript" src="/lib/xm-select.js"></script>
+    <script type="text/javascript" src="formData.js"></script>
+    <style>
+        body {
+            background-color: #ffffff;
+        }
+    </style>
+</head>
+<body>
+<div class="layui-form layuimini-form">
+    <form class="layui-form layui-row layui-col-space10" lay-filter="formFilter">
+        <input type="hidden" name="id">
+        <div id="content_div">
+
+            <div class="layui-form-item layui-form-text">
+                <label class="layui-form-label">资源共享广告跳转页面图文内容</label>
+                <input type="hidden" name="enterpriseSupportAdrContent">
+                <div class="layui-input-block" id="enterpriseSupportAdrContentEditor">
+
+                </div>
+            </div>
+
+            <div class="layui-form-item">
+                <label class="layui-form-label required">资源共享广告跳转页面联系电话</label>
+                <div class="layui-input-inline width_500">
+                    <input type="text" name="enterpriseSupportAdrPhone" lay-verify="required" lay-reqtext="联系电话不能为空" placeholder="请输入资源共享广告跳转页面联系电话"  class="layui-input">
+                </div>
+            </div>
+
+            <div class="layui-form-item">
+                <label class="layui-form-label required">资源共享广告跳转页面按钮描述</label>
+                <div class="layui-input-inline width_500">
+                    <input type="text" name="enterpriseSupportAdrBtnDescription" lay-verify="required" lay-reqtext="按钮描述不能为空" placeholder="请输入资源共享广告跳转页面按钮描述"  class="layui-input">
+                </div>
+            </div>
+
+            <div class="layui-form-item layui-form-text">
+                <label class="layui-form-label">礼包领取页面广告的图文内容</label>
+                <input type="hidden" name="couponAdrContent">
+                <div class="layui-input-block" id="couponAdrContentEditor">
+
+                </div>
+            </div>
+
+            <div class="layui-form-item">
+                <label class="layui-form-label required">广告标题</label>
+                <div class="layui-input-inline width_500">
+                    <input type="text" name="couponAdrBtnDescription" lay-verify="required" lay-reqtext="礼包领取页面广告的按钮描述" placeholder="请输入礼包领取页面广告的按钮描述"  class="layui-input">
+                </div>
+            </div>
+        </div>
+
+        <div class="layui-form-item" id="submitDiv">
+            <hr class="layui-bg-gray" />
+            <div class="layui-input-block layui-right">
+                <button class="layui-btn layui-btn-normal" lay-submit lay-filter="saveBtn">确认保存</button>
+            </div>
+        </div>
+        <div id="closeDiv">
+            <hr class="layui-bg-gray" />
+            <div class="layui-right">
+                <a class="layui-btn layui-btn-normal" id="closeBtn"><i class="layui-icon">&#xe609;</i>关闭</a>
+            </div>
+        </div>
+    </form>
+</div>
+
+</body>
+</html>
