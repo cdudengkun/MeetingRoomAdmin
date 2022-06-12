@@ -14,5 +14,7 @@ public class EnterpriseServiceTypeModel extends BaseModel{
     private Integer priority;//展示优先级,越大展示越前面
 
     private Integer type;//类型，1-企业服务,2-政策解读,3-礼包领取,4-企业助力
+    private Integer level;
+    private Long parentId;//父节点id，所有二级节点的父节点id都是0
 
 }

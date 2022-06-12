@@ -64,6 +64,9 @@ public class EnterpriseServiceTypeService {
             if( EmptyUtil.isNotEmpty( model.getType())){
                 predicate.getExpressions().add( cb.equal( root.get("type"), model.getType()));
             }
+            if( EmptyUtil.isNotEmpty( model.getLevel())){
+                predicate.getExpressions().add( cb.equal( root.get("level"), model.getLevel()));
+            }
             return predicate;
         };
         return specification;

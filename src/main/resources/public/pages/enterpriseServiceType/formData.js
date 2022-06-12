@@ -9,6 +9,14 @@ layui.use(['form','layer', 'baseConfig', "upload"], function () {
     var data = baseConfig.getDataFromList( pageName);
     var actionType = baseConfig.getUrlParamer( "actionType");
 
+    //------------加载搜索表单下拉框
+    var type = data ? data.type: null;
+    if( type){
+        var parentId = data ? data.parentId: null;
+        baseConfig.loadSelect( "/enterpriseServiceType/list?type=" + type + "&level=2", "parentId", parentId, "name");
+    }
+
+
     /**
      * 将list页面通过url传过来的参数加载到form表单里面去
      * @param data
@@ -42,6 +50,11 @@ layui.use(['form','layer', 'baseConfig', "upload"], function () {
 
     }
     handleFormItem();
+
+    form.on('select(typeFilter)', function(data){
+        var type = data.value; //得到被选中的值
+        baseConfig.loadSelect( "/enterpriseServiceType/list?type=" + type + "&level=2", "parentId", null, "name");
+    });
 
     //关闭弹窗页面
     $( "#closeBtn").on( "click", function(){

@@ -26,4 +26,6 @@ public class EnterpriseServiceTypeTable {
 
     private Integer type;//类型，1-企业服务,2-政策解读,3-礼包领取,4-企业助力
 
+    private Integer level;//2,3。现在已有的类型都当成2级来处理
+    private Long parentId;//父节点id，所有二级节点的父节点id都是0
 }

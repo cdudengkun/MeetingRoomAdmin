@@ -12,7 +12,7 @@ layui.use(['form','layer', 'baseConfig', "upload",'wangEditor'], function () {
 
     //------------加载搜索表单下拉框
     var typeId = data ? data.typeId: null;
-    baseConfig.loadSelect( "/enterpriseServiceType/list?type=1", "typeId", typeId, "name");
+    baseConfig.loadSelect( "/enterpriseServiceType/list?type=1&level=3", "typeId", typeId, "name");
 
     //处理富文本编辑器
     var editor = new wangEditor('#contentEditor');

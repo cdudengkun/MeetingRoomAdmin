@@ -27,6 +27,12 @@ layui.use(['form', 'table', 'util', 'baseConfig'], function () {
                     case 4: return "企业助力";
                 }
             }},
+            {field: 'level', width: 200, title: '层级', templet : function( d){
+                    switch (d.level) {
+                        case 2: return "二级菜单";
+                        case 3: return "三级菜单";
+                    }
+                }},
             {field: 'priority', width: 400, title: '展示优先级,越大展示越前面'},
             {field: 'createTime', width: 200, title: '创建时间', templet : function( d){
                 return util.toDateString( d.createTime);
