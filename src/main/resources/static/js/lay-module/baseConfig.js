@@ -124,6 +124,57 @@ layui.define(["form","jquery",'echarts'],function(exports){
                     }
                 });
             },
+        loadGroupSelect: function ( url, selectName, val, valueName){
+            $.get( url, function( res){
+                if( res.code == 200){
+                    var datas = res.data;
+
+                    //把列表数据组装为树形数据，列表数据里面，需要有id name parentId三个值
+                    var obj = {};
+                    for( var i = 0; i < datas.length; i++){
+                        var item = datas[i];
+                        obj[item.id] = item;
+                        item.title = item.name;
+                    }
+                    var treeData = [];
+                    for( var i = 0; i < datas.length; i++){
+                        var item = datas[i];
+                        var parent = obj[item.parentId];
+                        if (parent) {
+                            // * 当前项有父节点
+                            parent.children = parent.children || [];
+                            parent.children.push(item);
+                        } else {
+                            // * 当前项没有父节点 -> 顶层
+                            treeData.push(item);
+                        }
+                    }
+
+                    var sel = $("select[name=" + selectName + "]");
+                    sel.empty();
+                    sel.append( "<option value='' selected>请选择</option>");
+                    for( var i = 0; i < treeData.length; i++){
+                        var data = treeData[i];
+                        var children = data.children;
+                        sel.append( "<optgroup label='" + data[valueName] + "'></optgroup>");
+                        sel.append( "<option value='" + data.id + "'>" + data[valueName] + "</option> ")
+                        if( children){
+                            for( var j = 0; j < children.length; j++){
+                                var child = children[j];
+                                sel.append( "<option value='" + child.id + "'>" + child[valueName] + "</option> ")
+                            }
+                        }
+                    }
+
+                    //更新渲染
+                    layui.form.render( "select");
+                    sel.val( val);
+                    layui.form.render();
+                }else{
+                    top.layer.msg( res.msg);
+                }
+            });
+        },
             loadFormData: function ( data){
                 if( data && data.id){
                     layui.form.val( "formFilter", data);

@@ -63,7 +63,7 @@ layui.use(['form', 'table', 'util', 'baseConfig'], function () {
     });
 
     //------------加载搜索表单下拉框
-    baseConfig.loadSelect( "/enterpriseServiceType/list?type=3", "typeId", null, "name");
+    baseConfig.loadGroupSelect( "/enterpriseServiceType/list?type=3", "typeId", null, "name");
 
     //------------表单搜索
     form.on('submit(data-search-btn)', function (data) {

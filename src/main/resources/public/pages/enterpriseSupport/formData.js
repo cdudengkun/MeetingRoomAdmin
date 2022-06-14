@@ -10,7 +10,7 @@ layui.use(['form','layer', 'baseConfig', "upload",'wangEditor'], function () {
     var data = baseConfig.getDataFromList( pageName);
     var actionType = baseConfig.getUrlParamer( "actionType");
     var typeId = data ? data.typeId: null;
-    baseConfig.loadSelect( "/enterpriseServiceType/list?type=4", "typeId", typeId, "name");
+    baseConfig.loadGroupSelect( "/enterpriseServiceType/list?type=4", "typeId", typeId, "name");
 
     //处理富文本编辑器
     var editor = new wangEditor('#contentEditor');

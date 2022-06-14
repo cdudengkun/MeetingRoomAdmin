@@ -13,7 +13,7 @@ layui.use(['form','layer', 'baseConfig', "upload"], function () {
     var type = data ? data.type: null;
     if( type){
         var parentId = data ? data.parentId: null;
-        baseConfig.loadSelect( "/enterpriseServiceType/list?type=" + type + "&level=2", "parentId", parentId, "name");
+        baseConfig.loadGroupSelect( "/enterpriseServiceType/list?type=" + type + "&level=2", "parentId", parentId, "name");
     }
 
 
@@ -53,7 +53,7 @@ layui.use(['form','layer', 'baseConfig', "upload"], function () {
 
     form.on('select(typeFilter)', function(data){
         var type = data.value; //得到被选中的值
-        baseConfig.loadSelect( "/enterpriseServiceType/list?type=" + type + "&level=2", "parentId", null, "name");
+        baseConfig.loadGroupSelect( "/enterpriseServiceType/list?type=" + type + "&level=2", "parentId", null, "name");
     });
 
     //关闭弹窗页面
