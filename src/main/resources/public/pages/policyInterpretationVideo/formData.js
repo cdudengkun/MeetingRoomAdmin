@@ -16,6 +16,7 @@ layui.use(['form','layer', 'baseConfig', "upload"], function () {
      */
     if( data){
         baseConfig.loadFormData( data);
+        $( "#fileVideo").attr( "src", data.url);
     }
 
     /**

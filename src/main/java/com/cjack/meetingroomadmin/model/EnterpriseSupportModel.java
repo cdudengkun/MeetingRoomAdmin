@@ -16,6 +16,7 @@ public class EnterpriseSupportModel extends BaseModel{
     private Long typeId;//类型id
     private String typeName;//类型名称
     private String content;//内容
+    private String vedioUrl;//视频文件地址
     private Integer sorting;//展示顺序，越高展示越前面
 
 }

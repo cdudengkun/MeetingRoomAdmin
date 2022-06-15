@@ -58,10 +58,27 @@ layui.use(['form', 'layer', 'baseConfig', 'laydate', "upload",'wangEditor'], fun
             data.startTime = baseConfig.formatDateToDay( data.startTime);
             data.endTime = baseConfig.formatDateToDay( data.endTime);
             $( "#coverImg_img").attr( "src", data.cover);
+            $( "#fileVideo").attr( "src", data.vedioUrl);
             form.val( "formFilter", data);
         }
     }
     loadFormData( data);
+
+    upload.render({
+        elem: '#uploadFile',
+        url: '/file/upload?type=couponVedio',
+        accept: "video",
+        before: function(obj){ //obj参数包含的信息，跟 choose回调完全一致，可参见上文。
+
+        },
+        done: function(res){
+            if( res.code == 200){
+                var filePath = res.data.filePath;
+                $( "input[name=vedioUrl]").val( filePath);
+                $( "#fileVideo").attr( "src", filePath);
+            }
+        }
+    });
 
     //广告开始时间
     laydate.render({

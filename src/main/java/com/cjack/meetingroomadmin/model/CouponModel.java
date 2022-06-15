@@ -23,6 +23,7 @@ public class CouponModel  extends BaseModel{
     private Long typeId;//类型id
     private String typeName;//类型名称
     private Integer status;//1-未发布，2-已发布
+    private String vedioUrl;//视频文件地址
 
     private String content;//图文详情，只有礼包领取里面有这个
     private String numberNo;//优惠券编号

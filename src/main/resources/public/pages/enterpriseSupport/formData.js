@@ -54,7 +54,24 @@ layui.use(['form','layer', 'baseConfig', "upload",'wangEditor'], function () {
         editor.txt.html( data.content);
         baseConfig.loadFormData( data);
         $( "#coverImg_img").attr( "src", data.cover);
+        $( "#fileVideo").attr( "src", data.vedioUrl);
     }
+
+    upload.render({
+        elem: '#uploadFile',
+        url: '/file/upload?type=enterpriseSupportVideo',
+        accept: "video",
+        before: function(obj){ //obj参数包含的信息，跟 choose回调完全一致，可参见上文。
+
+        },
+        done: function(res){
+            if( res.code == 200){
+                var filePath = res.data.filePath;
+                $( "input[name=vedioUrl]").val( filePath);
+                $( "#fileVideo").attr( "src", filePath);
+            }
+        }
+    });
 
     /**
      * 处理表单元素的 禁用、隐藏、显示灯操作
