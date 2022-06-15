@@ -72,7 +72,10 @@
             <div class="layui-form-item layui-form-text">
                 <label class="layui-form-label">商品介绍</label>
                 <div class="layui-input-block">
-                    <textarea name="content" class="layui-textarea"  lay-verify="required" lay-reqtext="商品介绍不能为空" placeholder="请输入商品介绍"></textarea>
+                    <input type="hidden" name="content">
+                    <div class="layui-input-block" id="contentEditor">
+
+                    </div>
                 </div>
             </div>
         </div>

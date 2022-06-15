@@ -122,6 +122,9 @@ public class AppUserService {
             if( EmptyUtil.isNotEmpty( model.getPhone())){
                 predicate.getExpressions().add( cb.like( root.get("phone"), toLikeStr(  model.getPhone())));
             }
+            if( EmptyUtil.isNotEmpty( model.getRecommender())){
+                predicate.getExpressions().add( cb.like( root.get("recommender"), toLikeStr(  model.getRecommender())));
+            }
             if( EmptyUtil.isNotEmpty( model.getIsVip())){
                 Join<AppUserTable, AppUserAccountTable> join = root.join("appUser", JoinType.LEFT);
                 predicate.getExpressions().add( cb.equal( join.get("isVip"), model.getIsVip()));

@@ -28,4 +28,5 @@ public class AppUserModel  extends BaseModel{
     private AppUserAccountModel accountModel;
     private Integer isVip;
     private Integer status;//状态是否可用 1-可用，2-禁用
+    private String recommender;
 }

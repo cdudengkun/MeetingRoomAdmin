@@ -20,6 +20,7 @@ layui.use(['form', 'table', 'util', 'baseConfig'], function () {
         cols: [[
             {field: 'name', width: 200, title: '昵称'},
             {field: 'phone', width: 200, title: '电话'},
+            {field: 'recommender', width: 200, title: '推荐人'},
             {field: 'status', width: 300, title: '状态', templet : function( d){
                 switch (d.status) {
                     case 1: return "启用";

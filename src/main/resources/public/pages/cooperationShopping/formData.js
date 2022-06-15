@@ -1,8 +1,9 @@
-layui.use(['form','layer', 'baseConfig', "upload"], function () {
+layui.use(['form','layer', 'baseConfig', "upload",'wangEditor'], function () {
     var form = layui.form,
         $ = layui.jquery,
         layer = parent.layer === undefined ? layui.layer : top.layer,
         upload = layui.upload,
+        wangEditor = layui.wangEditor
         baseConfig = layui.baseConfig;
 
     var pageName = "cooperationShopping";
@@ -13,11 +14,46 @@ layui.use(['form','layer', 'baseConfig', "upload"], function () {
     var typeId = data ? data.typeId: null;
     baseConfig.loadSelect( "/singleKey/list/3", "typeId", typeId, "dataKey");
 
+    //处理富文本编辑器
+    var editor = new wangEditor('#contentEditor');
+    editor.customConfig.uploadImgServer = "/file/upload?type=wangEditor";
+    editor.customConfig.uploadFileName = 'file';
+    editor.customConfig.pasteFilterStyle = false;
+    editor.customConfig.zIndex=0;
+    editor.customConfig.uploadImgMaxLength = 5;
+    editor.customConfig.uploadImgHooks = {
+        // 上传超时
+        timeout: function (xhr, editor) {
+            layer.msg('上传超时！')
+        },
+        // 如果服务器端返回的不是 {errno:0, data: [...]} 这种格式，可使用该配置
+        customInsert: function (insertImg, result, editor) {
+            console.log(result);
+            if (result.code == 200) {
+                var url = result.data.filePath;
+                var urls = url.split( ",");
+                urls.forEach(function (e) {
+                    insertImg(e);
+                })
+            } else {
+                layer.msg(result.msg);
+            }
+        }
+    };
+    editor.customConfig.customAlert = function (info) {
+        layer.msg(info);
+    };
+    editor.customConfig.onchange = function (html) {
+        $("input[name=content]").val( html);
+    };
+    editor.create();
+
     /**
      * 将list页面通过url传过来的参数加载到form表单里面去
      * @param data
      */
     if( data){
+        editor.txt.html( data.content);
         baseConfig.loadFormData( data);
         $( "#coverImg_img").attr( "src", data.cover);
     }
