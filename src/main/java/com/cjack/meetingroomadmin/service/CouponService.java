@@ -22,6 +22,7 @@ import org.springframework.stereotype.Service;
 import javax.persistence.criteria.Join;
 import javax.persistence.criteria.JoinType;
 import javax.persistence.criteria.Predicate;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -58,6 +59,18 @@ public class CouponService {
         }
         page.setData( datas);
         page.setCount( Long.valueOf( pageTable.getTotalElements()).intValue());
+    }
+
+    public List<CouponModel> summary( CouponModel model) {
+        List<Object[]> columns = dao.sumViewCountByType();
+        List<CouponModel> datas = new ArrayList<>( columns.size());
+        for( Object[] column : columns){
+            CouponModel data = new CouponModel();
+            data.setTypeName( typeDao.getOne( Long.valueOf( column[0].toString())).getName());
+            data.setViewCount( ((BigDecimal) column[1]).intValue());
+            datas.add( data);
+        }
+        return datas;
     }
 
     //先删除文章段落，再删除文章

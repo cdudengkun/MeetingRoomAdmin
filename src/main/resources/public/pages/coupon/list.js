@@ -23,6 +23,7 @@ layui.use(['form', 'table', 'util', 'baseConfig'], function () {
             {field: 'typeName', width: 150, title: '服务类别'},
             {field: 'mount', width: 100, title: '金额'},
             {field: 'numberNo', width: 200, title: '编号'},
+            {field: 'viewCount', width: 200, title: '领取次数'},
             {field: 'status', width: 100, title: '状态', templet : function( d){
                 switch (d.status) {
                     case 1: return "未发布";
@@ -76,6 +77,17 @@ layui.use(['form', 'table', 'util', 'baseConfig'], function () {
             , where: result
         }, 'data');
 
+        return false;
+    });
+    form.on('submit(data-summary-btn)', function (data) {
+        var index = layer.open({
+            title: "礼包领取统计分析",
+            type: 2,
+            shade: 0.2,
+            shadeClose: true,
+            area: [ baseConfig.getWidth( minWidth), baseConfig.getHeight( minHeight)],
+            content: 'summary.html',
+        });
         return false;
     });
 

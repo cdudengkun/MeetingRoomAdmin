@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import java.util.List;
+
 /**
  * 优惠券
  */
@@ -37,6 +39,23 @@ public class CouponEndpoint extends BaseEndpoint{
             return AjaxResult.ERROR();
         }
     }
+
+    /**
+     * 列表
+     * @return
+     */
+    @RequestMapping(value = "/summary", method = RequestMethod.GET)
+    @ResponseBody
+    public AjaxResult summary( CouponModel model) {
+        try{
+            List<CouponModel> datas = service.summary( model);
+            return AjaxResult.SUCCESS( datas);
+        }catch ( Exception e) {
+            e.printStackTrace();
+            return AjaxResult.ERROR();
+        }
+    }
+
 
     /**
      * 新增

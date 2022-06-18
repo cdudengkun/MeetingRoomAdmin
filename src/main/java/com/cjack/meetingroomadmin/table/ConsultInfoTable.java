@@ -24,4 +24,5 @@ public class ConsultInfoTable {
     private Integer isHot;//是否热门，1-是，2-否
     private Integer matchCount;//匹配次数
     private Long adminUserId;//创建人id
+
 }

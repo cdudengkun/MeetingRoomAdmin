@@ -24,6 +24,7 @@ public class EnterpriseServiceTable {
     private Long adminUserId;//创建人id
     private Integer sorting;//展示顺序，越高展示越前面
     private String vedioUrl;//视频文件地址
+    private Integer viewCount;
 
     @OneToOne( cascade = {CascadeType.REFRESH, CascadeType.MERGE})
     @JoinColumn( name = "type_id")

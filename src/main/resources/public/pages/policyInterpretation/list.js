@@ -22,6 +22,7 @@ layui.use(['form', 'table', 'util', 'baseConfig',"miniTab"], function () {
         cols: [[
             {field: "id", fixed:"left",title: 'id', width:50},
             {field: 'title', width: 400, title: '标题'},
+            {field: 'viewCount', width: 200, title: '浏览次数'},
             {field: 'typeName', width: 150, title: '服务类别'},
             {field: 'type', width: 150, title: '内容类型', templet : function( d){
                 switch (d.type) {

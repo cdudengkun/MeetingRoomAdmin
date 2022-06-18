@@ -20,6 +20,7 @@ layui.use(['form', 'table', 'util', 'baseConfig'], function () {
         cols: [[
             {field: 'shop', width: 200, title: '商品名称'},
             {field: 'companyName', width: 200, title: '公司名称'},
+            {field: 'viewCount', width: 200, title: '浏览次数'},
             {field: 'name', width: 150, title: '联系人'},
             {field: 'phone', width: 200, title: '联系电话'},
             {field: 'typeName', width: 150, title: '类别'},

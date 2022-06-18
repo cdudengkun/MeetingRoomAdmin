@@ -18,6 +18,8 @@ public class PolicyInterpretationModel extends BaseModel{
 
     private String imgs;//内容3图片列表
 
+    private Integer viewCount;
+
     private String img;
 
     private List<PolicyInterpretationFileModel> files;//附件文件列表

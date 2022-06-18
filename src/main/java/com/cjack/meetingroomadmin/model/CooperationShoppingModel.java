@@ -16,4 +16,5 @@ public class CooperationShoppingModel  extends BaseModel{
     private String cover;
     private String typeName;
     private Long typeId;
+    private Integer viewCount;
 }

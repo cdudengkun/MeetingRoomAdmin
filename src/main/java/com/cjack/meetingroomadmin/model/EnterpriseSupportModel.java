@@ -18,5 +18,6 @@ public class EnterpriseSupportModel extends BaseModel{
     private String content;//内容
     private String vedioUrl;//视频文件地址
     private Integer sorting;//展示顺序，越高展示越前面
+    private Integer viewCount;
 
 }
