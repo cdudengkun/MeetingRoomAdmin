@@ -16,4 +16,15 @@ public class SysConfigModel {
     private String couponAdrContent;//礼包领取页面广告的图文内容
     private String couponAdrBtnDescription;//礼包领取页面广告的按钮描述
 
+    private Integer menmberPrice1;
+    private Integer menmberPrice3;
+    private Integer menmberPrice12;
+    private String memberRight;
+    private String memberWelfare;//会员福利，多个英文逗号分割
+
+    private String textEnterpriseService;
+    private String textPolicyInterpretation;
+    private String textGift;
+    private String textEnterpriseSupport;
+
 }
