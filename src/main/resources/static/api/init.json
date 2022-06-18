@@ -36,6 +36,13 @@
               "icon": "fa fa-user-secret",
               "privilegeName": "sysConfig",
               "target": "_self"
+            },
+            {
+              "title": "服务价格配置",
+              "href": "/pages/productPriceConfig/list.html",
+              "icon": "fa fa-user-secret",
+              "privilegeName": "productPriceConfig",
+              "target": "_self"
             }
           ]
         },
