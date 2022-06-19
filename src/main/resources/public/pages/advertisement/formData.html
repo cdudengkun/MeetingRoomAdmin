@@ -38,8 +38,12 @@
                 <div class="layui-input-inline">
                     <select name="urlType">
                         <option value="1">外部网站跳转</option>
-                        <option value="2">跳转资源共享广告图文页面</option>
-                        <option value="3">跳转礼包领取广告图文页面</option>
+                        <option value="2">跳转企业服务</option>
+                        <option value="3">跳转政策解读</option>
+                        <option value="4">跳转礼包领取</option>
+                        <option value="5">跳转企业助力</option>
+                        <option value="6">跳转共享办公中心</option>
+                        <option value="7">广告图文内容</option>
                     </select>
                 </div>
             </div>
@@ -47,8 +51,8 @@
             <div class="layui-form-item">
                 <label class="layui-form-label required">广告点击跳转地址</label>
                 <div class="layui-input-inline">
-                    <input type="text" name="url" lay-verify="required" lay-reqtext="广告点击跳转地址不能为空" placeholder="请输入广告点击跳转地址"  class="layui-input">
-                    <span style="color: red;">(如果是跳转内部模块，则为对应模块的数据id)</span>
+                    <input type="text" name="url" placeholder="请输入广告点击跳转地址"  class="layui-input">
+                    <span style="color: red;">(如果是跳转内部模块，则为对应模块的数据id；如果是跳转图文，则不填)</span>
                 </div>
             </div>
 
@@ -63,6 +67,7 @@
 
                 </div>
             </div>
+
 
             <div class="layui-form-item">
                 <label class="layui-form-label required">广告位置</label>
@@ -82,6 +87,28 @@
                     <input type="text" name="sequence" placeholder="请输入广告出现顺序"  class="layui-input">
                 </div>
                 <span style="color: red;">(同一个位置，出现的多条广告轮播图的顺序)</span>
+            </div>
+
+            <div class="layui-form-item layui-form-text">
+                <label class="layui-form-label">广告图文内容</label>
+                <input type="hidden" name="content">
+                <div class="layui-input-block" id="contentEditor">
+
+                </div>
+            </div>
+
+            <div class="layui-form-item">
+                <label class="layui-form-label required">广告方联系电话</label>
+                <div class="layui-input-inline width_500">
+                    <input type="text" name="phone"placeholder="请输入广告方联系电话"  class="layui-input">
+                </div>
+            </div>
+
+            <div class="layui-form-item">
+                <label class="layui-form-label required">广告方联系电话按钮文字</label>
+                <div class="layui-input-inline width_500">
+                    <input type="text" name="btnDesc"  placeholder="请输入广告方联系电话按钮文字"  class="layui-input">
+                </div>
             </div>
         </div>
 

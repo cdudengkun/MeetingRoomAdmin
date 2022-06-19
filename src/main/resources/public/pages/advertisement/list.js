@@ -27,13 +27,17 @@ layui.use(['form', 'table', 'util', 'baseConfig'], function () {
                     case 4: return "跳转礼包领取";
                     case 5: return "跳转企业助力";
                     case 6: return "跳转共享办公中心";
+                    case 7: return "广告图文内容";
                 }
             }},
-            {field: 'url', width: 400, title: '广告点击跳转地址'},
+            {field: 'url', width: 200, title: '广告点击跳转地址'},
+            {field: 'phone', width: 200, title: '广告方联系电话'},
             {field: 'sequence', width: 200, title: '广告出现顺序'},
             {field: 'position', width: 200, title: '广告位置', templet : function( d){
                 switch (d.position) {
                     case 1: return "首页广告";
+                    case 2: return "资源共享页面广告";
+                    case 3: return "礼包领取页面广告";
                 }
             }},
             {field: 'createTime', width: 200, title: '发布时间', templet : function( d){

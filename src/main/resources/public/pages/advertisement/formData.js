@@ -1,14 +1,49 @@
-layui.use(['form','layer', 'baseConfig', "upload", 'layarea'], function () {
+layui.use(['form','layer', 'baseConfig', "upload", 'layarea','wangEditor'], function () {
     var form = layui.form,
         $ = layui.jquery,
         layer = parent.layer === undefined ? layui.layer : top.layer,
         upload = layui.upload,
         baseConfig = layui.baseConfig,
+        wangEditor = layui.wangEditor,
         layarea = layui.layarea;
 
     var pageName = "advertisement";
     var data = baseConfig.getDataFromList( pageName);
     var actionType = baseConfig.getUrlParamer( "actionType");
+
+    //处理富文本编辑器
+    var contentEditor = new wangEditor('#contentEditor');
+    contentEditor.customConfig.uploadImgServer = "/file/upload?type=wangEditor";
+    contentEditor.customConfig.uploadFileName = 'file';
+    contentEditor.customConfig.pasteFilterStyle = false;
+    contentEditor.customConfig.zIndex=0;
+    contentEditor.customConfig.uploadImgMaxLength = 5;
+    contentEditor.customConfig.uploadImgHooks = {
+        // 上传超时
+        timeout: function (xhr, editor) {
+            layer.msg('上传超时！')
+        },
+        // 如果服务器端返回的不是 {errno:0, data: [...]} 这种格式，可使用该配置
+        customInsert: function (insertImg, result, editor) {
+            console.log(result);
+            if (result.code == 200) {
+                var url = result.data.filePath;
+                var urls = url.split( ",");
+                urls.forEach(function (e) {
+                    insertImg(e);
+                })
+            } else {
+                layer.msg(result.msg);
+            }
+        }
+    };
+    contentEditor.customConfig.customAlert = function (info) {
+        layer.msg(info);
+    };
+    contentEditor.customConfig.onchange = function (html) {
+        $("input[name=content]").val( html);
+    };
+    contentEditor.create();
 
     /**
      * 将list页面通过url传过来的参数加载到form表单里面去
@@ -17,6 +52,7 @@ layui.use(['form','layer', 'baseConfig', "upload", 'layarea'], function () {
     if( data){
         baseConfig.loadFormData( data);
         $( "#coverImg_img").attr( "src", data.cover);
+        contentEditor.txt.html( data.content);
     }
 
     /**

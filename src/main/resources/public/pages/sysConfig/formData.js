@@ -12,13 +12,13 @@ layui.use(['form','layer', 'baseConfig', "upload", 'layarea','wangEditor'], func
     var actionType = baseConfig.getUrlParamer( "actionType");
 
     //处理富文本编辑器
-    var enterpriseSupportAdrContentEditor = new wangEditor('#enterpriseSupportAdrContentEditor');
-    enterpriseSupportAdrContentEditor.customConfig.uploadImgServer = "/file/upload?type=wangEditor";
-    enterpriseSupportAdrContentEditor.customConfig.uploadFileName = 'file';
-    enterpriseSupportAdrContentEditor.customConfig.pasteFilterStyle = false;
-    enterpriseSupportAdrContentEditor.customConfig.zIndex=0;
-    enterpriseSupportAdrContentEditor.customConfig.uploadImgMaxLength = 5;
-    enterpriseSupportAdrContentEditor.customConfig.uploadImgHooks = {
+    var privacyPolicyEditor = new wangEditor('#privacyPolicyEditor');
+    privacyPolicyEditor.customConfig.uploadImgServer = "/file/upload?type=wangEditor";
+    privacyPolicyEditor.customConfig.uploadFileName = 'file';
+    privacyPolicyEditor.customConfig.pasteFilterStyle = false;
+    privacyPolicyEditor.customConfig.zIndex=0;
+    privacyPolicyEditor.customConfig.uploadImgMaxLength = 5;
+    privacyPolicyEditor.customConfig.uploadImgHooks = {
         // 上传超时
         timeout: function (xhr, editor) {
             layer.msg('上传超时！')
@@ -37,47 +37,13 @@ layui.use(['form','layer', 'baseConfig', "upload", 'layarea','wangEditor'], func
             }
         }
     };
-    enterpriseSupportAdrContentEditor.customConfig.customAlert = function (info) {
+    privacyPolicyEditor.customConfig.customAlert = function (info) {
         layer.msg(info);
     };
-    enterpriseSupportAdrContentEditor.customConfig.onchange = function (html) {
-        $("input[name=enterpriseSupportAdrContent]").val( html);
+    privacyPolicyEditor.customConfig.onchange = function (html) {
+        $("input[name=privacyPolicy]").val( html);
     };
-    enterpriseSupportAdrContentEditor.create();
-
-    //处理富文本编辑器
-    var couponAdrContentEditor = new wangEditor('#couponAdrContentEditor');
-    couponAdrContentEditor.customConfig.uploadImgServer = "/file/upload?type=wangEditor";
-    couponAdrContentEditor.customConfig.uploadFileName = 'file';
-    couponAdrContentEditor.customConfig.pasteFilterStyle = false;
-    couponAdrContentEditor.customConfig.zIndex=0;
-    couponAdrContentEditor.customConfig.uploadImgMaxLength = 5;
-    couponAdrContentEditor.customConfig.uploadImgHooks = {
-        // 上传超时
-        timeout: function (xhr, editor) {
-            layer.msg('上传超时！')
-        },
-        // 如果服务器端返回的不是 {errno:0, data: [...]} 这种格式，可使用该配置
-        customInsert: function (insertImg, result, editor) {
-            console.log(result);
-            if (result.code == 200) {
-                var url = result.data.filePath;
-                var urls = url.split( ",");
-                urls.forEach(function (e) {
-                    insertImg(e);
-                })
-            } else {
-                layer.msg(result.msg);
-            }
-        }
-    };
-    couponAdrContentEditor.customConfig.customAlert = function (info) {
-        layer.msg(info);
-    };
-    couponAdrContentEditor.customConfig.onchange = function (html) {
-        $("input[name=couponAdrContent]").val( html);
-    };
-    couponAdrContentEditor.create();
+    privacyPolicyEditor.create();
     /**
      * 将list页面通过url传过来的参数加载到form表单里面去
      * @param data
@@ -85,8 +51,7 @@ layui.use(['form','layer', 'baseConfig', "upload", 'layarea','wangEditor'], func
     if( data){
         baseConfig.loadFormData( data);
         $( "#coverImg_img").attr( "src", data.cover);
-        enterpriseSupportAdrContentEditor.txt.html( data.enterpriseSupportAdrContent);
-        couponAdrContentEditor.txt.html( data.couponAdrContent);
+        privacyPolicyEditor.txt.html( data.privacyPolicy);
     }
 
     /**

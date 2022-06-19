@@ -36,4 +36,6 @@ public class SysConfigTable {
     private String textGift;
     private String textEnterpriseSupport;
 
+    private String privacyPolicy;//隐私政策
+
 }

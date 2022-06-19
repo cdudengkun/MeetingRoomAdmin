@@ -27,4 +27,5 @@ public class SysConfigModel {
     private String textGift;
     private String textEnterpriseSupport;
 
+    private String privacyPolicy;//隐私政策
 }
