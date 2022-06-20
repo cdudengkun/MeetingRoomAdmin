@@ -9,23 +9,16 @@ public class SysConfigModel {
     private Long createTime;
     private Long updateTime;
 
-    private String enterpriseSupportAdrContent;//资源共享广告跳转页面图文内容
-    private String enterpriseSupportAdrPhone;//资源共享广告跳转页面联系电话
-    private String enterpriseSupportAdrBtnDescription;//资源共享广告跳转页面按钮描述
-
-    private String couponAdrContent;//礼包领取页面广告的图文内容
-    private String couponAdrBtnDescription;//礼包领取页面广告的按钮描述
-
     private Integer menmberPrice1;
     private Integer menmberPrice3;
     private Integer menmberPrice12;
     private String memberRight;
     private String memberWelfare;//会员福利，多个英文逗号分割
 
-    private String textEnterpriseService;
-    private String textPolicyInterpretation;
-    private String textGift;
-    private String textEnterpriseSupport;
+    private String textEnterpriseService;//企业服务
+    private String textPolicyInterpretation;//政策解读
+    private String textGift;//礼包领取
+    private String textEnterpriseSupport;//企业助力
 
     private String privacyPolicy;//隐私政策
 }

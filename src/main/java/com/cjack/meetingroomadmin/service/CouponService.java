@@ -61,6 +61,11 @@ public class CouponService {
         page.setCount( Long.valueOf( pageTable.getTotalElements()).intValue());
     }
 
+    //将关联了这个type的数据的type设置为null
+    public void delType( Long typeId){
+        dao.updateType( typeId);
+    }
+
     public List<CouponModel> summary( CouponModel model) {
         List<Object[]> columns = dao.sumViewCountByType();
         List<CouponModel> datas = new ArrayList<>( columns.size());

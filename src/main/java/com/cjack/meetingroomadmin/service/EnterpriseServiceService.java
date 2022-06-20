@@ -60,6 +60,11 @@ public class EnterpriseServiceService {
         dao.deleteInBatch( tables);
     }
 
+    //将关联了这个type的数据的type设置为null
+    public void delType( Long typeId){
+        dao.updateType( typeId);
+    }
+
     public void save( EnterpriseServiceModel model){
         EnterpriseServiceTable table;
         if( EmptyUtil.isNotEmpty( model.getId())){

@@ -62,6 +62,11 @@ public class PolicyInterpretationService {
         layPage.setCount( (Long.valueOf( pageTable.getTotalElements())).intValue());
     }
 
+    //将关联了这个type的数据的type设置为null
+    public void delType( Long typeId){
+        dao.updateType( typeId);
+    }
+
     public void del( String ids){
         List<PolicyInterpretationTable> tables = new ArrayList<>();
         String[] idArr = ids.split( ",");

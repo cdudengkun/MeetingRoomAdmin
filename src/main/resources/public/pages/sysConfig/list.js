@@ -18,9 +18,10 @@ layui.use(['form', 'table', 'util', 'baseConfig'], function () {
         toolbar: '#toolbar',
         defaultToolbar: [],
         cols: [[
-            {field: 'enterpriseSupportAdrPhone', width: 300, title: '资源共享广告跳转页面联系电话'},
-            {field: 'enterpriseSupportAdrBtnDescription', width: 300, title: '资源共享广告跳转页面按钮描述'},
-            {field: 'couponAdrBtnDescription', width: 300, title: '礼包领取页面广告的按钮描述'},
+            {field: 'textEnterpriseService', width: 200, title: '首页分类一'},
+            {field: 'textPolicyInterpretation', width: 200, title: '首页分类二'},
+            {field: 'textGift', width: 200, title: '首页分类三'},
+            {field: 'textEnterpriseSupport', width: 200, title: '首页分类四'},
             {field: 'createTime', width: 200, title: '最近修改时间', templet : function( d){
                 return util.toDateString( d.updateTime);
             }},

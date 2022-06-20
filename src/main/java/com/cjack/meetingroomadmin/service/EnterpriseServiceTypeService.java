@@ -19,6 +19,14 @@ public class EnterpriseServiceTypeService {
 
     @Autowired
     private EnterpriseServiceTypeDao dao;
+    @Autowired
+    private CouponService couponService;
+    @Autowired
+    private EnterpriseServiceService enterpriseServiceService;
+    @Autowired
+    private EnterpriseSupportService enterpriseSupportService;
+    @Autowired
+    private PolicyInterpretationService policyInterpretationService;
 
     public List<EnterpriseServiceTypeModel> list( EnterpriseServiceTypeModel model){
         List< Sort.Order> orders=new ArrayList<>();
@@ -37,9 +45,15 @@ public class EnterpriseServiceTypeService {
         List<EnterpriseServiceTypeTable> tables = new ArrayList<>();
         String[] idArr = ids.split( ",");
         for( String id : idArr){
+            Long typeId = Long.valueOf( id);
             EnterpriseServiceTypeTable table = new EnterpriseServiceTypeTable();
-            table.setId( Long.valueOf( id));
+            table.setId( typeId);
             tables.add( table);
+            //把关联的数据的type给设置为空
+            couponService.delType( typeId);
+            enterpriseServiceService.delType( typeId);
+            enterpriseSupportService.delType( typeId);
+            policyInterpretationService.delType( typeId);
         }
         dao.deleteInBatch( tables);
     }
