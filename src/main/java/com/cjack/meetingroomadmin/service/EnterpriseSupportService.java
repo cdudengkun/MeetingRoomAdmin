@@ -43,8 +43,11 @@ public class EnterpriseSupportService {
         List<EnterpriseSupportModel> datas = new ArrayList<>();
         for( EnterpriseSupportTable table : pageTable.getContent()){
             EnterpriseSupportModel data = ModelUtils.copySignModel( table, EnterpriseSupportModel.class);
-            data.setTypeId( table.getType().getId());
-            data.setTypeName( table.getType().getName());
+            if( table.getType() != null){
+                data.setTypeId( table.getType().getId());
+                data.setTypeName( table.getType().getName());
+            }
+
             datas.add( data);
         }
         layPage.setData( datas);
@@ -75,7 +78,10 @@ public class EnterpriseSupportService {
         }else{
             table = ModelUtils.copySignModel( model, EnterpriseSupportTable.class);
         }
-        table.setType( typeDao.getOne( model.getTypeId()));
+        if( EmptyUtil.isNotEmpty( model.getTypeId())){
+            table.setType( typeDao.getOne( model.getTypeId()));
+        }
+
         dao.save( table);
     }
 

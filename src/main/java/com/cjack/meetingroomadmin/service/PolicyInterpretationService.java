@@ -54,8 +54,11 @@ public class PolicyInterpretationService {
             PolicyInterpretationModel data = ModelUtils.copySignModel( table, PolicyInterpretationModel.class);
             data.setFiles( ModelUtils.copyListModel( table.getFiles(), PolicyInterpretationFileModel.class));
             data.setVideos( ModelUtils.copyListModel( table.getVideos(), PolicyInterpretationVideoModel.class));
-            data.setTypeId( table.getEnterpriseServiceTypeTable().getId());
-            data.setTypeName( table.getEnterpriseServiceTypeTable().getName());
+            if( table.getEnterpriseServiceTypeTable() != null){
+                data.setTypeId( table.getEnterpriseServiceTypeTable().getId());
+                data.setTypeName( table.getEnterpriseServiceTypeTable().getName());
+            }
+
             datas.add( data);
         }
         layPage.setData( datas);
@@ -163,7 +166,9 @@ public class PolicyInterpretationService {
         }else{
             table = ModelUtils.copySignModel( model, PolicyInterpretationTable.class);
         }
-        table.setEnterpriseServiceTypeTable( typeDao.getOne( model.getTypeId()));
+        if( EmptyUtil.isNotEmpty( model.getTypeId())){
+            table.setEnterpriseServiceTypeTable( typeDao.getOne( model.getTypeId()));
+        }
         dao.save( table);
     }
 

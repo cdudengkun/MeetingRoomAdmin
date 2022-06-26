@@ -27,48 +27,18 @@
         <input type="hidden" name="id">
         <div id="content_div">
             <div class="layui-form-item">
-                <label class="layui-form-label required">价格名称</label>
+                <label class="layui-form-label required">服务名称</label>
                 <div class="layui-input-inline width_500">
-                    <input type="text" name="name" lay-verify="required" lay-reqtext="价格名称不能为空" placeholder="请输入价格名称"  class="layui-input">
+                    <input type="text" name="name" lay-verify="required" lay-reqtext="服务名称不能为空" placeholder="请输入服务名称"  class="layui-input">
                 </div>
             </div>
 
             <div class="layui-form-item">
-                <label class="layui-form-label required">价格类型</label>
-                <div class="layui-input-inline">
-                    <select name="typeId">
-
-                    </select>
-                </div>
-            </div>
-
-            <div class="layui-form-item">
-                <label class="layui-form-label required">价格</label>
+                <label class="layui-form-label required">顺序</label>
                 <div class="layui-input-inline width_500">
-                    <input type="number" name="price" lay-verify="required" lay-reqtext="价格不能为空" placeholder="请输入价格"  class="layui-input">
+                    <input type="number" name="sort" lay-verify="required" lay-reqtext="顺序不能为空" placeholder="请输入顺序"  class="layui-input">
                 </div>
-            </div>
-
-            <div class="layui-form-item">
-                <label class="layui-form-label required">价格对应服务的月份</label>
-                <div class="layui-input-inline width_500">
-                    <input type="number" name="serviceCount" lay-verify="required" lay-reqtext="价格对应服务的月份不能为空" placeholder="请输入价格对应服务的月份"  class="layui-input">
-                </div>
-            </div>
-
-
-            <div class="layui-form-item">
-                <label class="layui-form-label required">简略服务介绍</label>
-                <div class="layui-input-inline width_500">
-                    <input type="text" name="simpleIntroduction" lay-verify="required" lay-reqtext="简略服务介绍不能为空" placeholder="请输入简略服务介绍"  class="layui-input">
-                </div>
-            </div>
-
-            <div class="layui-form-item">
-                <label class="layui-form-label required">服务介绍</label>
-                <div class="layui-input-inline width_500">
-                    <textarea name="introduction" placeholder="请填写服务介绍" class="layui-textarea" style="min-height: 170px;width: 600px;"></textarea>
-                </div>
+                <span style="color: red;">(越大出现越后面)</span>
             </div>
 
         </div>

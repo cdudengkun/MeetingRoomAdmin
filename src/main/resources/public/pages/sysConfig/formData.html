@@ -63,6 +63,22 @@
 
                 </div>
             </div>
+
+            <div class="layui-form-item">
+                <label class="layui-form-label required">会员权益标题</label>
+                <div class="layui-input-inline width_500">
+                    <input type="text" name="memberRightTitle" lay-verify="required" lay-reqtext="会员权益标题不能为空" placeholder="请输入会员权益标题"  class="layui-input">
+                </div>
+                <span style="color: red;">(原会员权益)</span>
+            </div>
+
+            <div class="layui-form-item layui-form-text">
+                <label class="layui-form-label">会员权益</label>
+                <input type="hidden" name="memberRight">
+                <div class="layui-input-block" id="memberRightEditor">
+
+                </div>
+            </div>
         </div>
 
         <div class="layui-form-item" id="submitDiv">

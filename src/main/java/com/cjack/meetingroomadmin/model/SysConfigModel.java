@@ -9,11 +9,8 @@ public class SysConfigModel {
     private Long createTime;
     private Long updateTime;
 
-    private Integer menmberPrice1;
-    private Integer menmberPrice3;
-    private Integer menmberPrice12;
+    private String memberRightTitle;
     private String memberRight;
-    private String memberWelfare;//会员福利，多个英文逗号分割
 
     private String textEnterpriseService;//企业服务
     private String textPolicyInterpretation;//政策解读

@@ -38,6 +38,13 @@
               "target": "_self"
             },
             {
+              "title": "服务配置",
+              "href": "/pages/productPriceType/list.html",
+              "icon": "fa fa-user-secret",
+              "privilegeName": "productPriceType",
+              "target": "_self"
+            },
+            {
               "title": "服务价格配置",
               "href": "/pages/productPriceConfig/list.html",
               "icon": "fa fa-user-secret",
