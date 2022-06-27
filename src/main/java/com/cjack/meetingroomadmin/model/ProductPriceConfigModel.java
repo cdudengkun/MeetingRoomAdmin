@@ -10,9 +10,7 @@ public class ProductPriceConfigModel {
     private Long createTime;
     private Long updateTime;
 
-    private Long typeId;
-    private String typeName;
-
+    private String cover;//服务内容介绍图片
     private String name;//价格名称
     private Integer serviceCount;//价格对应服务的月份，1一个月就是1，一年就是12
     private Integer price;//原价

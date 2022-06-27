@@ -3,7 +3,7 @@ layui.use(['form','layer', 'baseConfig', "upload",'wangEditor'], function () {
         $ = layui.jquery,
         layer = parent.layer === undefined ? layui.layer : top.layer,
         upload = layui.upload,
-        wangEditor = layui.wangEditor
+        wangEditor = layui.wangEditor,
         baseConfig = layui.baseConfig;
 
     var pageName = "cooperationShopping";

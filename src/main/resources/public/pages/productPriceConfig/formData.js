@@ -1,23 +1,57 @@
-layui.use(['form','layer', 'baseConfig', "upload", 'layarea'], function () {
+layui.use(['form','layer', 'baseConfig', "upload", 'layarea','wangEditor'], function () {
     var form = layui.form,
         $ = layui.jquery,
         layer = parent.layer === undefined ? layui.layer : top.layer,
         upload = layui.upload,
         baseConfig = layui.baseConfig,
+        wangEditor = layui.wangEditor,
         layarea = layui.layarea;
 
     var pageName = "productPriceConfig";
     var data = baseConfig.getDataFromList( pageName);
     var actionType = baseConfig.getUrlParamer( "actionType");
 
-    var typeId = data ? data.typeId: null;
-    baseConfig.loadSelect( "/productPriceConfig/type/list", "typeId", typeId, "name");
+    //处理富文本编辑器
+    var introductionEditor = new wangEditor('#introductionEditor');
+    introductionEditor.customConfig.uploadImgServer = "/file/upload?type=wangEditor";
+    introductionEditor.customConfig.uploadFileName = 'file';
+    introductionEditor.customConfig.pasteFilterStyle = false;
+    introductionEditor.customConfig.zIndex=0;
+    introductionEditor.customConfig.uploadImgMaxLength = 5;
+    introductionEditor.customConfig.uploadImgHooks = {
+        // 上传超时
+        timeout: function (xhr, editor) {
+            layer.msg('上传超时！')
+        },
+        // 如果服务器端返回的不是 {errno:0, data: [...]} 这种格式，可使用该配置
+        customInsert: function (insertImg, result, editor) {
+            console.log(result);
+            if (result.code == 200) {
+                var url = result.data.filePath;
+                var urls = url.split( ",");
+                urls.forEach(function (e) {
+                    insertImg(e);
+                })
+            } else {
+                layer.msg(result.msg);
+            }
+        }
+    };
+    introductionEditor.customConfig.customAlert = function (info) {
+        layer.msg(info);
+    };
+    introductionEditor.customConfig.onchange = function (html) {
+        $("input[name=introduction]").val( html);
+    };
+    introductionEditor.create();
+
 
     /**
      * 将list页面通过url传过来的参数加载到form表单里面去
      * @param data
      */
     if( data){
+        introductionEditor.txt.html( data.introduction);
         baseConfig.loadFormData( data);
         $( "#coverImg_img").attr( "src", data.cover);
     }
@@ -54,7 +88,7 @@ layui.use(['form','layer', 'baseConfig', "upload", 'layarea'], function () {
     //上传封面
     upload.render({
         elem: '#coverImg_div',
-        url: '/file/upload?type=advertisementCover',
+        url: '/file/upload?type=productPriceConfig',
         multiple: true,
         auto: false,
         choose: function(obj){  //上传前选择回调方法

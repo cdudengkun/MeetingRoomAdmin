@@ -18,11 +18,9 @@ layui.use(['form', 'table', 'util', 'baseConfig'], function () {
         toolbar: '#toolbar',
         defaultToolbar: [],
         cols: [[
-            {field: 'name', width: 200, title: '价格名称'},
-            {field: 'typeName', width: 200, title: '价格类型'},
-            {field: 'price', width: 200, title: '价格'},
+            {field: 'name', width: 200, title: '服务名称'},
+            {field: 'price', width: 200, title: '服务价格'},
             {field: 'serviceCount', width: 300, title: '价格对应服务月份'},
-            {field: 'simpleIntroduction', width: 200, title: '简略服务介绍'},
             {field: 'createTime', width: 200, title: '发布时间', templet : function( d){
                 return util.toDateString( d.createTime);
             }},
