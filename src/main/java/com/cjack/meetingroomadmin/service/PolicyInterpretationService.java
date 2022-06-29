@@ -168,6 +168,8 @@ public class PolicyInterpretationService {
         }
         if( EmptyUtil.isNotEmpty( model.getTypeId())){
             table.setEnterpriseServiceTypeTable( typeDao.getOne( model.getTypeId()));
+        }else{
+            table.setType( null);
         }
         dao.save( table);
     }

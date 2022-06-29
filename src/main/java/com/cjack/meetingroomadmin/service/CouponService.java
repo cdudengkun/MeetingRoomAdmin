@@ -99,6 +99,8 @@ public class CouponService {
         }
         if( EmptyUtil.isNotEmpty( model.getTypeId())){
             table.setType( typeDao.getOne( model.getTypeId()));
+        }else{
+            table.setType( null);
         }
         dao.save( table);
     }

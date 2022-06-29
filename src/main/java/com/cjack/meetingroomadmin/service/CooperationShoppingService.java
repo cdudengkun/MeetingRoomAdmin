@@ -41,8 +41,10 @@ public class CooperationShoppingService {
         List<CooperationShoppingModel> models = new ArrayList<>();
         for( CooperationShoppingTable table : pageTable.getContent()){
             CooperationShoppingModel model = ModelUtils.copySignModel( table, CooperationShoppingModel.class);
-            model.setTypeId( table.getType().getId());
-            model.setTypeName( table.getType().getDataKey());
+            if( table.getType() != null){
+                model.setTypeId( table.getType().getId());
+                model.setTypeName( table.getType().getDataKey());
+            }
             models.add( model);
         }
         page.setData( models);
@@ -68,7 +70,12 @@ public class CooperationShoppingService {
         }else{
             table = ModelUtils.copySignModel( model, CooperationShoppingTable.class);
         }
-        table.setType( defineSignValueDao.getOne( model.getTypeId()));
+        if( EmptyUtil.isNotEmpty(  model.getTypeId())){
+            table.setType( defineSignValueDao.getOne( model.getTypeId()));
+        }else{
+            table.setType( null);
+        }
+
         dao.save( table);
     }
 

@@ -19,6 +19,7 @@ layui.use(['form', 'table', 'util', 'baseConfig'], function () {
         defaultToolbar: [],
         cols: [[
             {field: 'name', width: 200, title: '服务名称'},
+            {field: 'btnText', width: 200, title: '购买按钮文本'},
             {field: 'price', width: 200, title: '服务价格'},
             {field: 'serviceCount', width: 300, title: '价格对应服务月份'},
             {field: 'createTime', width: 200, title: '发布时间', templet : function( d){
