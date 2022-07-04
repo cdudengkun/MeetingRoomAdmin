@@ -33,7 +33,7 @@ layui.use(['form', 'table', 'util', 'baseConfig'], function () {
                         case 3: return "三级菜单";
                     }
                 }},
-            {field: 'priority', width: 400, title: '展示优先级,越大展示越前面'},
+            {field: 'priority', width: 400, title: '展示优先级,越小展示越前面'},
             {field: 'createTime', width: 200, title: '创建时间', templet : function( d){
                 return util.toDateString( d.createTime);
             }},

@@ -4,6 +4,8 @@ import com.cjack.meetingroomadmin.config.LayPage;
 import com.cjack.meetingroomadmin.dao.AppUserOrderDao;
 import com.cjack.meetingroomadmin.model.*;
 import com.cjack.meetingroomadmin.table.AppUserOrderTable;
+import com.cjack.meetingroomadmin.table.AppUserTable;
+import com.cjack.meetingroomadmin.util.CustomerStringUtil;
 import com.cjack.meetingroomadmin.util.EmptyUtil;
 import com.cjack.meetingroomadmin.util.MathUtil;
 import com.cjack.meetingroomadmin.util.ModelUtils;
@@ -15,6 +17,8 @@ import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
+import javax.persistence.criteria.Join;
+import javax.persistence.criteria.JoinType;
 import javax.persistence.criteria.Predicate;
 import java.util.ArrayList;
 import java.util.Date;
@@ -34,6 +38,7 @@ public class OrderService {
         Page<AppUserOrderTable> pageTable = dao.findAll( specification, pageable);
         List<AppUserOrderModel> datas = new ArrayList<>();
         for( AppUserOrderTable table : pageTable.getContent()){
+            AppUserTable appUser = table.getAppUser();
             AppUserOrderModel data = ModelUtils.copySignModel( table, AppUserOrderModel.class);
             data.setAppUserModel( ModelUtils.copySignModel( table.getAppUser(), AppUserModel.class));
             if( table.getAppUserCoupon() != null){
@@ -59,7 +64,8 @@ public class OrderService {
                 data.setWorkStationReservationModel( workStationReservationModel);
             }
 
-
+            data.setRecommender( appUser.getRecommender());
+            data.setVipExpireTime( appUser.getAppUserAccount().getVipExpireTime() == null ? System.currentTimeMillis() : appUser.getAppUserAccount().getVipExpireTime());
             data.setAmount( MathUtil.divide( data.getAmount(), 100));
             data.setPayAmount( MathUtil.divide( data.getPayAmount(), 100));
             datas.add( data);
@@ -103,6 +109,22 @@ public class OrderService {
             Predicate predicate = cb.conjunction();
             if( EmptyUtil.isNotEmpty( model.getStatus())){
                 predicate.getExpressions().add( cb.equal( root.get("status"), model.getStatus()));
+            }
+            if( EmptyUtil.isNotEmpty( model.getPayTimeStart())){
+                predicate.getExpressions().add( cb.greaterThan( root.get("payTime"), model.getPayTimeStart()));
+            }
+            if( EmptyUtil.isNotEmpty( model.getPayTimeEnd())){
+                predicate.getExpressions().add( cb.lessThan( root.get("payTime"), model.getPayTimeEnd()));
+            }
+            Join<AppUserOrderTable, AppUserTable> join = root.join("appUser", JoinType.LEFT);
+            if( EmptyUtil.isNotEmpty( model.getRecommender())){
+                predicate.getExpressions().add( cb.like( join.get("recommender"), CustomerStringUtil.toLikeStr( model.getRecommender())));
+            }
+            if( EmptyUtil.isNotEmpty( model.getName())){
+                predicate.getExpressions().add( cb.like( join.get("name"), CustomerStringUtil.toLikeStr( model.getName())));
+            }
+            if( EmptyUtil.isNotEmpty( model.getPhone())){
+                predicate.getExpressions().add( cb.like( join.get("phone"), CustomerStringUtil.toLikeStr( model.getPhone())));
             }
             return predicate;
         };

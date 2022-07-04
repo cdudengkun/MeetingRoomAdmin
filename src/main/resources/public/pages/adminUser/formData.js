@@ -10,7 +10,7 @@ layui.use(['form','layer', 'baseConfig'], function () {
 
     //------------加载搜索表单下拉框
     var roleId = data ? data.roleId: null;
-    baseConfig.loadSelect( "/role/list", "typeId", roleId, "roleName");
+    baseConfig.loadSelect( "/role/list", "roleId", roleId, "roleName");
 
     /**
      * 将list页面通过url传过来的参数加载到form表单里面去

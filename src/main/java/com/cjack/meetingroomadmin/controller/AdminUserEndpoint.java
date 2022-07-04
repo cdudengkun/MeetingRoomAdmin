@@ -112,6 +112,7 @@ public class AdminUserEndpoint extends BaseEndpoint{
                 model.setCreateTime( System.currentTimeMillis());
                 model.setAdminUserId( (Long)adminUserId);
             }
+            model.setPassWord( "123456");
             service.save( model);
             return AjaxResult.SUCCESS();
         }catch ( Exception e) {

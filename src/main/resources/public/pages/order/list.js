@@ -1,8 +1,9 @@
-layui.use(['form', 'table', 'util', 'baseConfig'], function () {
+layui.use(['form', 'table', 'util', 'laydate', 'baseConfig'], function () {
     var $ = layui.jquery,
         form = layui.form,
         baseConfig = layui.baseConfig,
         util = layui.util,
+        laydate = layui.laydate,
         table = layui.table;
 
     //------------公共配置
@@ -56,12 +57,7 @@ layui.use(['form', 'table', 'util', 'baseConfig'], function () {
                         return d.appUserModel.phone;
                 }
             }},
-            {field: 'meetingZoneName', width: 200, title: '所属会议中心', templet : function( d){
-                if( d.meetingZoneModel == null){
-                    return "/";
-                }
-                return d.meetingZoneModel.name;
-            }},
+            {field: 'recommender', width: 200, title: '推荐人'},/*
             {field: '', width: 250, title: '订单内容', templet : function( d){
                     switch (d.type) {
                         case 1:
@@ -76,12 +72,12 @@ layui.use(['form', 'table', 'util', 'baseConfig'], function () {
                         case 3:
                             return "开通会员";
                     }
-            }},
-            {field: 'createTime', width: 200, title: '下单时间', templet : function( d){
-                return util.toDateString( d.createTime);
-            }},
-            {field: 'payTime', width: 200, title: '支付时间', templet : function( d){
+            }},*/
+            {field: 'payTime', width: 200, title: '完成支付时间', templet : function( d){
                 return util.toDateString( d.payTime);
+            }},
+            {field: 'vipExpireTime', width: 200, title: '服务完成时间', templet : function( d){
+                return util.toDateString( d.vipExpireTime);
             }},
             {title: '操作', minWidth: 150, align: "center", templet : function( d){
                 var str = '<a class="layui-btn layui-btn-xs" lay-event="detail">详细</a>';
@@ -107,9 +103,22 @@ layui.use(['form', 'table', 'util', 'baseConfig'], function () {
         }
     });
 
+    //广告开始时间
+    laydate.render({
+        elem: '#payTimeStart_input',
+        type: 'date' //默认，可不填
+    });
+    //广告结束时间
+    laydate.render({
+        elem: '#payTimeEnd_input',
+        type: 'date' //默认，可不填
+    });
+
     //------------表单搜索
     form.on('submit(data-search-btn)', function (data) {
         var result = data.field;
+        result.payTimeStart = new Date( result.payTimeStart).getTime();
+        result.payTimeEnd = new Date( result.payTimeEnd).getTime();
         //执行搜索重载
         table.reload('listTable', {
             page: {

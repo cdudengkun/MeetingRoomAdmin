@@ -61,9 +61,6 @@ layui.use(['form','layer', 'baseConfig', "upload",'wangEditor'], function () {
         elem: '#uploadFile',
         url: '/file/upload?type=enterpriseSupportVideo',
         accept: "video",
-        before: function(obj){ //obj参数包含的信息，跟 choose回调完全一致，可参见上文。
-
-        },
         done: function(res){
             if( res.code == 200){
                 var filePath = res.data.filePath;
@@ -140,35 +137,6 @@ layui.use(['form','layer', 'baseConfig', "upload",'wangEditor'], function () {
         var index = parent.layer.getFrameIndex( window.name);
         parent.layer.close( index);
     });
-    //上传封面
-    upload.render({
-        elem: '#uploadFile',
-        url: '/file/upload?type=enterpriseSupportFile',
-        accept: "file",
-        before: function(obj){ //obj参数包含的信息，跟 choose回调完全一致，可参见上文。
-            obj.preview(function(index, file, result) {
-                var size = file.size;//文件大小填写到数据表里面，这里的单位是byte
-                if( parseInt( size / 1024) > 0){//转化为KB
-                    if( parseInt(size / 1024 / 1024) > 0){//转化为MB
-                        size = parseInt(size / 1024 /1024) + "MB";
-                    }else{
-                        size = parseInt(size / 1024) + "KB";
-                    }
-                }else{
-                    size = size + "B";
-                }
-
-                $( "input[name=size]").val( size);
-            });
-        },
-        done: function(res){
-            if( res.code == 200){
-                var filePath = res.data.filePath;
-                $( "input[name=url]").val( filePath);
-            }
-        }
-    });
-
 
     //监听提交
     form.on('submit(saveBtn)', function (data) {

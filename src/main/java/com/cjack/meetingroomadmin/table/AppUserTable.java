@@ -34,7 +34,7 @@ public class AppUserTable {
     private String wechatOpenId; //绑定微信id
     private Long lastLoginTime;//最后登录时间
     private Integer status;//状态是否可用 1-可用，2-禁用
-    private String recommender;
+    private String recommender;//推荐人
     @ManyToOne
     @JoinColumn(name="province_id")
     private CityTable province;

@@ -20,6 +20,13 @@ public class AppUserOrderModel  extends BaseModel{
     private Integer vipHour;
     private CouponModel couponModel;
     private Integer payType;
+    private String recommender;//推荐人
+    private String name;//姓名
+    private String phone;//电话
+    private Long vipExpireTime;//vip过期时间
+
+    private Long payTimeStart;//支付时间 查询条件开始
+    private Long payTimeEnd;//支付时间 查询条件结束
 
     private AppUserModel appUserModel;
 
