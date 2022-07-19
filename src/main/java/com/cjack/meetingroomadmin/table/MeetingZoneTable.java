@@ -3,6 +3,7 @@ package com.cjack.meetingroomadmin.table;
 import lombok.Data;
 
 import javax.persistence.*;
+import java.util.List;
 
 /**
  * 会议中心表
@@ -41,5 +42,15 @@ public class MeetingZoneTable{
     private String imgs; //图片地址列表，多个英文逗号分割
     private Long adminUserId;//创建人id
 
+    @OneToMany( cascade = {CascadeType.REFRESH, CascadeType.MERGE, CascadeType.REMOVE},mappedBy = "meetingZone")
+    @OrderBy("id asc")
+    private List<MeetingRoomTable> meetingRooms;
 
+    @OneToMany( cascade = {CascadeType.REFRESH, CascadeType.MERGE, CascadeType.REMOVE},mappedBy = "meetingZone")
+    @OrderBy("id asc")
+    private List<AppUserOrderTable> orders;
+
+    @OneToMany( cascade = {CascadeType.REFRESH, CascadeType.MERGE, CascadeType.REMOVE},mappedBy = "meetingZone")
+    @OrderBy("id asc")
+    private List<WorkStationReservationTable> workStationReservations;
 }

@@ -30,4 +30,6 @@ public class CouponModel  extends BaseModel{
     private String cover;//封面图片地址
     private Integer sorting;//展示顺序，越高展示越前面
     private Integer viewCount;
+
+    private Integer drawedCount;//优惠券被领取的次数
 }

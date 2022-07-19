@@ -30,6 +30,7 @@ layui.use(['form', 'table', 'util', 'baseConfig'], function () {
                     case 2: return "已发布";
                 }
             }},
+            {field: 'drawedCount', width: 200, title: '领取次数'},
             {field: 'startTime', width: 400, title: '可用时间', templet : function( d){
                 return baseConfig.formatDateToDay( d.startTime) + "至" + baseConfig.formatDateToDay( d.endTime);
             }},

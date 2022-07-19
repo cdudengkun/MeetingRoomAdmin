@@ -117,8 +117,13 @@ layui.use(['form', 'table', 'util', 'laydate', 'baseConfig'], function () {
     //------------表单搜索
     form.on('submit(data-search-btn)', function (data) {
         var result = data.field;
-        result.payTimeStart = new Date( result.payTimeStart).getTime();
-        result.payTimeEnd = new Date( result.payTimeEnd).getTime();
+        if( result.payTimeStart){
+            result.payTimeStart = new Date( result.payTimeStart).getTime();
+        }
+        if( result.payTimeEnd){
+            result.payTimeEnd = new Date( result.payTimeEnd).getTime();
+        }
+
         //执行搜索重载
         table.reload('listTable', {
             page: {

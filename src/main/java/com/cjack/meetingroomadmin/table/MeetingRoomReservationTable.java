@@ -32,4 +32,7 @@ public class MeetingRoomReservationTable {
     @OneToOne( cascade = {CascadeType.REFRESH, CascadeType.MERGE})
     @JoinColumn( name = "app_user_id")
     private AppUserTable appUser;// 预定用户id
+
+    @OneToOne( cascade = {CascadeType.REFRESH, CascadeType.MERGE},mappedBy = "meetingRoom")
+    private AppUserOrderTable orderTable;
 }

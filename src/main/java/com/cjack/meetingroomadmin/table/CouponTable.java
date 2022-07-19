@@ -3,6 +3,7 @@ package com.cjack.meetingroomadmin.table;
 import lombok.Data;
 
 import javax.persistence.*;
+import java.util.List;
 
 /**
  * 优惠券
@@ -39,4 +40,8 @@ public class CouponTable {
     @OneToOne( cascade = {CascadeType.REFRESH, CascadeType.MERGE})
     @JoinColumn( name = "type_id")
     private EnterpriseServiceTypeTable type;//企业服务类型
+
+    @OneToMany( cascade = {CascadeType.REFRESH, CascadeType.MERGE},mappedBy = "coupon" , fetch = FetchType.LAZY)
+    @OrderBy("id asc")
+    private List<AppUserCouponTable> drawedCoupons;
 }

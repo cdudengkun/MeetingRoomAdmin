@@ -38,10 +38,6 @@ public class AppUserOrderTable {
     private AppUserCouponTable appUserCoupon;//使用优惠券
 
     @OneToOne( cascade = {CascadeType.REFRESH, CascadeType.MERGE})
-    @JoinColumn( name = "app_user_order_id")
-    private AppUserOrderTable order;
-
-    @OneToOne( cascade = {CascadeType.REFRESH, CascadeType.MERGE})
     @JoinColumn( name = "meeting_room_reservation_id")
     private MeetingRoomReservationTable meetingRoom;//关联会议室预定信息
 

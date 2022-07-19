@@ -1,9 +1,7 @@
 package com.cjack.meetingroomadmin.service;
 
 import com.cjack.meetingroomadmin.config.LayPage;
-import com.cjack.meetingroomadmin.dao.DefineSignValueDao;
-import com.cjack.meetingroomadmin.dao.MeetingRoomDao;
-import com.cjack.meetingroomadmin.dao.MeetingZoneDao;
+import com.cjack.meetingroomadmin.dao.*;
 import com.cjack.meetingroomadmin.model.MeetingRoomModel;
 import com.cjack.meetingroomadmin.model.MeetingZoneModel;
 import com.cjack.meetingroomadmin.table.MeetingRoomTable;
@@ -34,6 +32,10 @@ public class MeetingRoomService {
     private MeetingZoneDao meetingZoneDao;
     @Autowired
     private DefineSignValueDao defineSignValueDao;
+    @Autowired
+    private MeetingRoomReservationDao meetingRoomReservationDao;
+    @Autowired
+    private AppUserOrderDao appUserOrderDao;
 
     public void list(LayPage page, MeetingRoomModel model){
         List< Sort.Order> orders=new ArrayList<>();
@@ -61,6 +63,15 @@ public class MeetingRoomService {
             tables.add( table);
         }
         dao.deleteInBatch( tables);
+    }
+
+    public void del( List<MeetingRoomTable> meetingRooms){
+        for( MeetingRoomTable meetingRoom : meetingRooms){
+            meetingRoomReservationDao.deleteInBatch( meetingRoom.getReservations());
+            meetingRoomReservationDao.flush();
+            dao.delete( meetingRoom);
+            dao.flush();
+        }
     }
 
     public void save( MeetingRoomModel model){

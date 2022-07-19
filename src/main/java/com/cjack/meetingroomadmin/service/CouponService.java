@@ -18,6 +18,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
+import org.springframework.util.CollectionUtils;
 
 import javax.persistence.criteria.Join;
 import javax.persistence.criteria.JoinType;
@@ -54,7 +55,11 @@ public class CouponService {
                 data.setTypeId( table.getType().getId());
                 data.setTypeName( table.getType().getName());
             }
-
+            if( !CollectionUtils.isEmpty( table.getDrawedCoupons())){
+                data.setDrawedCount( table.getDrawedCoupons().size());
+            }else{
+                data.setDrawedCount( 0);
+            }
             datas.add( data);
         }
         page.setData( datas);

@@ -27,6 +27,7 @@ public class WorkStationReservationTable {
     @JoinColumn( name = "meeting_zone_id")
     private MeetingZoneTable meetingZone;// 所属会议空间
 
+
     @OneToOne( cascade = {CascadeType.REFRESH, CascadeType.MERGE})
     @JoinColumn( name = "app_user_id")
     private AppUserTable appUser;// 预定用户id

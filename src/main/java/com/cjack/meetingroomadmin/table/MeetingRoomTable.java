@@ -3,6 +3,7 @@ package com.cjack.meetingroomadmin.table;
 import lombok.Data;
 
 import javax.persistence.*;
+import java.util.List;
 
 /**
  * 会议室表
@@ -33,5 +34,7 @@ public class MeetingRoomTable {
     @JoinColumn( name = "level_id")
     private DefineSignKeyTable level;//规格
 
-
+    @OneToMany( cascade = {CascadeType.REFRESH, CascadeType.MERGE},mappedBy = "meetingRoom")
+    @OrderBy("id asc")
+    private List<MeetingRoomReservationTable> reservations;
 }

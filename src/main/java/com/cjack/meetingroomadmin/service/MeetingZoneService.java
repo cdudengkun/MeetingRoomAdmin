@@ -1,8 +1,10 @@
 package com.cjack.meetingroomadmin.service;
 
 import com.cjack.meetingroomadmin.config.LayPage;
+import com.cjack.meetingroomadmin.dao.AppUserOrderDao;
 import com.cjack.meetingroomadmin.dao.CityDao;
 import com.cjack.meetingroomadmin.dao.MeetingZoneDao;
+import com.cjack.meetingroomadmin.dao.WorkStationReservationDao;
 import com.cjack.meetingroomadmin.model.MeetingZoneModel;
 import com.cjack.meetingroomadmin.table.MeetingZoneTable;
 import com.cjack.meetingroomadmin.util.CustomerStringUtil;
@@ -15,6 +17,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
+import org.springframework.util.CollectionUtils;
+
 import javax.persistence.criteria.Predicate;
 import java.util.ArrayList;
 import java.util.List;
@@ -26,6 +30,12 @@ public class MeetingZoneService {
     private MeetingZoneDao dao;
     @Autowired
     private CityDao cityDao;
+    @Autowired
+    private MeetingRoomService meetingRoomService;
+    @Autowired
+    private AppUserOrderDao appUserOrderDao;
+    @Autowired
+    private WorkStationReservationDao workStationReservationDao;
 
     public void list(LayPage page, MeetingZoneModel condition){
         List< Sort.Order> orders=new ArrayList<>();
@@ -83,9 +93,17 @@ public class MeetingZoneService {
         String[] idArr = ids.split( ",");
         for( String id : idArr){
             MeetingZoneTable table = dao.getOne( Long.valueOf( id));
-            tables.add( table);
+            if( !CollectionUtils.isEmpty( table.getOrders())){
+                appUserOrderDao.deleteInBatch( table.getOrders());
+                appUserOrderDao.flush();
+            }
+            if( !CollectionUtils.isEmpty( table.getWorkStationReservations())){
+                workStationReservationDao.deleteInBatch( table.getWorkStationReservations());
+                workStationReservationDao.flush();
+            }
+            meetingRoomService.del( table.getMeetingRooms());
+            dao.delete( table);
         }
-        dao.deleteInBatch( tables);
     }
 
     public void save( MeetingZoneModel model){
