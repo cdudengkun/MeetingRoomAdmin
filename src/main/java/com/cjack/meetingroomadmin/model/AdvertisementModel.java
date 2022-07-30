@@ -19,4 +19,6 @@ public class AdvertisementModel extends BaseModel{
     private String content;//广告图文内容
     private String phone;//广告方联系电话
     private String btnDesc;//广告方联系电话按钮文字
+
+    private Long priceId;
 }

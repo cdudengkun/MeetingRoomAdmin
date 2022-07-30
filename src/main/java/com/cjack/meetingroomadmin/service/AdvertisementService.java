@@ -2,6 +2,7 @@ package com.cjack.meetingroomadmin.service;
 
 
 import com.cjack.meetingroomadmin.dao.AdvertisementDao;
+import com.cjack.meetingroomadmin.dao.ProductPriceConfigDao;
 import com.cjack.meetingroomadmin.model.AdvertisementModel;
 import com.cjack.meetingroomadmin.table.AdvertisementTable;
 import com.cjack.meetingroomadmin.util.EmptyUtil;
@@ -18,8 +19,20 @@ public class AdvertisementService {
     @Autowired
     private AdvertisementDao dao;
 
+    @Autowired
+    private ProductPriceConfigDao priceDao;
+
     public List<AdvertisementModel> list(){
-        return ModelUtils.copyListModel( dao.findAll(), AdvertisementModel.class);
+        List<AdvertisementTable> tables = dao.findAll();
+        List<AdvertisementModel> datas = new ArrayList<>();
+        for( AdvertisementTable table : tables){
+            AdvertisementModel data = ModelUtils.copySignModel( table, AdvertisementModel.class);
+            if( table.getPriceConfigTable() != null){
+                data.setPriceId( table.getPriceConfigTable().getId());
+            }
+            datas.add( data);
+        }
+        return datas;
     }
 
     public void del( String ids){
@@ -40,6 +53,11 @@ public class AdvertisementService {
             ModelUtils.copySignModel( model, table);
         }else{
             table = ModelUtils.copySignModel( model, AdvertisementTable.class);
+        }
+        if( EmptyUtil.isNotEmpty( model.getPriceId())){
+            table.setPriceConfigTable( priceDao.getOne( model.getPriceId()));
+        }else{
+            table.setPriceConfigTable( null);
         }
         dao.save( table);
     }

@@ -11,6 +11,9 @@ layui.use(['form','layer', 'baseConfig', "upload", 'layarea','wangEditor'], func
     var data = baseConfig.getDataFromList( pageName);
     var actionType = baseConfig.getUrlParamer( "actionType");
 
+    var priceId = data ? data.priceId: null;
+    baseConfig.loadSelect( "/productPriceConfig/list", "priceId", priceId, "name");
+
     //处理富文本编辑器
     var contentEditor = new wangEditor('#contentEditor');
     contentEditor.customConfig.uploadImgServer = "/file/upload?type=wangEditor";

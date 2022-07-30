@@ -28,4 +28,8 @@ public class AdvertisementTable {
     private String content;//广告图文内容
     private String phone;//广告方联系电话
     private String btnDesc;//广告方联系电话按钮文字
+
+    @OneToOne( cascade = {CascadeType.REFRESH, CascadeType.MERGE})
+    @JoinColumn( name = "price_config_id")
+    private ProductPriceConfigTable priceConfigTable;// 对应的 服务价格pid
 }
